@@ -12,15 +12,18 @@ export default defineConfig(() => {
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['icon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
+        includeAssets: ['icon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-512x512.png'],
         manifest: {
           id: '/',
+          lang: 'fr',
           name: 'DROPP — Social Commerce Cameroun',
           short_name: 'DROPP',
           description: 'Flux vidéo et place de marché de gros au Cameroun en FCFA.',
           theme_color: '#000000',
           background_color: '#000000',
           display: 'standalone',
+          orientation: 'portrait',
+          categories: ['shopping', 'business'],
           start_url: '/',
           scope: '/',
           icons: [
@@ -45,8 +48,33 @@ export default defineConfig(() => {
           ],
         },
         workbox: {
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,jpg}'],
+          cleanupOutdatedCaches: true,
+          skipWaiting: true,
+          clientsClaim: true,
+          globPatterns: [
+            'index.html',
+            'assets/index-*.{js,css}',
+            'assets/react-vendor-*.js',
+            'assets/rolldown-runtime-*.js',
+            'assets/virtual_pwa-register-*.js',
+            'assets/workbox-window.*.js',
+          ],
+          globIgnores: ['**/firebase-*', 'src/assets/**', 'videos/**'],
           runtimeCaching: [
+            {
+              urlPattern: /\/assets\/.*\.(?:js|css)$/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'dropp-app-chunks',
+                expiration: {
+                  maxEntries: 40,
+                  maxAgeSeconds: 60 * 60 * 24 * 14,
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
             {
               urlPattern: /\/videos\/.*\.mp4$/i,
               handler: 'CacheFirst',
@@ -78,8 +106,7 @@ export default defineConfig(() => {
           ],
         },
         devOptions: {
-          enabled: true,
-          type: 'module',
+          enabled: false,
         },
       }),
       // Copies src/assets into dist/ so root-relative URLs like
@@ -108,8 +135,14 @@ export default defineConfig(() => {
             if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
               return 'react-vendor';
             }
+            if (id.includes('node_modules/@firebase/firestore') || id.includes('node_modules/firebase/firestore')) {
+              return 'firebase-firestore';
+            }
+            if (id.includes('node_modules/@firebase/auth') || id.includes('node_modules/firebase/auth')) {
+              return 'firebase-auth';
+            }
             if (id.includes('node_modules/firebase') || id.includes('node_modules/@firebase')) {
-              return 'firebase-vendor';
+              return 'firebase-core';
             }
           },
         },

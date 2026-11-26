@@ -1,7 +1,30 @@
 {
+  "headers": [
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        { "key": "Content-Type", "value": "application/manifest+json; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/sw.js",
+      "headers": [
+        { "key": "Content-Type", "value": "application/javascript; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "Service-Worker-Allowed", "value": "/" }
+      ]
+    },
+    {
+      "source": "/(pwa-.*|apple-touch-icon)\\.png",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    }
+  ],
   "rewrites": [
     {
-      "source": "/((?!api/|assets/|videos/|src/|pwa-|apple-touch-icon|icon\\.svg|manifest\\.webmanifest|sw\\.js|workbox-).*)",
+      "source": "/((?!api/)[^.]+)",
       "destination": "/index.html"
     }
   ]

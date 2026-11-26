@@ -99,6 +99,22 @@ export function useDroppState(isOnline: boolean) {
     return saved === 'en' ? 'en' : 'fr';
   });
 
+  // Clear stale cached fake stats on version upgrade
+  useEffect(() => {
+    try {
+      const ver = localStorage.getItem('dropp_data_version');
+      if (ver !== '2') {
+        localStorage.setItem('dropp_data_version', '2');
+        localStorage.removeItem(STORAGE_KEYS.posts);
+        localStorage.removeItem(STORAGE_KEYS.shops);
+        localStorage.removeItem(STORAGE_KEYS.bookmarks);
+        localStorage.removeItem(STORAGE_KEYS.following);
+      }
+    } catch {
+      // Ignore
+    }
+  }, []);
+
   const [posts, setPosts] = useState<FeedPost[]>(() =>
     readStorageJson<FeedPost[]>(STORAGE_KEYS.posts, DEMO_POSTS)
   );
@@ -109,10 +125,10 @@ export function useDroppState(isOnline: boolean) {
     readStorageJson<string[]>(STORAGE_KEYS.likes, [])
   );
   const [bookmarkedIds, setBookmarkedIds] = useState<string[]>(() =>
-    readStorageJson<string[]>(STORAGE_KEYS.bookmarks, ['post-01', 'post-03'])
+    readStorageJson<string[]>(STORAGE_KEYS.bookmarks, [])
   );
   const [followedShopIds, setFollowedShopIds] = useState<string[]>(() =>
-    readStorageJson<string[]>(STORAGE_KEYS.following, ['shop-akwa-mode', 'shop-ouest-terroir'])
+    readStorageJson<string[]>(STORAGE_KEYS.following, [])
   );
   const [commentsByPost, setCommentsByPost] = useState<Record<string, PostComment[]>>(() =>
     readStorageJson<Record<string, PostComment[]>>(

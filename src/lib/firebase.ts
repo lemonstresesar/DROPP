@@ -35,23 +35,35 @@ export interface FirebaseServices {
   db: Firestore;
 }
 
+let cachedAuthPromise: Promise<{ app: FirebaseApp; auth: Auth }> | null = null;
 let cachedServicesPromise: Promise<FirebaseServices> | null = null;
 let cachedAuthInstance: Auth | null = null;
 let connectionTested = false;
 
-export async function getFirebaseServices(): Promise<FirebaseServices> {
-  if (!cachedServicesPromise) {
-    cachedServicesPromise = (async () => {
-      const [{ initializeApp, getApps, getApp }, { getAuth }, { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, getFirestore, doc, getDocFromServer }] =
-        await Promise.all([
-          import('firebase/app'),
-          import('firebase/auth'),
-          import('firebase/firestore'),
-        ]);
-
+export async function getFirebaseAuth(): Promise<{ app: FirebaseApp; auth: Auth }> {
+  if (!cachedAuthPromise) {
+    cachedAuthPromise = (async () => {
+      const [{ initializeApp, getApps, getApp }, { getAuth }] = await Promise.all([
+        import('firebase/app'),
+        import('firebase/auth'),
+      ]);
       const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
       const auth = getAuth(app);
       cachedAuthInstance = auth;
+      return { app, auth };
+    })();
+  }
+  return cachedAuthPromise;
+}
+
+export async function getFirebaseServices(): Promise<FirebaseServices> {
+  if (!cachedServicesPromise) {
+    cachedServicesPromise = (async () => {
+      const [{ app, auth }, { initializeFirestore, persistentLocalCache, persistentMultipleTabManager, getFirestore, doc, getDocFromServer }] =
+        await Promise.all([
+          getFirebaseAuth(),
+          import('firebase/firestore'),
+        ]);
 
       let db: Firestore;
       try {
