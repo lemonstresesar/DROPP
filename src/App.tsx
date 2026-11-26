@@ -150,6 +150,10 @@ export default function App() {
 
   const t = TRANSLATIONS[lang];
 
+  const isApprovedVendor =
+    session?.role === 'admin' ||
+    (session?.role === 'vendor' && session.vendorStatus === 'approved');
+
   const [activeTab, setActiveTab] = useState<NavTab>('feed');
   const [profileSubTab, setProfileSubTab] = useState<
     'posts' | 'products' | 'info' | 'orders' | 'wallet' | 'notifs'
@@ -276,14 +280,16 @@ export default function App() {
               <span>{t.nav.market}</span>
             </button>
 
-            <button
-              type="button"
-              onClick={() => setShowCreateSheet(true)}
-              className="w-full min-h-[44px] px-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-[var(--dropp-muted)] hover:bg-[var(--dropp-surface)] hover:text-[var(--dropp-text)] transition-colors"
-            >
-              <Plus className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
-              <span>{t.nav.create}</span>
-            </button>
+            {isApprovedVendor && (
+              <button
+                type="button"
+                onClick={() => setShowCreateSheet(true)}
+                className="w-full min-h-[44px] px-3 rounded-xl flex items-center gap-3 text-sm font-semibold text-[var(--dropp-muted)] hover:bg-[var(--dropp-surface)] hover:text-[var(--dropp-text)] transition-colors"
+              >
+                <Plus className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
+                <span>{t.nav.create}</span>
+              </button>
+            )}
 
             <button
               type="button"
@@ -512,10 +518,12 @@ export default function App() {
         )}
       </main>
 
-      {/* Mobile Bottom 5-Item Navigation Bar (TikTok DNA, <= 64px height) */}
+      {/* Mobile Navigation Bar */}
       <nav
         aria-label="Navigation mobile"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 h-16 bg-[var(--dropp-elevated)]/95 backdrop-blur-md border-t border-[var(--dropp-border)] grid grid-cols-5 items-center px-1"
+        className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 h-16 bg-[var(--dropp-elevated)]/95 backdrop-blur-md border-t border-[var(--dropp-border)] grid ${
+          isApprovedVendor ? 'grid-cols-5' : 'grid-cols-4'
+        } items-center px-1`}
       >
         <button
           type="button"
@@ -542,19 +550,21 @@ export default function App() {
           <span className="text-[10px] font-medium">{t.nav.market}</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => setShowCreateSheet(true)}
-          aria-label={t.nav.create}
-          className="min-h-[44px] flex items-center justify-center"
-        >
-          <span
-            style={{ background: 'var(--dropp-gradient)' }}
-            className="w-11 h-8 rounded-xl text-white flex items-center justify-center shadow-md shadow-[#FF5A1F]/25"
+        {isApprovedVendor && (
+          <button
+            type="button"
+            onClick={() => setShowCreateSheet(true)}
+            aria-label={t.nav.create}
+            className="min-h-[44px] flex items-center justify-center"
           >
-            <Plus className="w-5 h-5 stroke-[2.6]" aria-hidden="true" />
-          </span>
-        </button>
+            <span
+              style={{ background: 'var(--dropp-gradient)' }}
+              className="w-11 h-8 rounded-xl text-white flex items-center justify-center shadow-md shadow-[#FF5A1F]/25"
+            >
+              <Plus className="w-5 h-5 stroke-[2.6]" aria-hidden="true" />
+            </span>
+          </button>
+        )}
 
         <button
           type="button"

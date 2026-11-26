@@ -541,65 +541,78 @@ export const CreateActionSheet: React.FC<CreateActionSheetProps> = ({
               onClose();
               onRequireAuth();
             }}
-            className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] text-white text-sm font-bold hover:bg-[#E54E19] transition-colors"
+            className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] text-white text-sm font-bold hover:bg-[#E54E19] transition-colors"
           >
             {t.profile.loginCta}
           </button>
-        ) : (
+        ) : isApprovedVendor ? (
           <div className="space-y-2.5 pt-1">
-            {isApprovedVendor && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenVendorStudio('publish');
-                }}
-                className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
-              >
-                {t.sheets.openVendorStudio}
-              </button>
-            )}
-
-            {isPendingVendor && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenVendorStudio('kyc');
-                }}
-                className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
-              >
-                {t.sheets.openKycModal}
-              </button>
-            )}
-
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenVendorStudio('publish');
+              }}
+              className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
+            >
+              {t.sheets.openVendorStudio}
+            </button>
             <button
               type="button"
               onClick={() => {
                 onClose();
                 onOpenRfq();
               }}
-              className={`w-full min-h-[44px] rounded-xl text-sm font-bold transition-colors ${
-                isApprovedVendor || isPendingVendor
-                  ? 'bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold'
-                  : 'bg-[#FF5A1F] hover:bg-[#E54E19] text-white'
-              }`}
+              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
             >
               {t.sheets.openRfqModal}
             </button>
-
-            {!isApprovedVendor && !isPendingVendor && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenVendorStudio('kyc');
-                }}
-                className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] text-xs font-semibold transition-colors"
-              >
-                {t.profile.becomeVendorBtn}
-              </button>
-            )}
+          </div>
+        ) : isPendingVendor ? (
+          <div className="space-y-2.5 pt-1">
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenVendorStudio('kyc');
+              }}
+              className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
+            >
+              {t.sheets.openKycModal}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenRfq();
+              }}
+              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
+            >
+              {t.sheets.openRfqModal}
+            </button>
+          </div>
+        ) : (
+          <div className="space-y-2.5 pt-1">
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenRfq();
+              }}
+              className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
+            >
+              {t.sheets.openRfqModal}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenVendorStudio('kyc');
+              }}
+              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
+            >
+              {t.profile.becomeVendorBtn}
+            </button>
           </div>
         )}
       </div>

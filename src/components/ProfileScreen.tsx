@@ -181,21 +181,21 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
     (session?.role === 'vendor' && session.vendorStatus === 'approved');
 
   return (
-    <div className="h-full overflow-y-auto bg-[var(--dropp-bg)] pb-24 lg:pb-8">
-      <div className="max-w-3xl mx-auto px-4 pt-5 space-y-6">
+    <div className="h-full overflow-y-auto bg-[var(--dropp-bg)] pb-28 lg:pb-12">
+      <div className="max-w-2xl mx-auto px-4 pt-6 space-y-6">
         {activeShop && (
           <button
             type="button"
             onClick={onClearViewedShop}
-            className="min-h-[44px] text-xs font-semibold text-[var(--dropp-muted)] hover:text-[var(--dropp-text)]"
+            className="min-h-[44px] text-xs font-semibold text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
           >
-            ← {t.profile.backToMyProfile}
+            <span>← {t.profile.backToMyProfile}</span>
           </button>
         )}
 
-        {/* Header Identity Card (TikTok-style) */}
+        {/* Profile Card / Header */}
         {activeShop ? (
-          <section className="flex flex-col items-center text-center space-y-3">
+          <section className="p-6 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex flex-col items-center text-center space-y-4 shadow-xl">
             <img
               src={buildCloudinaryMediaUrl(activeShop.avatarUrl, {
                 dataSaver,
@@ -203,84 +203,78 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               })}
               alt={activeShop.name}
               referrerPolicy="no-referrer"
-              className="w-24 h-24 rounded-full object-cover border-2 border-[var(--dropp-border-strong)]"
+              className="w-24 h-24 rounded-full object-cover border-4 border-black shadow-md"
             />
-            <div>
+            <div className="space-y-1">
               <div className="flex items-center justify-center gap-1.5">
                 <h1 className="text-xl font-bold text-[var(--dropp-text)]">{activeShop.name}</h1>
                 {activeShop.isCertified && (
                   <BadgeCheck className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
                 )}
               </div>
-              <p className="text-xs text-[var(--dropp-muted)] mt-0.5">
-                {activeShop.handle} · {activeShop.city} · {activeShop.neighborhood}
+              <p className="text-xs text-[var(--dropp-muted)]">
+                {activeShop.handle} · {activeShop.city} ({activeShop.neighborhood})
               </p>
             </div>
 
-            <div className="flex items-center justify-center gap-8 py-2">
+            <div className="grid grid-cols-3 gap-6 w-full py-3 border-y border-[var(--dropp-border)]">
               <div>
                 <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
                   {formatCompactCount(activeShop.followingCount, lang)}
                 </div>
-                <div className="text-xs text-[var(--dropp-muted)]">{t.profile.followingCount}</div>
+                <div className="text-[11px] text-[var(--dropp-muted)]">{t.profile.followingCount}</div>
               </div>
               <div>
                 <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
                   {formatCompactCount(activeShop.followersCount, lang)}
                 </div>
-                <div className="text-xs text-[var(--dropp-muted)]">{t.profile.followersCount}</div>
+                <div className="text-[11px] text-[var(--dropp-muted)]">{t.profile.followersCount}</div>
               </div>
               <div>
                 <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
                   {formatCompactCount(activeShop.likesCount, lang)}
                 </div>
-                <div className="text-xs text-[var(--dropp-muted)]">{t.profile.likesCount}</div>
+                <div className="text-[11px] text-[var(--dropp-muted)]">{t.profile.likesCount}</div>
               </div>
             </div>
 
-            <p className="text-xs text-[var(--dropp-muted)] max-w-md leading-relaxed">{activeShop.bio}</p>
+            <p className="text-xs text-[var(--dropp-muted)] leading-relaxed">{activeShop.bio}</p>
 
             <button
               type="button"
               onClick={() => onMessageShop(activeShop)}
-              className="min-h-[44px] px-5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors"
+              className="w-full sm:w-auto min-h-[44px] px-6 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors shadow-md shadow-[#FF5A1F]/25"
             >
               <MessageSquare className="w-4 h-4" aria-hidden="true" />
               <span>{t.product.negotiateBtn}</span>
             </button>
           </section>
         ) : session ? (
-          <section className="space-y-4">
-            <div className="flex flex-col items-center text-center space-y-3">
-              <div className="w-20 h-20 rounded-full bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] flex items-center justify-center text-2xl font-bold text-[var(--dropp-text)]">
+          <section className="p-6 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-5 shadow-xl">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+              <div className="w-20 h-20 rounded-full bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] flex items-center justify-center text-2xl font-bold text-[var(--dropp-text)] shrink-0 shadow-inner">
                 {session.displayName.slice(0, 2).toUpperCase()}
               </div>
-              <div>
-                <div className="flex items-center justify-center gap-1.5">
-                  <h1 className="text-xl font-bold text-[var(--dropp-text)]">{session.displayName}</h1>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
+                  <h1 className="text-xl font-bold text-[var(--dropp-text)] truncate">{session.displayName}</h1>
                   {session.isCertified && (
-                    <BadgeCheck className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
+                    <BadgeCheck className="w-5 h-5 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
                   )}
                 </div>
-                <p className="text-xs text-[var(--dropp-muted)] mt-0.5">
-                  {roleLabel} · {session.city} ({session.neighborhood})
+                <p className="text-xs text-[var(--dropp-muted)] mt-1">
+                  {session.email} · <span className="font-semibold text-[var(--dropp-text)]">{roleLabel}</span> · {session.city}
                 </p>
               </div>
-
-              <div className="flex items-center justify-center gap-8 py-1">
-                <div>
-                  <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
-                    {followedShopIds.length}
-                  </div>
-                  <div className="text-xs text-[var(--dropp-muted)]">{t.profile.followingCount}</div>
-                </div>
-                <div>
-                  <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
-                    {bookmarkedIds.length}
-                  </div>
-                  <div className="text-xs text-[var(--dropp-muted)]">{t.actions.bookmark}</div>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={onSignOut}
+                aria-label={t.auth.signOut}
+                className="min-h-[40px] px-3.5 rounded-xl bg-[var(--dropp-surface-alt)] hover:border-[var(--dropp-border-strong)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)] inline-flex items-center gap-1.5 transition-colors"
+              >
+                <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{t.auth.signOut}</span>
+              </button>
             </div>
 
             {session.role === 'vendor' && session.vendorStatus === 'pending' && (
@@ -290,13 +284,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               </div>
             )}
 
-            {/* Role Actions: Vendor Studio / Become Vendor KYC / Super Admin */}
-            <div className="flex flex-wrap gap-2 justify-center">
+            {/* Quick Actions (Vendor Studio / KYC / Admin) */}
+            <div className="flex flex-wrap gap-2 pt-1 border-t border-[var(--dropp-border)]">
               {isApprovedVendor ? (
                 <button
                   type="button"
                   onClick={() => onOpenVendorStudio('publish')}
-                  className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors"
+                  className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors shadow-md shadow-[#FF5A1F]/20"
                 >
                   <Store className="w-4 h-4" aria-hidden="true" />
                   <span>{t.profile.openVendorStudioBtn}</span>
@@ -305,7 +299,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                 <button
                   type="button"
                   onClick={() => onOpenVendorStudio('kyc')}
-                  className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+                  className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
                 >
                   <Store className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
                   <span>{t.profile.becomeVendorBtn}</span>
@@ -316,7 +310,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                 <button
                   type="button"
                   onClick={onOpenAdminConsole}
-                  className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-accent)]/60 hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] text-xs font-bold inline-flex items-center gap-2 transition-colors"
+                  className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-accent)]/60 hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-bold inline-flex items-center gap-2 transition-colors"
                 >
                   <ShieldCheck className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
                   <span>{t.profile.openAdminBtn}</span>
@@ -324,12 +318,12 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               )}
             </div>
 
-            {/* Wallet & Referral strip */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Wallet & Referral summary cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <button
                 type="button"
                 onClick={() => setProfileTab('wallet')}
-                className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] flex items-center justify-between text-left"
+                className="p-4 rounded-2xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] flex items-center justify-between text-left transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <Wallet className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
@@ -340,44 +334,40 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                     </div>
                   </div>
                 </div>
-                <span className="text-[11px] text-[var(--dropp-muted)] tabular-nums">
-                  {t.profile.escrowLabel}: {formatFcfa(session.pendingEscrowFcfa)}
-                </span>
+                <div className="text-right">
+                  <span className="text-[10px] text-[var(--dropp-muted)] block">{t.profile.escrowLabel}</span>
+                  <span className="text-xs font-bold text-[var(--dropp-text)] tabular-nums">{formatFcfa(session.pendingEscrowFcfa)}</span>
+                </div>
               </button>
 
-              <div className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex items-center justify-between">
+              <div className="p-4 rounded-2xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] flex items-center justify-between">
                 <div>
                   <div className="text-xs text-[var(--dropp-muted)]">{t.profile.referralLabel}</div>
-                  <div className="text-sm font-bold text-[var(--dropp-text)] font-mono">
+                  <div className="text-sm font-bold text-[var(--dropp-text)] font-mono tracking-wide mt-0.5">
                     {session.referralCode}
                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={onSignOut}
-                  className="min-h-[40px] px-3 rounded-xl bg-[var(--dropp-surface-alt)] hover:border-[var(--dropp-border-strong)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-                >
-                  <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
-                  <span>{t.auth.signOut}</span>
-                </button>
+                <span className="text-[11px] font-semibold text-[#FF5A1F] bg-[#FF5A1F]/10 px-2.5 py-1 rounded-lg">
+                  +500 FCFA
+                </span>
               </div>
             </div>
           </section>
         ) : (
-          <section className="p-6 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-center space-y-3">
+          <section className="p-8 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-center space-y-4 shadow-xl">
             <h1 className="text-xl font-bold text-[var(--dropp-text)]">{t.profile.visitorTitle}</h1>
-            <p className="text-sm text-[var(--dropp-muted)] max-w-md mx-auto">{t.profile.visitorSubtitle}</p>
+            <p className="text-sm text-[var(--dropp-muted)] max-w-md mx-auto leading-relaxed">{t.profile.visitorSubtitle}</p>
             <button
               type="button"
               onClick={onOpenAuth}
-              className="min-h-[48px] px-6 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white font-bold text-sm transition-colors"
+              className="min-h-[48px] px-8 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white font-bold text-sm transition-colors shadow-lg shadow-[#FF5A1F]/25"
             >
               {t.profile.loginCta}
             </button>
           </section>
         )}
 
-        {/* Dynamic Profile Tabs */}
+        {/* Profile Navigation Tabs */}
         <div>
           <div className="flex border-b border-[var(--dropp-border)] overflow-x-auto no-scrollbar">
             {availableTabs.map((tabItem) => {
@@ -387,7 +377,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                   key={tabItem.id}
                   type="button"
                   onClick={() => setProfileTab(tabItem.id)}
-                  className={`flex-1 min-w-[90px] min-h-[44px] px-2 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  className={`flex-1 min-w-[100px] min-h-[44px] px-3 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap ${
                     active
                       ? 'border-[var(--dropp-accent)] text-[var(--dropp-text)]'
                       : 'border-transparent text-[var(--dropp-muted)] hover:text-[var(--dropp-text)]'
@@ -400,25 +390,28 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           </div>
 
           {effectiveTab === 'posts' && (
-            <div className="pt-3">
+            <div className="pt-4">
               {!activeShop && !session?.shopId && (
-                <div className="flex items-center gap-1.5 text-xs text-[var(--dropp-muted)] mb-3">
-                  <Bookmark className="w-3.5 h-3.5" aria-hidden="true" />
+                <div className="flex items-center gap-1.5 text-xs text-[var(--dropp-muted)] mb-3 px-1">
+                  <Bookmark className="w-3.5 h-3.5 text-[var(--dropp-accent)]" aria-hidden="true" />
                   <span>{t.profile.savedItemsTitle}</span>
                 </div>
               )}
               {shopPosts.length === 0 ? (
-                <p className="py-10 text-center text-xs text-[var(--dropp-muted)]">
-                  {activeShop ? t.profile.emptyPosts : t.profile.emptyBookmarks}
-                </p>
+                <div className="py-16 text-center space-y-2">
+                  <Bookmark className="w-8 h-8 text-[var(--dropp-muted)] mx-auto opacity-40" aria-hidden="true" />
+                  <p className="text-xs text-[var(--dropp-muted)]">
+                    {activeShop ? t.profile.emptyPosts : t.profile.emptyBookmarks}
+                  </p>
+                </div>
               ) : (
-                <div className="grid grid-cols-3 gap-1">
+                <div className="grid grid-cols-3 gap-1.5 rounded-2xl overflow-hidden">
                   {shopPosts.map((post) => (
                     <button
                       key={post.postId}
                       type="button"
                       onClick={() => onWatchPost(post.postId)}
-                      className="relative aspect-[3/4] bg-black overflow-hidden group"
+                      className="relative aspect-[3/4] bg-black overflow-hidden group rounded-xl border border-[var(--dropp-border)]"
                     >
                       <img
                         src={buildCloudinaryMediaUrl(post.posterUrl, {
@@ -427,14 +420,14 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                         })}
                         alt={post.title}
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                      <span className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/80 to-transparent pointer-events-none" aria-hidden="true" />
-                      <span className="absolute bottom-1.5 left-1.5 text-[11px] font-bold text-[#FF5A1F] drop-shadow tabular-nums">
+                      <span className="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/85 to-transparent pointer-events-none" aria-hidden="true" />
+                      <span className="absolute bottom-2 left-2 text-[11px] font-bold text-[#FF5A1F] drop-shadow tabular-nums">
                         {formatFcfa(post.priceFcfa)}
                       </span>
                       <Play
-                        className="w-4 h-4 text-white/85 absolute top-1.5 right-1.5 drop-shadow"
+                        className="w-4 h-4 text-white/90 absolute top-2 right-2 drop-shadow"
                         aria-hidden="true"
                       />
                     </button>
@@ -445,13 +438,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           )}
 
           {effectiveTab === 'products' && (
-            <div className="pt-3 space-y-2.5">
+            <div className="pt-4 space-y-3">
               {shopPosts.map((post) => (
                 <button
                   key={post.postId}
                   type="button"
                   onClick={() => onOpenProductDetail(post)}
-                  className="w-full p-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex items-center gap-3 text-left hover:border-[var(--dropp-border-strong)]"
+                  className="w-full p-3.5 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex items-center gap-3.5 text-left hover:border-[var(--dropp-border-strong)] transition-colors"
                 >
                   <img
                     src={buildCloudinaryMediaUrl(post.posterUrl, {
@@ -460,12 +453,14 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                     })}
                     alt={post.title}
                     referrerPolicy="no-referrer"
-                    className="w-14 h-16 rounded-lg object-cover shrink-0"
+                    className="w-14 h-16 rounded-xl object-cover shrink-0 bg-black"
                   />
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-semibold text-[var(--dropp-text)] truncate">{post.title}</div>
-                    <div className="text-xs text-[var(--dropp-muted)] mt-0.5 tabular-nums">
-                      <span className="font-bold text-[var(--dropp-accent)]">{formatFcfa(post.priceFcfa)}</span> · {t.feed.moqLabel} {post.moq}
+                    <div className="text-xs text-[var(--dropp-muted)] mt-1 tabular-nums flex items-center gap-2">
+                      <span className="font-bold text-[var(--dropp-accent)] text-sm">{formatFcfa(post.priceFcfa)}</span>
+                      <span>·</span>
+                      <span>{t.feed.moqLabel} {post.moq} {t.sheets.pcsUnit}</span>
                     </div>
                   </div>
                 </button>
@@ -474,61 +469,65 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           )}
 
           {effectiveTab === 'info' && (
-            <div className="pt-4 space-y-3 text-xs text-[var(--dropp-muted)]">
+            <div className="pt-4 space-y-4">
               {activeShop ? (
-                <div className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] grid grid-cols-3 gap-3 text-center">
+                <div className="p-5 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] grid grid-cols-3 gap-4 text-center">
                   <div>
-                    <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">{activeShop.rating}/5</div>
-                    <div className="text-[var(--dropp-muted)]">{t.profile.shopStatsRating}</div>
+                    <div className="text-lg font-bold text-[var(--dropp-text)] tabular-nums">{activeShop.rating}/5</div>
+                    <div className="text-xs text-[var(--dropp-muted)] mt-0.5">{t.profile.shopStatsRating}</div>
                   </div>
                   <div>
-                    <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">{activeShop.salesCount}</div>
-                    <div className="text-[var(--dropp-muted)]">{t.profile.shopStatsSales}</div>
+                    <div className="text-lg font-bold text-[var(--dropp-text)] tabular-nums">{activeShop.salesCount}</div>
+                    <div className="text-xs text-[var(--dropp-muted)] mt-0.5">{t.profile.shopStatsSales}</div>
                   </div>
                   <div>
-                    <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">{activeShop.responseRate}%</div>
-                    <div className="text-[var(--dropp-muted)]">{t.profile.shopStatsResponse}</div>
+                    <div className="text-lg font-bold text-[var(--dropp-text)] tabular-nums">{activeShop.responseRate}%</div>
+                    <div className="text-xs text-[var(--dropp-muted)] mt-0.5">{t.profile.shopStatsResponse}</div>
                   </div>
                 </div>
               ) : (
-                <p className="text-[var(--dropp-muted)]">{t.tagline}</p>
+                <div className="p-5 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-center text-xs text-[var(--dropp-muted)]">
+                  {t.tagline}
+                </div>
               )}
             </div>
           )}
 
           {!activeShop && session && (effectiveTab === 'orders' || effectiveTab === 'wallet' || effectiveTab === 'notifs') && (
-            <WalletAndOrdersPanel
-              t={t}
-              section={effectiveTab}
-              session={session}
-              isOnline={isOnline}
-              orders={orders}
-              transactions={transactions}
-              notifications={notifications}
-              notifPrefs={notifPrefs}
-              appRating={appRating}
-              onCancelOrder={onCancelOrder}
-              onConfirmDelivery={onConfirmDelivery}
-              onOpenDispute={onOpenDispute}
-              onRateOrder={onRateOrder}
-              onReorder={onReorder}
-              onOpenCart={onOpenCart}
-              onDeposit={onDeposit}
-              onWithdraw={onWithdraw}
-              onToggleNotifPref={onToggleNotifPref}
-              onMarkAllNotifsRead={onMarkAllNotifsRead}
-              onApplyReferralCode={onApplyReferralCode}
-              onSubmitAppRating={onSubmitAppRating}
-            />
+            <div className="pt-4">
+              <WalletAndOrdersPanel
+                t={t}
+                section={effectiveTab}
+                session={session}
+                isOnline={isOnline}
+                orders={orders}
+                transactions={transactions}
+                notifications={notifications}
+                notifPrefs={notifPrefs}
+                appRating={appRating}
+                onCancelOrder={onCancelOrder}
+                onConfirmDelivery={onConfirmDelivery}
+                onOpenDispute={onOpenDispute}
+                onRateOrder={onRateOrder}
+                onReorder={onReorder}
+                onOpenCart={onOpenCart}
+                onDeposit={onDeposit}
+                onWithdraw={onWithdraw}
+                onToggleNotifPref={onToggleNotifPref}
+                onMarkAllNotifsRead={onMarkAllNotifsRead}
+                onApplyReferralCode={onApplyReferralCode}
+                onSubmitAppRating={onSubmitAppRating}
+              />
+            </div>
           )}
         </div>
 
-        {/* Network, Theme, PWA Install & Language Preferences */}
-        <section className="pt-4 border-t border-[var(--dropp-border)] space-y-3">
+        {/* App Settings & Preferences */}
+        <section className="pt-6 border-t border-[var(--dropp-border)] space-y-3.5">
           <h2 className="text-sm font-semibold text-[var(--dropp-text)]">{t.profile.settingsTitle}</h2>
 
-          {/* Theme Switcher (Dark default | Light | Auto) */}
-          <div className="flex flex-wrap items-center justify-between gap-2 p-3.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)]">
+          {/* Theme Switcher */}
+          <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)]">
             <div className="flex items-center gap-3">
               {themePref === 'light' ? (
                 <Sun className="w-4 h-4 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
@@ -539,7 +538,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
               )}
               <span className="text-xs font-semibold text-[var(--dropp-text)]">{t.profile.themeLabel}</span>
             </div>
-            <div className="flex items-center gap-1 p-1 rounded-lg bg-[var(--dropp-bg)] border border-[var(--dropp-border)]">
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--dropp-bg)] border border-[var(--dropp-border)]">
               {(
                 [
                   { id: 'dark' as const, label: t.profile.themeDark, Icon: Moon },
@@ -554,7 +553,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                     type="button"
                     aria-pressed={active}
                     onClick={() => onChangeTheme(id)}
-                    className={`px-2.5 py-1.5 rounded-md text-xs font-semibold inline-flex items-center gap-1.5 transition-colors ${
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-colors ${
                       active
                         ? 'bg-[var(--dropp-text)] text-[var(--dropp-bg)]'
                         : 'text-[var(--dropp-muted)] hover:text-[var(--dropp-text)]'
@@ -568,12 +567,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-3.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)]">
+          {/* Data Saver */}
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)]">
             <div className="flex items-center gap-3">
               <Zap className="w-4 h-4 text-[#F5A524] shrink-0" aria-hidden="true" />
               <div>
                 <div className="text-xs font-semibold text-[var(--dropp-text)]">{t.network.dataSaverLabel}</div>
-                <div className="text-[11px] text-[var(--dropp-muted)]">{t.network.dataSaverHint}</div>
+                <div className="text-[11px] text-[var(--dropp-muted)] mt-0.5">{t.network.dataSaverHint}</div>
               </div>
             </div>
             <button
@@ -594,18 +594,19 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             </button>
           </div>
 
-          <div className="flex items-center justify-between p-3.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)]">
+          {/* Language Selector */}
+          <div className="flex items-center justify-between p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)]">
             <div className="flex items-center gap-3">
               <Globe className="w-4 h-4 text-[var(--dropp-muted)] shrink-0" aria-hidden="true" />
               <span className="text-xs font-semibold text-[var(--dropp-text)]">{t.profile.languageLabel}</span>
             </div>
-            <div className="flex items-center gap-1 p-1 rounded-lg bg-[var(--dropp-bg)] border border-[var(--dropp-border)]">
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--dropp-bg)] border border-[var(--dropp-border)]">
               {(['fr', 'en'] as const).map((code) => (
                 <button
                   key={code}
                   type="button"
                   onClick={() => onChangeLang(code)}
-                  className={`px-3 py-1.5 rounded-md text-xs font-semibold uppercase ${
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold uppercase transition-colors ${
                     lang === code
                       ? 'bg-[var(--dropp-text)] text-[var(--dropp-bg)]'
                       : 'text-[var(--dropp-muted)] hover:text-[var(--dropp-text)]'
@@ -621,7 +622,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             <button
               type="button"
               onClick={() => (pwaIsIOS ? setShowIosGuide(true) : onInstallPwa())}
-              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] text-[var(--dropp-text)] text-xs font-semibold flex items-center justify-center gap-2 hover:bg-[var(--dropp-surface-alt)] transition-colors"
+              className="w-full min-h-[48px] rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] text-[var(--dropp-text)] text-xs font-semibold flex items-center justify-center gap-2 hover:bg-[var(--dropp-surface-alt)] transition-colors shadow-sm"
             >
               <Download className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
               <span>{t.actions.installApp}</span>
@@ -639,15 +640,15 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
             role="dialog"
             aria-modal="true"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm rounded-2xl bg-[var(--dropp-elevated)] border border-[var(--dropp-border)] p-5 space-y-3"
+            className="w-full max-w-sm rounded-3xl bg-[var(--dropp-elevated)] border border-[var(--dropp-border)] p-6 space-y-3.5 shadow-2xl"
           >
             <h3 className="text-base font-bold text-[var(--dropp-text)]">{t.actions.installIosTitle}</h3>
-            <p className="text-xs text-[var(--dropp-muted)]">{t.actions.installIosStep1}</p>
-            <p className="text-xs text-[var(--dropp-muted)]">{t.actions.installIosStep2}</p>
+            <p className="text-xs text-[var(--dropp-muted)] leading-relaxed">{t.actions.installIosStep1}</p>
+            <p className="text-xs text-[var(--dropp-muted)] leading-relaxed">{t.actions.installIosStep2}</p>
             <button
               type="button"
               onClick={() => setShowIosGuide(false)}
-              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] text-xs font-semibold"
+              className="w-full min-h-[48px] rounded-xl bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] text-xs font-bold"
             >
               {t.actions.close}
             </button>
