@@ -1,0 +1,888 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Core Primitives
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isVerifiedUser() && (
+        request.auth.token.email == 'yvanfloriansidioboutchouang@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidCategory(cat) {
+      return cat in ['Mode', 'Électronique', 'Beauté', 'Alimentation', 'Maison', 'Autre'];
+    }
+
+    // Entity Validation Blueprints
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'displayName', 'role', 'vendorStatus', 'isCertified', 'city', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'role', 'vendorStatus', 'isCertified', 'city', 'neighborhood', 'avatarUrl', 'bio', 'followersCount', 'followingCount', 'likesCount', 'referralCode', 'referredByCode', 'createdAt', 'updatedAt'])
+        && isValidId(data.uid)
+        && data.displayName is string && data.displayName.size() >= 2 && data.displayName.size() <= 80
+        && data.role in ['client', 'vendor', 'admin']
+        && data.vendorStatus in ['none', 'pending', 'approved', 'rejected', 'suspended']
+        && data.isCertified is bool
+        && data.city is string && data.city.size() >= 2 && data.city.size() <= 60
+        && (!('neighborhood' in data) || (data.neighborhood is string && data.neighborhood.size() <= 80))
+        && (!('avatarUrl' in data) || (data.avatarUrl is string && data.avatarUrl.size() <= 500))
+        && (!('bio' in data) || (data.bio is string && data.bio.size() <= 240))
+        && (!('followersCount' in data) || (data.followersCount is number && data.followersCount >= 0))
+        && (!('followingCount' in data) || (data.followingCount is number && data.followingCount >= 0))
+        && (!('likesCount' in data) || (data.likesCount is number && data.likesCount >= 0))
+        && (!('referralCode' in data) || (data.referralCode is string && data.referralCode.size() >= 6 && data.referralCode.size() <= 24))
+        && (!('referredByCode' in data) || (data.referredByCode is string && data.referredByCode.size() >= 6 && data.referredByCode.size() <= 24))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidUserPrivateInfo(data) {
+      return data.keys().hasAll(['uid', 'email', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'phone', 'address', 'updatedAt'])
+        && isValidId(data.uid)
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 160
+        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 32))
+        && (!('address' in data) || (data.address is string && data.address.size() <= 240))
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidWallet(data) {
+      return data.keys().hasAll(['userId', 'availableFcfa', 'pendingFcfa', 'referralFcfa', 'updatedAt'])
+        && data.keys().hasOnly(['userId', 'availableFcfa', 'pendingFcfa', 'referralFcfa', 'updatedAt'])
+        && isValidId(data.userId)
+        && data.availableFcfa is number && data.availableFcfa >= 0
+        && data.pendingFcfa is number && data.pendingFcfa >= 0
+        && data.referralFcfa is number && data.referralFcfa >= 0
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidWalletTransaction(data) {
+      return data.keys().hasAll(['txId', 'userId', 'type', 'amountFcfa', 'methodLabel', 'status', 'createdAt'])
+        && data.keys().hasOnly(['txId', 'userId', 'type', 'amountFcfa', 'methodLabel', 'referenceId', 'status', 'createdAt'])
+        && isValidId(data.txId)
+        && isValidId(data.userId)
+        && data.type in ['deposit', 'withdrawal', 'escrow_hold', 'escrow_release', 'refund', 'referral_bonus']
+        && data.amountFcfa is number
+        && data.methodLabel is string && data.methodLabel.size() >= 2 && data.methodLabel.size() <= 80
+        && (!('referenceId' in data) || (data.referenceId is string && data.referenceId.size() <= 128))
+        && data.status in ['completed', 'failed']
+        && data.createdAt is timestamp;
+    }
+
+    function isValidShop(data) {
+      return data.keys().hasAll(['shopId', 'ownerId', 'name', 'city', 'category', 'isCertified', 'vendorStatus', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['shopId', 'ownerId', 'name', 'city', 'neighborhood', 'category', 'isCertified', 'isPremium', 'vendorStatus', 'rating', 'salesCount', 'responseRate', 'followersCount', 'likesCount', 'avatarUrl', 'bio', 'hasActiveStory', 'storyPreviewText', 'storyMediaUrl', 'createdAt', 'updatedAt'])
+        && isValidId(data.shopId)
+        && isValidId(data.ownerId)
+        && data.name is string && data.name.size() >= 2 && data.name.size() <= 80
+        && data.city is string && data.city.size() >= 2 && data.city.size() <= 60
+        && (!('neighborhood' in data) || (data.neighborhood is string && data.neighborhood.size() <= 80))
+        && isValidCategory(data.category)
+        && data.isCertified is bool
+        && (!('isPremium' in data) || data.isPremium is bool)
+        && data.vendorStatus in ['pending', 'approved', 'rejected', 'suspended']
+        && (!('rating' in data) || (data.rating is number && data.rating >= 0 && data.rating <= 5))
+        && (!('salesCount' in data) || (data.salesCount is number && data.salesCount >= 0))
+        && (!('responseRate' in data) || (data.responseRate is number && data.responseRate >= 0 && data.responseRate <= 100))
+        && (!('followersCount' in data) || (data.followersCount is number && data.followersCount >= 0))
+        && (!('likesCount' in data) || (data.likesCount is number && data.likesCount >= 0))
+        && (!('avatarUrl' in data) || (data.avatarUrl is string && data.avatarUrl.size() <= 500))
+        && (!('bio' in data) || (data.bio is string && data.bio.size() <= 280))
+        && (!('hasActiveStory' in data) || data.hasActiveStory is bool)
+        && (!('storyPreviewText' in data) || (data.storyPreviewText is string && data.storyPreviewText.size() <= 240))
+        && (!('storyMediaUrl' in data) || (data.storyMediaUrl is string && data.storyMediaUrl.size() <= 500))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidKycApplication(data) {
+      return data.keys().hasAll(['applicationId', 'userId', 'shopName', 'city', 'category', 'cniNumber', 'cniFrontUrl', 'cniBackUrl', 'selfieUrl', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['applicationId', 'userId', 'shopName', 'city', 'neighborhood', 'category', 'cniNumber', 'cniFrontUrl', 'cniBackUrl', 'selfieUrl', 'status', 'rejectionReason', 'createdAt', 'updatedAt'])
+        && isValidId(data.applicationId)
+        && isValidId(data.userId)
+        && data.shopName is string && data.shopName.size() >= 2 && data.shopName.size() <= 80
+        && data.city in ['Douala', 'Yaoundé']
+        && (!('neighborhood' in data) || (data.neighborhood is string && data.neighborhood.size() <= 80))
+        && isValidCategory(data.category)
+        && data.cniNumber is string && data.cniNumber.size() >= 5 && data.cniNumber.size() <= 40
+        && data.cniFrontUrl is string && data.cniFrontUrl.size() >= 1 && data.cniFrontUrl.size() <= 500
+        && data.cniBackUrl is string && data.cniBackUrl.size() >= 1 && data.cniBackUrl.size() <= 500
+        && data.selfieUrl is string && data.selfieUrl.size() >= 1 && data.selfieUrl.size() <= 500
+        && data.status in ['pending', 'approved', 'rejected']
+        && (!('rejectionReason' in data) || (data.rejectionReason is string && data.rejectionReason.size() <= 240))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidFeedPost(data) {
+      return data.keys().hasAll(['postId', 'shopId', 'ownerId', 'shopName', 'shopCertified', 'city', 'title', 'description', 'category', 'mediaType', 'posterUrl', 'priceFcfa', 'moq', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['postId', 'shopId', 'ownerId', 'shopName', 'shopCertified', 'city', 'neighborhood', 'title', 'description', 'category', 'mediaType', 'videoUrl', 'posterUrl', 'priceFcfa', 'promoPercent', 'moq', 'likesCount', 'commentsCount', 'bookmarksCount', 'sharesCount', 'status', 'createdAt', 'updatedAt'])
+        && isValidId(data.postId)
+        && isValidId(data.shopId)
+        && isValidId(data.ownerId)
+        && data.shopName is string && data.shopName.size() >= 2 && data.shopName.size() <= 80
+        && data.shopCertified is bool
+        && data.city is string && data.city.size() >= 2 && data.city.size() <= 60
+        && (!('neighborhood' in data) || (data.neighborhood is string && data.neighborhood.size() <= 80))
+        && data.title is string && data.title.size() >= 3 && data.title.size() <= 120
+        && data.description is string && data.description.size() >= 3 && data.description.size() <= 500
+        && isValidCategory(data.category)
+        && data.mediaType in ['video', 'carousel']
+        && (!('videoUrl' in data) || (data.videoUrl is string && data.videoUrl.size() <= 500))
+        && data.posterUrl is string && data.posterUrl.size() >= 1 && data.posterUrl.size() <= 500
+        && data.priceFcfa is number && data.priceFcfa > 0
+        && (!('promoPercent' in data) || (data.promoPercent is number && data.promoPercent >= 0 && data.promoPercent <= 90))
+        && data.moq is number && data.moq >= 1
+        && (!('likesCount' in data) || (data.likesCount is number && data.likesCount >= 0))
+        && (!('commentsCount' in data) || (data.commentsCount is number && data.commentsCount >= 0))
+        && (!('bookmarksCount' in data) || (data.bookmarksCount is number && data.bookmarksCount >= 0))
+        && (!('sharesCount' in data) || (data.sharesCount is number && data.sharesCount >= 0))
+        && data.status in ['published', 'pending', 'rejected']
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidComment(data) {
+      return data.keys().hasAll(['commentId', 'postId', 'authorId', 'authorName', 'text', 'status', 'createdAt'])
+        && data.keys().hasOnly(['commentId', 'postId', 'authorId', 'authorName', 'text', 'status', 'createdAt'])
+        && isValidId(data.commentId)
+        && isValidId(data.postId)
+        && isValidId(data.authorId)
+        && data.authorName is string && data.authorName.size() >= 1 && data.authorName.size() <= 80
+        && data.text is string && data.text.size() >= 1 && data.text.size() <= 400
+        && data.status in ['visible', 'hidden']
+        && data.createdAt is timestamp;
+    }
+
+    function isValidReview(data) {
+      return data.keys().hasAll(['reviewId', 'postId', 'authorId', 'authorName', 'rating', 'comment', 'createdAt'])
+        && data.keys().hasOnly(['reviewId', 'postId', 'authorId', 'authorName', 'rating', 'comment', 'createdAt'])
+        && isValidId(data.reviewId)
+        && isValidId(data.postId)
+        && isValidId(data.authorId)
+        && data.authorName is string && data.authorName.size() >= 1 && data.authorName.size() <= 80
+        && data.rating is number && data.rating >= 1 && data.rating <= 5
+        && data.comment is string && data.comment.size() >= 2 && data.comment.size() <= 500
+        && data.createdAt is timestamp;
+    }
+
+    function isValidPostLike(data) {
+      return data.keys().hasAll(['userId', 'postId', 'createdAt'])
+        && data.keys().hasOnly(['userId', 'postId', 'createdAt'])
+        && isValidId(data.userId)
+        && isValidId(data.postId)
+        && data.createdAt is timestamp;
+    }
+
+    function isValidBookmark(data) {
+      return data.keys().hasAll(['userId', 'postId', 'createdAt'])
+        && data.keys().hasOnly(['userId', 'postId', 'createdAt'])
+        && isValidId(data.userId)
+        && isValidId(data.postId)
+        && data.createdAt is timestamp;
+    }
+
+    function isValidFollowing(data) {
+      return data.keys().hasAll(['userId', 'shopId', 'createdAt'])
+        && data.keys().hasOnly(['userId', 'shopId', 'createdAt'])
+        && isValidId(data.userId)
+        && isValidId(data.shopId)
+        && data.createdAt is timestamp;
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll(['orderId', 'globalOrderId', 'buyerId', 'shopId', 'vendorOwnerId', 'subtotalFcfa', 'shippingFeeFcfa', 'totalFcfa', 'paymentMethod', 'escrowStatus', 'status', 'deliveryCity', 'deliveryNeighborhood', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['orderId', 'globalOrderId', 'buyerId', 'shopId', 'vendorOwnerId', 'subtotalFcfa', 'shippingFeeFcfa', 'totalFcfa', 'paymentMethod', 'escrowStatus', 'status', 'deliveryCity', 'deliveryNeighborhood', 'rated', 'disputeId', 'createdAt', 'updatedAt'])
+        && isValidId(data.orderId)
+        && isValidId(data.globalOrderId)
+        && isValidId(data.buyerId)
+        && isValidId(data.shopId)
+        && isValidId(data.vendorOwnerId)
+        && data.subtotalFcfa is number && data.subtotalFcfa > 0
+        && data.shippingFeeFcfa is number && data.shippingFeeFcfa >= 0
+        && data.totalFcfa is number && data.totalFcfa == data.subtotalFcfa + data.shippingFeeFcfa
+        && data.paymentMethod in ['wallet', 'mtn_momo', 'orange_money']
+        && data.escrowStatus in ['held', 'released', 'refunded', 'disputed']
+        && data.status in ['awaiting_payment', 'pending', 'confirmed', 'delivering', 'delivered', 'cancelled', 'disputed']
+        && data.deliveryCity is string && data.deliveryCity.size() >= 2 && data.deliveryCity.size() <= 60
+        && data.deliveryNeighborhood is string && data.deliveryNeighborhood.size() >= 2 && data.deliveryNeighborhood.size() <= 80
+        && (!('rated' in data) || data.rated is bool)
+        && (!('disputeId' in data) || isValidId(data.disputeId))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidDispute(data) {
+      return data.keys().hasAll(['disputeId', 'orderId', 'buyerId', 'shopId', 'vendorOwnerId', 'reason', 'amountHeldFcfa', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['disputeId', 'orderId', 'buyerId', 'shopId', 'vendorOwnerId', 'reason', 'amountHeldFcfa', 'status', 'resolutionNote', 'createdAt', 'updatedAt'])
+        && isValidId(data.disputeId)
+        && isValidId(data.orderId)
+        && isValidId(data.buyerId)
+        && isValidId(data.shopId)
+        && isValidId(data.vendorOwnerId)
+        && data.reason is string && data.reason.size() >= 4 && data.reason.size() <= 500
+        && data.amountHeldFcfa is number && data.amountHeldFcfa > 0
+        && data.status in ['open', 'resolved_buyer', 'resolved_vendor']
+        && (!('resolutionNote' in data) || (data.resolutionNote is string && data.resolutionNote.size() <= 400))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidConversation(data) {
+      return data.keys().hasAll(['conversationId', 'buyerId', 'shopId', 'vendorOwnerId', 'updatedAt'])
+        && data.keys().hasOnly(['conversationId', 'buyerId', 'shopId', 'vendorOwnerId', 'lastMessageText', 'updatedAt'])
+        && isValidId(data.conversationId)
+        && isValidId(data.buyerId)
+        && isValidId(data.shopId)
+        && isValidId(data.vendorOwnerId)
+        && (!('lastMessageText' in data) || (data.lastMessageText is string && data.lastMessageText.size() <= 400))
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidChatMessage(data) {
+      return data.keys().hasAll(['messageId', 'conversationId', 'senderId', 'buyerId', 'vendorOwnerId', 'kind', 'text', 'createdAt'])
+        && data.keys().hasOnly(['messageId', 'conversationId', 'senderId', 'buyerId', 'vendorOwnerId', 'kind', 'text', 'offerStatus', 'createdAt'])
+        && isValidId(data.messageId)
+        && isValidId(data.conversationId)
+        && isValidId(data.senderId)
+        && isValidId(data.buyerId)
+        && isValidId(data.vendorOwnerId)
+        && data.kind in ['text', 'image', 'video', 'file', 'location', 'offer']
+        && data.text is string && data.text.size() <= 1000
+        && (!('offerStatus' in data) || data.offerStatus in ['pending', 'accepted', 'declined'])
+        && data.createdAt is timestamp;
+    }
+
+    function isValidRfq(data) {
+      return data.keys().hasAll(['rfqId', 'buyerId', 'title', 'description', 'category', 'quantity', 'budgetFcfa', 'deadlineDays', 'city', 'status', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['rfqId', 'buyerId', 'title', 'description', 'category', 'quantity', 'budgetFcfa', 'deadlineDays', 'city', 'status', 'createdAt', 'updatedAt'])
+        && isValidId(data.rfqId)
+        && isValidId(data.buyerId)
+        && data.title is string && data.title.size() >= 3 && data.title.size() <= 120
+        && data.description is string && data.description.size() >= 4 && data.description.size() <= 600
+        && isValidCategory(data.category)
+        && data.quantity is number && data.quantity >= 1
+        && data.budgetFcfa is number && data.budgetFcfa >= 1000
+        && data.deadlineDays is number && data.deadlineDays >= 1
+        && data.city is string && data.city.size() >= 2 && data.city.size() <= 60
+        && data.status in ['open', 'awarded', 'closed']
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidRfqOffer(data) {
+      return data.keys().hasAll(['offerId', 'rfqId', 'buyerId', 'shopId', 'vendorOwnerId', 'unitPriceFcfa', 'deliveryDays', 'message', 'status', 'createdAt'])
+        && data.keys().hasOnly(['offerId', 'rfqId', 'buyerId', 'shopId', 'vendorOwnerId', 'unitPriceFcfa', 'deliveryDays', 'message', 'status', 'createdAt'])
+        && isValidId(data.offerId)
+        && isValidId(data.rfqId)
+        && isValidId(data.buyerId)
+        && isValidId(data.shopId)
+        && isValidId(data.vendorOwnerId)
+        && data.unitPriceFcfa is number && data.unitPriceFcfa > 0
+        && data.deliveryDays is number && data.deliveryDays >= 1
+        && data.message is string && data.message.size() >= 2 && data.message.size() <= 400
+        && data.status in ['pending', 'accepted', 'declined']
+        && data.createdAt is timestamp;
+    }
+
+    // Connection Validation Doc
+    match /test/{docId} {
+      allow get: if docId == 'connection';
+    }
+
+    // Admin Markers
+    match /admins/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+      allow create, update, delete: if isValidId(userId) && isAdmin();
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin() || (isSignedIn() && resource.data.uid == request.auth.uid);
+
+      allow create: if isSignedIn()
+        && isValidId(userId)
+        && isValidUserProfile(incoming())
+        && incoming().uid == userId
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && (
+          isAdmin() || (
+            isOwner(userId)
+            && incoming().role == 'client'
+            && incoming().vendorStatus == 'none'
+            && incoming().isCertified == false
+          )
+        );
+
+      allow update: if isSignedIn()
+        && isValidId(userId)
+        && isValidUserProfile(incoming())
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          isAdmin() || (
+            isOwner(userId)
+            && incoming().role == existing().role
+            && incoming().vendorStatus == existing().vendorStatus
+            && incoming().isCertified == existing().isCertified
+            && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'city', 'neighborhood', 'avatarUrl', 'bio', 'referredByCode', 'updatedAt'])
+          )
+        );
+
+      allow delete: if isValidId(userId) && isAdmin();
+
+      // Isolated Private PII
+      match /private/{docId} {
+        allow get: if isValidId(userId) && isValidId(docId) && (isOwner(userId) || isAdmin());
+        allow list: if isOwner(userId) || isAdmin();
+        allow create: if isSignedIn()
+          && isValidId(userId)
+          && isValidId(docId)
+          && isValidUserPrivateInfo(incoming())
+          && (isOwner(userId) || isAdmin())
+          && incoming().uid == userId
+          && incoming().updatedAt == request.time;
+        allow update: if isSignedIn()
+          && isValidId(userId)
+          && isValidId(docId)
+          && isValidUserPrivateInfo(incoming())
+          && (isOwner(userId) || isAdmin())
+          && incoming().uid == existing().uid
+          && incoming().updatedAt == request.time
+          && incoming().diff(existing()).affectedKeys().hasOnly(['email', 'phone', 'address', 'updatedAt']);
+        allow delete: if isValidId(userId) && isValidId(docId) && isAdmin();
+      }
+
+      // User Bookmarks
+      match /bookmarks/{postId} {
+        allow get: if isValidId(userId) && isValidId(postId) && isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isSignedIn()
+          && isValidId(userId)
+          && isValidId(postId)
+          && isOwner(userId)
+          && isValidBookmark(incoming())
+          && incoming().userId == userId
+          && incoming().postId == postId
+          && incoming().createdAt == request.time;
+        allow delete: if isValidId(userId) && isValidId(postId) && isOwner(userId);
+      }
+
+      // User Following
+      match /following/{shopId} {
+        allow get: if isValidId(userId) && isValidId(shopId) && isOwner(userId);
+        allow list: if isOwner(userId);
+        allow create: if isSignedIn()
+          && isValidId(userId)
+          && isValidId(shopId)
+          && isOwner(userId)
+          && isValidFollowing(incoming())
+          && incoming().userId == userId
+          && incoming().shopId == shopId
+          && incoming().createdAt == request.time;
+        allow delete: if isValidId(userId) && isValidId(shopId) && isOwner(userId);
+      }
+    }
+
+    // Wallets Collection (Owner Read-Only, Admin Controlled)
+    match /wallets/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+      allow create, update, delete: if isValidId(userId) && isAdmin() && isValidWallet(incoming());
+    }
+
+    // Wallet Transactions (Owner Read-Only, Admin Controlled)
+    match /walletTransactions/{txId} {
+      allow get: if isValidId(txId) && (isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid));
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create, update, delete: if isValidId(txId) && isAdmin() && isValidWalletTransaction(incoming());
+    }
+
+    // Vendor KYC Applications (Strict PII & CNI isolation)
+    match /kycApplications/{applicationId} {
+      allow get: if isValidId(applicationId) && (isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid));
+      allow list: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+
+      allow create: if isVerifiedUser()
+        && isValidId(applicationId)
+        && isValidKycApplication(incoming())
+        && incoming().applicationId == applicationId
+        && incoming().userId == request.auth.uid
+        && incoming().status == 'pending'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+
+      allow update: if isVerifiedUser()
+        && isValidId(applicationId)
+        && isValidKycApplication(incoming())
+        && incoming().applicationId == existing().applicationId
+        && incoming().userId == existing().userId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          isAdmin() || (
+            existing().userId == request.auth.uid
+            && existing().status == 'rejected'
+            && incoming().status == 'pending'
+            && incoming().diff(existing()).affectedKeys().hasOnly(['shopName', 'city', 'neighborhood', 'category', 'cniNumber', 'cniFrontUrl', 'cniBackUrl', 'selfieUrl', 'status', 'updatedAt'])
+          )
+        );
+
+      allow delete: if isValidId(applicationId) && isAdmin();
+    }
+
+    // Shops Collection
+    match /shops/{shopId} {
+      allow get: if isValidId(shopId) && (
+        resource.data.vendorStatus == 'approved' ||
+        (isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin()))
+      );
+      allow list: if resource.data.vendorStatus == 'approved' || (isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin()));
+
+      allow create: if isSignedIn()
+        && isValidId(shopId)
+        && isValidShop(incoming())
+        && incoming().shopId == shopId
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && (
+          isAdmin() || (
+            incoming().ownerId == request.auth.uid
+            && incoming().vendorStatus == 'pending'
+            && incoming().isCertified == false
+          )
+        );
+
+      allow update: if isSignedIn()
+        && isValidId(shopId)
+        && isValidShop(incoming())
+        && incoming().shopId == existing().shopId
+        && incoming().ownerId == existing().ownerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          isAdmin() || (
+            existing().ownerId == request.auth.uid
+            && incoming().vendorStatus == existing().vendorStatus
+            && incoming().isCertified == existing().isCertified
+            && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'city', 'neighborhood', 'bio', 'avatarUrl', 'hasActiveStory', 'storyPreviewText', 'storyMediaUrl', 'updatedAt'])
+          )
+        );
+
+      allow delete: if isValidId(shopId) && isAdmin();
+    }
+
+    // Feed Posts Collection
+    match /posts/{postId} {
+      allow get: if isValidId(postId) && (
+        resource.data.status == 'published' ||
+        (isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin()))
+      );
+      allow list: if resource.data.status == 'published' || (isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin()));
+
+      allow create: if isSignedIn()
+        && isValidId(postId)
+        && isValidFeedPost(incoming())
+        && incoming().postId == postId
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && exists(/databases/$(database)/documents/shops/$(incoming().shopId))
+        && (
+          isAdmin() || (
+            incoming().ownerId == request.auth.uid
+            && get(/databases/$(database)/documents/shops/$(incoming().shopId)).data.ownerId == request.auth.uid
+            && get(/databases/$(database)/documents/shops/$(incoming().shopId)).data.vendorStatus == 'approved'
+          )
+        );
+
+      allow update: if isSignedIn()
+        && isValidId(postId)
+        && isValidFeedPost(incoming())
+        && incoming().postId == existing().postId
+        && incoming().shopId == existing().shopId
+        && incoming().ownerId == existing().ownerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && existing().status != 'rejected'
+        && (
+          isAdmin() || (
+            existing().ownerId == request.auth.uid
+            && incoming().status == existing().status
+            && incoming().diff(existing()).affectedKeys().hasOnly(['title', 'description', 'priceFcfa', 'promoPercent', 'moq', 'updatedAt'])
+          )
+        );
+
+      allow delete: if isValidId(postId) && (isAdmin() || (isSignedIn() && resource.data.ownerId == request.auth.uid));
+
+      // Post Comments
+      match /comments/{commentId} {
+        allow get: if isValidId(postId) && isValidId(commentId) && (
+          resource.data.status == 'visible' ||
+          (isSignedIn() && (resource.data.authorId == request.auth.uid || isAdmin()))
+        );
+        allow list: if resource.data.status == 'visible' || (isSignedIn() && (resource.data.authorId == request.auth.uid || isAdmin()));
+
+        allow create: if isSignedIn()
+          && isValidId(postId)
+          && isValidId(commentId)
+          && isValidComment(incoming())
+          && incoming().commentId == commentId
+          && incoming().postId == postId
+          && incoming().authorId == request.auth.uid
+          && incoming().status == 'visible'
+          && incoming().createdAt == request.time
+          && exists(/databases/$(database)/documents/posts/$(postId));
+
+        allow update: if isSignedIn()
+          && isValidId(postId)
+          && isValidId(commentId)
+          && isValidComment(incoming())
+          && isAdmin();
+
+        allow delete: if isValidId(postId) && isValidId(commentId) && (isAdmin() || (isSignedIn() && resource.data.authorId == request.auth.uid));
+      }
+
+      // Product Reviews
+      match /reviews/{reviewId} {
+        allow get: if isValidId(postId) && isValidId(reviewId);
+        allow list: if isValidId(postId) && resource.data.postId == postId;
+
+        allow create: if isSignedIn()
+          && isValidId(postId)
+          && isValidId(reviewId)
+          && isValidReview(incoming())
+          && incoming().reviewId == reviewId
+          && incoming().postId == postId
+          && incoming().authorId == request.auth.uid
+          && incoming().createdAt == request.time
+          && exists(/databases/$(database)/documents/posts/$(postId));
+
+        allow delete: if isValidId(postId) && isValidId(reviewId) && (isAdmin() || (isSignedIn() && resource.data.authorId == request.auth.uid));
+      }
+
+      // Post Likes
+      match /likes/{userId} {
+        allow get: if isValidId(postId) && isValidId(userId) && isOwner(userId);
+        allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+        allow create: if isSignedIn()
+          && isValidId(postId)
+          && isValidId(userId)
+          && isOwner(userId)
+          && isValidPostLike(incoming())
+          && incoming().userId == userId
+          && incoming().postId == postId
+          && incoming().createdAt == request.time
+          && exists(/databases/$(database)/documents/posts/$(postId));
+        allow delete: if isValidId(postId) && isValidId(userId) && isOwner(userId);
+      }
+    }
+
+    // Orders Collection (Buyer + Vendor Owner + Admin)
+    match /orders/{orderId} {
+      allow get: if isValidId(orderId) && isSignedIn() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.vendorOwnerId == request.auth.uid ||
+        isAdmin()
+      );
+      allow list: if isSignedIn() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.vendorOwnerId == request.auth.uid ||
+        isAdmin()
+      );
+
+      allow create: if isVerifiedUser()
+        && isValidId(orderId)
+        && isValidOrder(incoming())
+        && incoming().orderId == orderId
+        && incoming().buyerId == request.auth.uid
+        && incoming().escrowStatus == 'held'
+        && incoming().status in ['awaiting_payment', 'pending']
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && exists(/databases/$(database)/documents/shops/$(incoming().shopId))
+        && get(/databases/$(database)/documents/shops/$(incoming().shopId)).data.ownerId == incoming().vendorOwnerId;
+
+      allow update: if isVerifiedUser()
+        && isValidId(orderId)
+        && isValidOrder(incoming())
+        && incoming().orderId == existing().orderId
+        && incoming().globalOrderId == existing().globalOrderId
+        && incoming().buyerId == existing().buyerId
+        && incoming().shopId == existing().shopId
+        && incoming().vendorOwnerId == existing().vendorOwnerId
+        && incoming().totalFcfa == existing().totalFcfa
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && existing().status != 'cancelled'
+        && (
+          isAdmin() ||
+          // Buyer cancels before vendor confirmation
+          (
+            existing().buyerId == request.auth.uid
+            && existing().status in ['awaiting_payment', 'pending']
+            && incoming().status == 'cancelled'
+            && incoming().escrowStatus == 'refunded'
+            && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'escrowStatus', 'updatedAt'])
+          ) ||
+          // Buyer confirms receipt -> releases escrow
+          (
+            existing().buyerId == request.auth.uid
+            && existing().status in ['delivering', 'delivered']
+            && existing().escrowStatus == 'held'
+            && incoming().status == 'delivered'
+            && incoming().escrowStatus == 'released'
+            && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'escrowStatus', 'updatedAt'])
+          ) ||
+          // Buyer opens dispute
+          (
+            existing().buyerId == request.auth.uid
+            && existing().status == 'delivered'
+            && existing().escrowStatus == 'held'
+            && incoming().status == 'disputed'
+            && incoming().escrowStatus == 'disputed'
+            && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'escrowStatus', 'disputeId', 'updatedAt'])
+          ) ||
+          // Buyer rates delivered order
+          (
+            existing().buyerId == request.auth.uid
+            && existing().status == 'delivered'
+            && incoming().rated == true
+            && incoming().diff(existing()).affectedKeys().hasOnly(['rated', 'updatedAt'])
+          ) ||
+          // Vendor advances order fulfillment (never touches escrowStatus)
+          (
+            existing().vendorOwnerId == request.auth.uid
+            && existing().status in ['pending', 'confirmed', 'delivering']
+            && incoming().status in ['confirmed', 'delivering', 'delivered', 'cancelled']
+            && incoming().escrowStatus == existing().escrowStatus
+            && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt'])
+          )
+        );
+
+      allow delete: if isValidId(orderId) && isAdmin();
+    }
+
+    // Disputes Collection
+    match /disputes/{disputeId} {
+      allow get: if isValidId(disputeId) && isSignedIn() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.vendorOwnerId == request.auth.uid ||
+        isAdmin()
+      );
+      allow list: if isSignedIn() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.vendorOwnerId == request.auth.uid ||
+        isAdmin()
+      );
+
+      allow create: if isVerifiedUser()
+        && isValidId(disputeId)
+        && isValidDispute(incoming())
+        && incoming().disputeId == disputeId
+        && incoming().buyerId == request.auth.uid
+        && incoming().status == 'open'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time
+        && exists(/databases/$(database)/documents/orders/$(incoming().orderId))
+        && get(/databases/$(database)/documents/orders/$(incoming().orderId)).data.buyerId == request.auth.uid;
+
+      allow update: if isAdmin()
+        && isValidId(disputeId)
+        && isValidDispute(incoming())
+        && existing().status == 'open'
+        && incoming().disputeId == existing().disputeId
+        && incoming().orderId == existing().orderId
+        && incoming().buyerId == existing().buyerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time;
+
+      allow delete: if isValidId(disputeId) && isAdmin();
+    }
+
+    // Conversations & Messages
+    match /conversations/{conversationId} {
+      allow get: if isValidId(conversationId) && isSignedIn() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.vendorOwnerId == request.auth.uid ||
+        isAdmin()
+      );
+      allow list: if isSignedIn() && (
+        resource.data.buyerId == request.auth.uid ||
+        resource.data.vendorOwnerId == request.auth.uid ||
+        isAdmin()
+      );
+
+      allow create: if isVerifiedUser()
+        && isValidId(conversationId)
+        && isValidConversation(incoming())
+        && incoming().conversationId == conversationId
+        && incoming().buyerId == request.auth.uid
+        && incoming().updatedAt == request.time
+        && exists(/databases/$(database)/documents/shops/$(incoming().shopId));
+
+      allow update: if isVerifiedUser()
+        && isValidId(conversationId)
+        && isValidConversation(incoming())
+        && incoming().conversationId == existing().conversationId
+        && incoming().buyerId == existing().buyerId
+        && incoming().shopId == existing().shopId
+        && incoming().vendorOwnerId == existing().vendorOwnerId
+        && incoming().updatedAt == request.time
+        && (existing().buyerId == request.auth.uid || existing().vendorOwnerId == request.auth.uid || isAdmin())
+        && incoming().diff(existing()).affectedKeys().hasOnly(['lastMessageText', 'updatedAt']);
+
+      allow delete: if isValidId(conversationId) && isAdmin();
+
+      match /messages/{messageId} {
+        allow get: if isValidId(conversationId) && isValidId(messageId) && isSignedIn() && (
+          resource.data.buyerId == request.auth.uid ||
+          resource.data.vendorOwnerId == request.auth.uid ||
+          isAdmin()
+        );
+        allow list: if isValidId(conversationId) && isSignedIn() && (
+          resource.data.buyerId == request.auth.uid ||
+          resource.data.vendorOwnerId == request.auth.uid ||
+          isAdmin()
+        );
+
+        allow create: if isVerifiedUser()
+          && isValidId(conversationId)
+          && isValidId(messageId)
+          && isValidChatMessage(incoming())
+          && incoming().messageId == messageId
+          && incoming().conversationId == conversationId
+          && incoming().senderId == request.auth.uid
+          && incoming().createdAt == request.time
+          && exists(/databases/$(database)/documents/conversations/$(conversationId))
+          && incoming().buyerId == get(/databases/$(database)/documents/conversations/$(conversationId)).data.buyerId
+          && incoming().vendorOwnerId == get(/databases/$(database)/documents/conversations/$(conversationId)).data.vendorOwnerId
+          && (
+            incoming().buyerId == request.auth.uid ||
+            incoming().vendorOwnerId == request.auth.uid
+          );
+
+        allow update: if isVerifiedUser()
+          && isValidId(conversationId)
+          && isValidId(messageId)
+          && isValidChatMessage(incoming())
+          && existing().kind == 'offer'
+          && existing().offerStatus == 'pending'
+          && incoming().offerStatus in ['accepted', 'declined']
+          && incoming().diff(existing()).affectedKeys().hasOnly(['offerStatus'])
+          && existing().buyerId == request.auth.uid;
+
+        allow delete: if isValidId(conversationId) && isValidId(messageId) && isAdmin();
+      }
+    }
+
+    // RFQs & Supplier Offers
+    match /rfqs/{rfqId} {
+      allow get: if isValidId(rfqId) && isSignedIn() && (resource.data.status == 'open' || resource.data.buyerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.status == 'open' || resource.data.buyerId == request.auth.uid || isAdmin());
+
+      allow create: if isVerifiedUser()
+        && isValidId(rfqId)
+        && isValidRfq(incoming())
+        && incoming().rfqId == rfqId
+        && incoming().buyerId == request.auth.uid
+        && incoming().status == 'open'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+
+      allow update: if isVerifiedUser()
+        && isValidId(rfqId)
+        && isValidRfq(incoming())
+        && incoming().rfqId == existing().rfqId
+        && incoming().buyerId == existing().buyerId
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          isAdmin() || (
+            existing().buyerId == request.auth.uid
+            && existing().status == 'open'
+            && incoming().status in ['awarded', 'closed']
+            && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt'])
+          )
+        );
+
+      allow delete: if isValidId(rfqId) && isAdmin();
+
+      match /offers/{offerId} {
+        allow get: if isValidId(rfqId) && isValidId(offerId) && isSignedIn() && (
+          resource.data.vendorOwnerId == request.auth.uid ||
+          resource.data.buyerId == request.auth.uid ||
+          isAdmin()
+        );
+        allow list: if isValidId(rfqId) && isSignedIn() && (
+          resource.data.vendorOwnerId == request.auth.uid ||
+          resource.data.buyerId == request.auth.uid ||
+          isAdmin()
+        );
+
+        allow create: if isVerifiedUser()
+          && isValidId(rfqId)
+          && isValidId(offerId)
+          && isValidRfqOffer(incoming())
+          && incoming().offerId == offerId
+          && incoming().rfqId == rfqId
+          && incoming().vendorOwnerId == request.auth.uid
+          && incoming().status == 'pending'
+          && incoming().createdAt == request.time
+          && exists(/databases/$(database)/documents/rfqs/$(rfqId))
+          && get(/databases/$(database)/documents/rfqs/$(rfqId)).data.status == 'open'
+          && incoming().buyerId == get(/databases/$(database)/documents/rfqs/$(rfqId)).data.buyerId
+          && exists(/databases/$(database)/documents/shops/$(incoming().shopId))
+          && get(/databases/$(database)/documents/shops/$(incoming().shopId)).data.ownerId == request.auth.uid
+          && get(/databases/$(database)/documents/shops/$(incoming().shopId)).data.vendorStatus == 'approved';
+
+        allow update: if isVerifiedUser()
+          && isValidId(rfqId)
+          && isValidId(offerId)
+          && isValidRfqOffer(incoming())
+          && existing().status == 'pending'
+          && incoming().status in ['accepted', 'declined']
+          && incoming().diff(existing()).affectedKeys().hasOnly(['status'])
+          && (
+            isAdmin() ||
+            existing().buyerId == request.auth.uid
+          );
+
+        allow delete: if isValidId(rfqId) && isValidId(offerId) && isAdmin();
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "DROPP",
+  "description": "Application web de social commerce au Cameroun : flux vidéo immersif et place de marché de gros en FCFA.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

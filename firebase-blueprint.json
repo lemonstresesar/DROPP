@@ -1,0 +1,399 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Public-safe user role and display profile without PII",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "role": { "type": "string", "enum": ["client", "vendor", "admin"] },
+        "vendorStatus": { "type": "string", "enum": ["none", "pending", "approved", "rejected", "suspended"] },
+        "isCertified": { "type": "boolean" },
+        "city": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "bio": { "type": "string", "maxLength": 240 },
+        "followersCount": { "type": "number" },
+        "followingCount": { "type": "number" },
+        "likesCount": { "type": "number" },
+        "referralCode": { "type": "string", "minLength": 6, "maxLength": 24, "pattern": "^DROPP-[A-Z0-9]+$" },
+        "referredByCode": { "type": "string", "minLength": 6, "maxLength": 24, "pattern": "^DROPP-[A-Z0-9]+$" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "role", "vendorStatus", "isCertified", "city", "createdAt", "updatedAt"]
+    },
+    "UserPrivateInfo": {
+      "title": "UserPrivateInfo",
+      "description": "Isolated PII document for user email, phone, and delivery address",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "phone": { "type": "string", "maxLength": 32 },
+        "address": { "type": "string", "maxLength": 240 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "updatedAt"]
+    },
+    "Wallet": {
+      "title": "Wallet",
+      "description": "Server-controlled wallet and escrow balances in FCFA",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "availableFcfa": { "type": "number" },
+        "pendingFcfa": { "type": "number" },
+        "referralFcfa": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "availableFcfa", "pendingFcfa", "referralFcfa", "updatedAt"]
+    },
+    "WalletTransaction": {
+      "title": "WalletTransaction",
+      "description": "Immutable financial ledger record in FCFA",
+      "type": "object",
+      "properties": {
+        "txId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "type": { "type": "string", "enum": ["deposit", "withdrawal", "escrow_hold", "escrow_release", "refund", "referral_bonus"] },
+        "amountFcfa": { "type": "number" },
+        "methodLabel": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "referenceId": { "type": "string", "maxLength": 128 },
+        "status": { "type": "string", "enum": ["completed", "failed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["txId", "userId", "type", "amountFcfa", "methodLabel", "status", "createdAt"]
+    },
+    "Shop": {
+      "title": "Shop",
+      "description": "Public supplier shop storefront",
+      "type": "object",
+      "properties": {
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "city": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "category": { "type": "string", "enum": ["Mode", "Électronique", "Beauté", "Alimentation", "Maison", "Autre"] },
+        "isCertified": { "type": "boolean" },
+        "isPremium": { "type": "boolean" },
+        "vendorStatus": { "type": "string", "enum": ["pending", "approved", "rejected", "suspended"] },
+        "rating": { "type": "number" },
+        "salesCount": { "type": "number" },
+        "responseRate": { "type": "number" },
+        "followersCount": { "type": "number" },
+        "likesCount": { "type": "number" },
+        "avatarUrl": { "type": "string", "maxLength": 500 },
+        "bio": { "type": "string", "maxLength": 280 },
+        "hasActiveStory": { "type": "boolean" },
+        "storyPreviewText": { "type": "string", "maxLength": 240 },
+        "storyMediaUrl": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["shopId", "ownerId", "name", "city", "category", "isCertified", "vendorStatus", "createdAt", "updatedAt"]
+    },
+    "VendorKycApplication": {
+      "title": "VendorKycApplication",
+      "description": "Private vendor national ID (CNI) and selfie verification dossier",
+      "type": "object",
+      "properties": {
+        "applicationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "city": { "type": "string", "enum": ["Douala", "Yaoundé"] },
+        "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "category": { "type": "string", "enum": ["Mode", "Électronique", "Beauté", "Alimentation", "Maison", "Autre"] },
+        "cniNumber": { "type": "string", "minLength": 5, "maxLength": 40 },
+        "cniFrontUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "cniBackUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "selfieUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "rejectionReason": { "type": "string", "maxLength": 240 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["applicationId", "userId", "shopName", "city", "category", "cniNumber", "cniFrontUrl", "cniBackUrl", "selfieUrl", "status", "createdAt", "updatedAt"]
+    },
+    "FeedPost": {
+      "title": "FeedPost",
+      "description": "Short video or photo commerce publication linked to product pricing and MOQ",
+      "type": "object",
+      "properties": {
+        "postId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "shopCertified": { "type": "boolean" },
+        "city": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 3, "maxLength": 500 },
+        "category": { "type": "string", "enum": ["Mode", "Électronique", "Beauté", "Alimentation", "Maison", "Autre"] },
+        "mediaType": { "type": "string", "enum": ["video", "carousel"] },
+        "videoUrl": { "type": "string", "maxLength": 500 },
+        "posterUrl": { "type": "string", "maxLength": 500 },
+        "priceFcfa": { "type": "number" },
+        "promoPercent": { "type": "number" },
+        "moq": { "type": "number" },
+        "likesCount": { "type": "number" },
+        "commentsCount": { "type": "number" },
+        "bookmarksCount": { "type": "number" },
+        "sharesCount": { "type": "number" },
+        "status": { "type": "string", "enum": ["published", "pending", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["postId", "shopId", "ownerId", "shopName", "shopCertified", "city", "title", "description", "category", "mediaType", "posterUrl", "priceFcfa", "moq", "status", "createdAt", "updatedAt"]
+    },
+    "PostComment": {
+      "title": "PostComment",
+      "description": "User comment on a feed publication",
+      "type": "object",
+      "properties": {
+        "commentId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "postId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "text": { "type": "string", "minLength": 1, "maxLength": 400 },
+        "status": { "type": "string", "enum": ["visible", "hidden"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["commentId", "postId", "authorId", "authorName", "text", "status", "createdAt"]
+    },
+    "ProductReview": {
+      "title": "ProductReview",
+      "description": "Buyer rating and review on a product post",
+      "type": "object",
+      "properties": {
+        "reviewId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "postId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "authorName": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "rating": { "type": "number" },
+        "comment": { "type": "string", "minLength": 2, "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["reviewId", "postId", "authorId", "authorName", "rating", "comment", "createdAt"]
+    },
+    "PostLike": {
+      "title": "PostLike",
+      "description": "User like record on a feed post",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "postId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "postId", "createdAt"]
+    },
+    "UserBookmark": {
+      "title": "UserBookmark",
+      "description": "Bookmarked post for a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "postId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "postId", "createdAt"]
+    },
+    "UserFollowing": {
+      "title": "UserFollowing",
+      "description": "Shop followed by a user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "shopId", "createdAt"]
+    },
+    "OrderRecord": {
+      "title": "OrderRecord",
+      "description": "Per-vendor sub-order with simulated escrow state and Cameroon delivery details",
+      "type": "object",
+      "properties": {
+        "orderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "globalOrderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "subtotalFcfa": { "type": "number" },
+        "shippingFeeFcfa": { "type": "number" },
+        "totalFcfa": { "type": "number" },
+        "paymentMethod": { "type": "string", "enum": ["wallet", "mtn_momo", "orange_money"] },
+        "escrowStatus": { "type": "string", "enum": ["held", "released", "refunded", "disputed"] },
+        "status": { "type": "string", "enum": ["awaiting_payment", "pending", "confirmed", "delivering", "delivered", "cancelled", "disputed"] },
+        "deliveryCity": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "deliveryNeighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["orderId", "globalOrderId", "buyerId", "shopId", "vendorOwnerId", "subtotalFcfa", "shippingFeeFcfa", "totalFcfa", "paymentMethod", "escrowStatus", "status", "deliveryCity", "deliveryNeighborhood", "createdAt", "updatedAt"]
+    },
+    "DisputeRecord": {
+      "title": "DisputeRecord",
+      "description": "Buyer escrow dispute record adjudicated by Super Admin",
+      "type": "object",
+      "properties": {
+        "disputeId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "orderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "reason": { "type": "string", "minLength": 4, "maxLength": 500 },
+        "amountHeldFcfa": { "type": "number" },
+        "status": { "type": "string", "enum": ["open", "resolved_buyer", "resolved_vendor"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["disputeId", "orderId", "buyerId", "shopId", "vendorOwnerId", "reason", "amountHeldFcfa", "status", "createdAt", "updatedAt"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "Direct buyer-to-vendor conversation header",
+      "type": "object",
+      "properties": {
+        "conversationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "lastMessageText": { "type": "string", "maxLength": 400 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["conversationId", "buyerId", "shopId", "vendorOwnerId", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Message or negotiated price offer inside a conversation",
+      "type": "object",
+      "properties": {
+        "messageId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "conversationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "senderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "kind": { "type": "string", "enum": ["text", "image", "video", "file", "location", "offer"] },
+        "text": { "type": "string", "maxLength": 1000 },
+        "offerStatus": { "type": "string", "enum": ["pending", "accepted", "declined"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["messageId", "conversationId", "senderId", "buyerId", "vendorOwnerId", "kind", "text", "createdAt"]
+    },
+    "RfqRequest": {
+      "title": "RfqRequest",
+      "description": "Buyer wholesale request for quote (RFQ)",
+      "type": "object",
+      "properties": {
+        "rfqId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+        "description": { "type": "string", "minLength": 4, "maxLength": 600 },
+        "category": { "type": "string", "enum": ["Mode", "Électronique", "Beauté", "Alimentation", "Maison", "Autre"] },
+        "quantity": { "type": "number" },
+        "budgetFcfa": { "type": "number" },
+        "deadlineDays": { "type": "number" },
+        "city": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "status": { "type": "string", "enum": ["open", "awarded", "closed"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["rfqId", "buyerId", "title", "description", "category", "quantity", "budgetFcfa", "deadlineDays", "city", "status", "createdAt", "updatedAt"]
+    },
+    "RfqOffer": {
+      "title": "RfqOffer",
+      "description": "Supplier quote offer on an open RFQ",
+      "type": "object",
+      "properties": {
+        "offerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "rfqId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "unitPriceFcfa": { "type": "number" },
+        "deliveryDays": { "type": "number" },
+        "message": { "type": "string", "minLength": 2, "maxLength": 400 },
+        "status": { "type": "string", "enum": ["pending", "accepted", "declined"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["offerId", "rfqId", "buyerId", "shopId", "vendorOwnerId", "unitPriceFcfa", "deliveryDays", "message", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Public-safe user profile and role state"
+    },
+    "/users/{userId}/private/{docId}": {
+      "schema": { "$ref": "#/entities/UserPrivateInfo" },
+      "description": "Private PII isolated from public reads"
+    },
+    "/users/{userId}/bookmarks/{postId}": {
+      "schema": { "$ref": "#/entities/UserBookmark" },
+      "description": "Saved feed posts for the user"
+    },
+    "/users/{userId}/following/{shopId}": {
+      "schema": { "$ref": "#/entities/UserFollowing" },
+      "description": "Followed shops for the user"
+    },
+    "/wallets/{userId}": {
+      "schema": { "$ref": "#/entities/Wallet" },
+      "description": "Server-controlled FCFA wallet balances"
+    },
+    "/walletTransactions/{txId}": {
+      "schema": { "$ref": "#/entities/WalletTransaction" },
+      "description": "Immutable wallet & escrow ledger entries"
+    },
+    "/shops/{shopId}": {
+      "schema": { "$ref": "#/entities/Shop" },
+      "description": "Supplier shop storefront"
+    },
+    "/kycApplications/{applicationId}": {
+      "schema": { "$ref": "#/entities/VendorKycApplication" },
+      "description": "Private vendor national ID KYC applications"
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/FeedPost" },
+      "description": "Commerce video and image publications"
+    },
+    "/posts/{postId}/comments/{commentId}": {
+      "schema": { "$ref": "#/entities/PostComment" },
+      "description": "Comments on a publication"
+    },
+    "/posts/{postId}/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/ProductReview" },
+      "description": "Buyer ratings and reviews on a product"
+    },
+    "/posts/{postId}/likes/{userId}": {
+      "schema": { "$ref": "#/entities/PostLike" },
+      "description": "User likes per publication"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/OrderRecord" },
+      "description": "Per-vendor orders with simulated escrow protection"
+    },
+    "/disputes/{disputeId}": {
+      "schema": { "$ref": "#/entities/DisputeRecord" },
+      "description": "Escrow disputes reviewed by Super Admin"
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "Buyer-to-vendor negotiation threads"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Messages and price offer cards inside a conversation"
+    },
+    "/rfqs/{rfqId}": {
+      "schema": { "$ref": "#/entities/RfqRequest" },
+      "description": "Wholesale buyer requests for quote (RFQ)"
+    },
+    "/rfqs/{rfqId}/offers/{offerId}": {
+      "schema": { "$ref": "#/entities/RfqOffer" },
+      "description": "Supplier quotes competing on an RFQ"
+    }
+  }
+}
