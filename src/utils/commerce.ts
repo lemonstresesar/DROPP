@@ -11,7 +11,29 @@ import type {
 } from '../types/dropp';
 
 export const REFERRAL_BONUS_FCFA = 500;
+export const DEFAULT_COMMISSION_PERCENT = 5;
 export const DISPUTE_WINDOW_MS = 24 * 60 * 60 * 1000;
+
+export function computeCommissionSplit(
+  subtotalFcfa: number,
+  shippingFeeFcfa: number,
+  commissionPercent: number = DEFAULT_COMMISSION_PERCENT
+): {
+  commissionRatePercent: number;
+  commissionFcfa: number;
+  netVendorFcfa: number;
+} {
+  const safeRate = Math.max(0, Math.min(30, Number.isFinite(commissionPercent) ? commissionPercent : DEFAULT_COMMISSION_PERCENT));
+  const safeSubtotal = Math.max(0, Math.round(subtotalFcfa));
+  const safeShipping = Math.max(0, Math.round(shippingFeeFcfa));
+  const commissionFcfa = Math.round((safeSubtotal * safeRate) / 100);
+  const netVendorFcfa = Math.max(0, safeSubtotal + safeShipping - commissionFcfa);
+  return {
+    commissionRatePercent: safeRate,
+    commissionFcfa,
+    netVendorFcfa,
+  };
+}
 
 /**
  * Tiered Cameroon shipping rules:
@@ -157,6 +179,7 @@ export function processMultiVendorCheckout(input: CheckoutInput): CheckoutResult
       shippingFeeFcfa: g.shippingFeeFcfa,
       totalFcfa: g.totalFcfa,
       paymentMethod: input.paymentMethod,
+      isSimulatedPayment: true,
       escrowStatus: 'held',
       status: 'awaiting_payment',
       deliveryCity: input.deliveryCity.trim(),
@@ -187,6 +210,7 @@ export function processMultiVendorCheckout(input: CheckoutInput): CheckoutResult
     shippingFeeFcfa: g.shippingFeeFcfa,
     totalFcfa: g.totalFcfa,
     paymentMethod: input.paymentMethod,
+    isSimulatedPayment: true,
     escrowStatus: 'held',
     status: 'pending',
     deliveryCity: input.deliveryCity.trim(),
@@ -319,7 +343,6 @@ export function filterAndSortMarketPosts(
     if (params.sortBy === 'moq_asc') return a.moq - b.moq || a.priceFcfa - b.priceFcfa;
     if (params.sortBy === 'popular') return b.likesCount - a.likesCount;
 
-    // 'recommended': boost matching categories from likes/views + certification + likes
     const scoreA =
       (likedCategories.has(a.category) ? 2000 : 0) +
       (a.shopCertified ? 600 : 0) +

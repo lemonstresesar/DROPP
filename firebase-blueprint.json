@@ -12,6 +12,7 @@
         "isCertified": { "type": "boolean" },
         "city": { "type": "string", "minLength": 2, "maxLength": 60 },
         "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "avatarUrl": { "type": "string", "maxLength": 500 },
         "bio": { "type": "string", "maxLength": 240 },
         "followersCount": { "type": "number" },
@@ -19,6 +20,7 @@
         "likesCount": { "type": "number" },
         "referralCode": { "type": "string", "minLength": 6, "maxLength": 24, "pattern": "^DROPP-[A-Z0-9]+$" },
         "referredByCode": { "type": "string", "minLength": 6, "maxLength": 24, "pattern": "^DROPP-[A-Z0-9]+$" },
+        "hasCompletedFirstOrder": { "type": "boolean" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -74,22 +76,27 @@
         "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "name": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "handle": { "type": "string", "maxLength": 60 },
         "city": { "type": "string", "minLength": 2, "maxLength": 60 },
         "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
         "category": { "type": "string", "enum": ["Mode", "Électronique", "Beauté", "Alimentation", "Maison", "Autre"] },
         "isCertified": { "type": "boolean" },
         "isPremium": { "type": "boolean" },
         "vendorStatus": { "type": "string", "enum": ["pending", "approved", "rejected", "suspended"] },
+        "memberSinceYear": { "type": "number" },
         "rating": { "type": "number" },
         "salesCount": { "type": "number" },
         "responseRate": { "type": "number" },
         "followersCount": { "type": "number" },
+        "followingCount": { "type": "number" },
         "likesCount": { "type": "number" },
         "avatarUrl": { "type": "string", "maxLength": 500 },
         "bio": { "type": "string", "maxLength": 280 },
         "hasActiveStory": { "type": "boolean" },
         "storyPreviewText": { "type": "string", "maxLength": 240 },
         "storyMediaUrl": { "type": "string", "maxLength": 500 },
+        "storyExpiresAt": { "type": "string", "maxLength": 60 },
+        "isOnline": { "type": "boolean" },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -102,6 +109,7 @@
       "properties": {
         "applicationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "userId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "applicantName": { "type": "string", "maxLength": 80 },
         "shopName": { "type": "string", "minLength": 2, "maxLength": 80 },
         "city": { "type": "string", "enum": ["Douala", "Yaoundé"] },
         "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
@@ -112,6 +120,7 @@
         "selfieUrl": { "type": "string", "minLength": 1, "maxLength": 500 },
         "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
         "rejectionReason": { "type": "string", "maxLength": 240 },
+        "submittedAt": { "type": "string", "maxLength": 60 },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -126,6 +135,8 @@
         "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "shopName": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "shopHandle": { "type": "string", "maxLength": 60 },
+        "shopAvatarUrl": { "type": "string", "maxLength": 500 },
         "shopCertified": { "type": "boolean" },
         "city": { "type": "string", "minLength": 2, "maxLength": 60 },
         "neighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
@@ -135,13 +146,19 @@
         "mediaType": { "type": "string", "enum": ["video", "carousel"] },
         "videoUrl": { "type": "string", "maxLength": 500 },
         "posterUrl": { "type": "string", "maxLength": 500 },
+        "galleryUrls": { "type": "array" },
         "priceFcfa": { "type": "number" },
         "promoPercent": { "type": "number" },
         "moq": { "type": "number" },
+        "samplePriceFcfa": { "type": "number" },
+        "tiers": { "type": "array" },
+        "variants": { "type": "array" },
+        "specs": { "type": "array" },
         "likesCount": { "type": "number" },
         "commentsCount": { "type": "number" },
         "bookmarksCount": { "type": "number" },
         "sharesCount": { "type": "number" },
+        "rating": { "type": "number" },
         "status": { "type": "string", "enum": ["published", "pending", "rejected"] },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
@@ -219,8 +236,11 @@
         "orderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "globalOrderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerName": { "type": "string", "maxLength": 80 },
         "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopName": { "type": "string", "maxLength": 80 },
         "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "items": { "type": "array" },
         "subtotalFcfa": { "type": "number" },
         "shippingFeeFcfa": { "type": "number" },
         "totalFcfa": { "type": "number" },
@@ -229,6 +249,11 @@
         "status": { "type": "string", "enum": ["awaiting_payment", "pending", "confirmed", "delivering", "delivered", "cancelled", "disputed"] },
         "deliveryCity": { "type": "string", "minLength": 2, "maxLength": 60 },
         "deliveryNeighborhood": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "deliveryPhone": { "type": "string", "maxLength": 32 },
+        "deliveredAt": { "type": "string", "maxLength": 60 },
+        "rated": { "type": "boolean" },
+        "disputeId": { "type": "string", "maxLength": 128 },
+        "idempotencyKey": { "type": "string", "maxLength": 128 },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -242,11 +267,14 @@
         "disputeId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "orderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerName": { "type": "string", "maxLength": 80 },
         "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopName": { "type": "string", "maxLength": 80 },
         "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "reason": { "type": "string", "minLength": 4, "maxLength": 500 },
         "amountHeldFcfa": { "type": "number" },
         "status": { "type": "string", "enum": ["open", "resolved_buyer", "resolved_vendor"] },
+        "resolutionNote": { "type": "string", "maxLength": 400 },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -259,8 +287,14 @@
       "properties": {
         "conversationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerName": { "type": "string", "maxLength": 80 },
         "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopName": { "type": "string", "maxLength": 80 },
+        "shopAvatarUrl": { "type": "string", "maxLength": 500 },
+        "shopCertified": { "type": "boolean" },
+        "shopOnline": { "type": "boolean" },
         "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "unreadCount": { "type": "number" },
         "lastMessageText": { "type": "string", "maxLength": 400 },
         "updatedAt": { "type": "string", "format": "date-time" }
       },
@@ -274,10 +308,15 @@
         "messageId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "conversationId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "senderId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "senderName": { "type": "string", "maxLength": 80 },
         "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "kind": { "type": "string", "enum": ["text", "image", "video", "file", "location", "offer"] },
         "text": { "type": "string", "maxLength": 1000 },
+        "mediaUrl": { "type": "string", "maxLength": 500 },
+        "fileName": { "type": "string", "maxLength": 160 },
+        "locationLabel": { "type": "string", "maxLength": 160 },
+        "offer": { "type": "object" },
         "offerStatus": { "type": "string", "enum": ["pending", "accepted", "declined"] },
         "createdAt": { "type": "string", "format": "date-time" }
       },
@@ -290,6 +329,7 @@
       "properties": {
         "rfqId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "buyerName": { "type": "string", "maxLength": 80 },
         "title": { "type": "string", "minLength": 3, "maxLength": 120 },
         "description": { "type": "string", "minLength": 4, "maxLength": 600 },
         "category": { "type": "string", "enum": ["Mode", "Électronique", "Beauté", "Alimentation", "Maison", "Autre"] },
@@ -297,6 +337,7 @@
         "budgetFcfa": { "type": "number" },
         "deadlineDays": { "type": "number" },
         "city": { "type": "string", "minLength": 2, "maxLength": 60 },
+        "photoUrl": { "type": "string", "maxLength": 500 },
         "status": { "type": "string", "enum": ["open", "awarded", "closed"] },
         "createdAt": { "type": "string", "format": "date-time" },
         "updatedAt": { "type": "string", "format": "date-time" }
@@ -312,6 +353,8 @@
         "rfqId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "buyerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "shopId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "shopName": { "type": "string", "maxLength": 80 },
+        "shopCertified": { "type": "boolean" },
         "vendorOwnerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
         "unitPriceFcfa": { "type": "number" },
         "deliveryDays": { "type": "number" },
@@ -394,6 +437,18 @@
     "/rfqs/{rfqId}/offers/{offerId}": {
       "schema": { "$ref": "#/entities/RfqOffer" },
       "description": "Supplier quotes competing on an RFQ"
+    },
+    "/platformConfig/{docId}": {
+      "description": "Global platform configuration (commission rate, enabled categories, announcement banner)"
+    },
+    "/withdrawalRequests/{requestId}": {
+      "description": "Server-processed Mobile Money withdrawal requests reviewed by Super Admin"
+    },
+    "/auditLogs/{logId}": {
+      "description": "Administrative action audit log"
+    },
+    "/idempotencyKeys/{keyId}": {
+      "description": "Server-only anti-double-spend idempotency records"
     }
   }
 }

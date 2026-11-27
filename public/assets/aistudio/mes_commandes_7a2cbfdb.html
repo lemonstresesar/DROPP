@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#131313;color:#e5e2e1;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-variant": "#353534", "tertiary-fixed-dim": "#ffb95f", "surface-bright": "#393939", "on-primary-fixed": "#3a0b00", "on-primary": "#5e1700", "surface-container-lowest": "#0e0e0e", "surface-container": "#201f1f", "on-tertiary": "#472a00", "primary-container": "#ff5a1f", "outline-variant": "#5b4038", "secondary-container": "#00a572", "on-primary-fixed-variant": "#852400", "on-surface": "#e5e2e1", "on-secondary-container": "#00311f", "on-error": "#690005", "on-surface-variant": "#e4beb3", "on-error-container": "#ffdad6", "primary-fixed": "#ffdbd0", "tertiary-fixed": "#ffddb8", "primary": "#ffb59e", "on-secondary": "#003824", "on-tertiary-container": "#402500", "on-tertiary-fixed": "#2a1700", "secondary-fixed": "#6ffbbe", "tertiary": "#ffb95f", "tertiary-container": "#cc8200", "on-secondary-fixed-variant": "#005236", "surface-tint": "#ffb59e", "error-container": "#93000a", "outline": "#ab897f", "surface-dim": "#131313", "on-background": "#e5e2e1", "error": "#ffb4ab", "surface-container-low": "#1c1b1b", "secondary-fixed-dim": "#4edea3", "surface": "#131313", "on-tertiary-fixed-variant": "#653e00", "inverse-on-surface": "#313030", "secondary": "#4edea3", "on-primary-container": "#541400", "on-secondary-fixed": "#002113", "primary-fixed-dim": "#ffb59e", "surface-container-high": "#2a2a2a", "surface-container-highest": "#353534", "inverse-primary": "#ae3200", "inverse-surface": "#e5e2e1", "background": "#131313" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin-mobile": "0.75rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "margin-desktop": "2rem", "gutter": "0.75rem", "space-lg": "1.5rem", "space-md": "1rem", "margin": "1rem", "space-xl": "2.25rem", "space-sm": "0.5rem" }, fontFamily: { "display-mobile": ["Space Grotesk"], "price-card": ["Space Grotesk"], "price-hero": ["Space Grotesk"], "label-md": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "display": ["Space Grotesk"], "body-sm": ["Plus Jakarta Sans"], "label-sm": ["Space Grotesk"] }, fontSize: { "display-mobile": ["30px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "price-card": ["18px", { "lineHeight": "22px", "fontWeight": "700" }], "price-hero": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-sm": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-white"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0"><span class="font-display text-headline-md tracking-tighter text-white font-bold">DROPP</span><span class="w-2 h-2 rounded-full bg-primary-container flex-shrink-0"></span></div><div class="flex items-center justify-center flex-1 min-w-0 px-space-xs"><span class="font-label-md text-label-md text-on-surface-variant truncate uppercase tracking-widest text-center">Marché</span></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Rechercher" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:text-primary transition-colors"><span class="material-symbols-outlined text-[24px]">search</span></button><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:text-primary transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span></button><a aria-label="Profil" class="w-11 h-11 flex items-center justify-center" data-path="profil" href="#"><div class="w-8 h-8 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center overflow-hidden"><span class="material-symbols-outlined text-on-surface-variant text-[20px]">person</span></div></a></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-6">
+<!-- Search & Action Bar -->
+<div class="px-margin pt-2 pb-3">
+<div class="flex items-center gap-space-sm">
+<div class="relative flex-1">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px] pointer-events-none">search</span>
+<input class="w-full h-11 pl-10 pr-4 bg-surface-container-high rounded-full font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-highest transition-colors" placeholder="N° commande, vendeur, produit..." type="text"/>
+</div>
+<button aria-label="Filtrer les commandes" class="w-11 h-11 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface hover:text-primary-container active:scale-95 transition-all relative flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary-container"></span>
+</button>
+</div>
+</div>
+<!-- Status Filter Carousel -->
+<div class="w-full overflow-x-auto no-scrollbar py-1 px-margin flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface whitespace-nowrap active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Toutes</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container-lowest text-outline">8</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface whitespace-nowrap active:scale-95 transition-all">
+<span class="font-label-md text-label-md">En attente</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container-lowest text-outline">2</span>
+</button>
+<button class="flex items-center gap-1.5 px-4 h-9 rounded-full bg-primary-container text-white whitespace-nowrap shadow-md shadow-primary-container/20 active:scale-95 transition-all">
+<span class="font-label-md text-label-md font-bold">En expédition</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-white/20 text-white font-bold">3</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface whitespace-nowrap active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Livrées</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-surface-container-lowest text-outline">12</span>
+</button>
+<button class="flex items-center gap-1.5 px-3.5 h-9 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface whitespace-nowrap active:scale-95 transition-all">
+<span class="font-label-md text-label-md">Litiges</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded-full bg-error-container text-on-error-container">1</span>
+</button>
+</div>
+<!-- Orders Stack -->
+<div class="px-margin flex flex-col gap-3.5 mt-3">
+<!-- Card 1: Active In-Transit -->
+<div class="w-full bg-surface-container rounded-xl p-3.5 shadow-lg relative overflow-hidden">
+<!-- Glow Accent Line -->
+<div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary-container via-tertiary to-primary-container"></div>
+<!-- Order Header -->
+<div class="flex items-center justify-between gap-2 pt-1 pb-2.5">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="font-label-lg text-label-lg text-white font-bold tracking-tight">#DRP-2025-089</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">@KmerChic_Douala</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/20 text-secondary">
+<span class="material-symbols-outlined text-[14px]">two_wheeler</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">En cours</span>
+</div>
+</div>
+<!-- Warehouse & Escrow Pills -->
+<div class="flex flex-wrap items-center gap-1.5 pb-3">
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-highest text-on-surface-variant">
+<span class="material-symbols-outlined text-[13px] text-tertiary">warehouse</span>
+<span class="font-label-sm text-label-sm">Akwa, Douala</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-secondary-container/15 text-secondary">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-sm text-label-sm">Escrow Sécurisé (MTN MoMo)</span>
+</div>
+</div>
+<!-- Item Row -->
+<div class="flex items-start gap-3 bg-surface-container-low rounded-lg p-2.5">
+<img class="w-16 h-16 rounded-md object-cover flex-shrink-0 bg-surface-container-highest" data-alt="Commercial bulk shipment of modern streetwear athletic sneakers neatly stacked in wholesale packaging crates, high-contrast studio lighting, dark graphite tone with saturated neon orange accents, 8k product photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpKnvnu52jzj50CB8HKmwpaymtSWYpkLWPg5OvuZarB9JcYI2PnyyUqYDYfuGy1EJ-QYku7GU0D4EeT4TROknB_uSNKJBVxFocTBBNP_93SIdO4O0tkGGRIJOm9QuDP8Oy80i8EGeZuwPUqpSluc5IHBLTntoksxDT85DxZYED8xfyZp2lXhqqG0pFSIBdhXboi20Fge-d9VQDa4yu2ce-cdwf4Ovrm9GlyMLr468"/>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-sm text-headline-sm text-white line-clamp-1">Lot 20 paires Sneakers Streetwear Air Pro</h2>
+<span class="font-body-sm text-body-sm text-outline mt-0.5">20 paires • Tailles mixtes 40-45</span>
+<div class="flex items-baseline gap-1.5 mt-1">
+<span class="font-price-card text-price-card text-white">174 500 FCFA</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(8 725 F / u)</span>
+</div>
+</div>
+</div>
+<!-- Live Delivery Progress Box -->
+<div class="mt-3 p-2.5 rounded-lg bg-surface-container-high/70 flex items-start gap-2.5">
+<div class="w-7 h-7 rounded-full bg-primary-container/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-primary-container text-[18px]">navigation</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between gap-1">
+<span class="font-label-sm text-label-sm font-bold text-white uppercase tracking-wider">Mototaxi Express Akwa</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">16:30</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5 leading-snug">
+            En transit vers votre magasin • Arrivée estimée dans ~24 min
+          </p>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-2 mt-3 pt-1">
+<button class="flex-1 h-12 rounded-full bg-primary-container text-white flex items-center justify-center gap-1.5 shadow-md shadow-primary-container/25 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-label-lg text-label-lg font-bold">Suivre la livraison</span>
+</button>
+<button aria-label="Contacter le grossiste" class="h-12 px-4 rounded-full bg-surface-container-highest text-white flex items-center justify-center gap-1.5 active:scale-95 transition-all flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+<span class="font-label-md text-label-md">Contacter</span>
+</button>
+</div>
+</div>
+<!-- Card 2: In Preparation / Depot Transfer -->
+<div class="w-full bg-surface-container rounded-xl p-3.5 shadow-lg relative">
+<!-- Order Header -->
+<div class="flex items-center justify-between gap-2 pb-2.5">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="font-label-lg text-label-lg text-white font-bold tracking-tight">#DRP-2025-072</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">@TechHub_Mokolo</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-container/20 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">En transit agence</span>
+</div>
+</div>
+<!-- Warehouse Pill -->
+<div class="flex items-center gap-1.5 pb-3">
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-md bg-surface-container-highest text-on-surface-variant">
+<span class="material-symbols-outlined text-[13px] text-tertiary">storefront</span>
+<span class="font-label-sm text-label-sm">Marché Mokolo, Yaoundé</span>
+</div>
+</div>
+<!-- Item Row -->
+<div class="flex items-start gap-3 bg-surface-container-low rounded-lg p-2.5">
+<img class="w-16 h-16 rounded-md object-cover flex-shrink-0 bg-surface-container-highest" data-alt="Stacked retail boxes of sleek matte black true wireless stereo TWS pro bluetooth earbuds with digital LED battery display, packaged for wholesale electronics market, dramatic side lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjzlGNzAvU-Uqip330gp_7bUZwGZecpIHdzY8HZDs9WOOr-mkoAqLdLdhUrL70ytyWGkLm8ehOP8aEbWUbz99DvJNVYJ8FQQlbxJxGRFOoGKv_iWrw8zRyOeEck_UwRodK7eT0LFPLUYaYqRKpzPfbTCkQbBovUSs9GuKxcgqZzkOLjHrO4huAdqKrd9wXCWLvKXwJc2DkHbuowLD_YcL_XCG4bBxaZ55SyYJ2xRg"/>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-sm text-headline-sm text-white line-clamp-1">Cartons 20 Écouteurs TWS Pro</h2>
+<span class="font-body-sm text-body-sm text-outline mt-0.5">20 unités neuves sous blister</span>
+<div class="flex items-baseline gap-1.5 mt-1">
+<span class="font-price-card text-price-card text-white">38 500 FCFA</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">(1 925 F / u)</span>
+</div>
+</div>
+</div>
+<!-- Status Notice -->
+<div class="mt-3 p-2.5 rounded-lg bg-surface-container-high/60 flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">departure_board</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">
+          Remis à l'agence <span class="text-white font-medium">Finexs Voyages Douala</span>
+</p>
+</div>
+<!-- Action Buttons -->
+<div class="grid grid-cols-2 gap-2 mt-3 pt-1">
+<button class="h-11 rounded-full bg-surface-container-highest text-white flex items-center justify-center gap-1 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="font-label-md text-label-md">Détails</span>
+</button>
+<button class="h-11 rounded-full bg-surface-container-highest text-white flex items-center justify-center gap-1 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">sync_alt</span>
+<span class="font-label-md text-label-md">Échanger</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Delivered & Settled -->
+<div class="w-full bg-surface-container rounded-xl p-3.5 shadow-lg relative opacity-95">
+<!-- Order Header -->
+<div class="flex items-center justify-between gap-2 pb-2.5">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="font-label-lg text-label-lg text-white font-bold tracking-tight">#DRP-2025-055</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Livré le 24 Mai</span>
+</div>
+<div class="flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/20 text-secondary">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Clôturée</span>
+</div>
+</div>
+<!-- Item Row -->
+<div class="flex items-start gap-3 bg-surface-container-low rounded-lg p-2.5">
+<img class="w-16 h-16 rounded-md object-cover flex-shrink-0 bg-surface-container-highest" data-alt="Heavy burlap textile bale marked with 45kg stencil, packed with colorful high-grade vintage dresses and apparel, warm ambient market warehouse background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtYzBSFEieBhoJruTL7BFDomBwyk8ZaPi3cTQAIjtcyrdsGJEnSXfPOO-VaK8ZZG45V1TnY4fQcIgd_SPUt6xndk622ds5ZQ17AnvRFLLUeeEefelO5pRzS3CGgkAr1eYmwUJ2OFimhcZjQ-dSm9toGQD3KU1vQU63PxSt6aB6g30KI2pDA21D_bwijRJ6dzW8E17u7k-6ZBo4dg4REy32XBqzMeHpgvKSHjDNVjA"/>
+<div class="flex flex-col min-w-0 flex-1">
+<h2 class="font-headline-sm text-headline-sm text-white line-clamp-1">Bales Friperie Crème Robes 45kg</h2>
+<span class="font-body-sm text-body-sm text-outline mt-0.5">Qualité Supérieure A+ • Yaoundé Nkololoun</span>
+<div class="flex items-baseline gap-1.5 mt-1">
+<span class="font-price-card text-price-card text-white">45 000 FCFA</span>
+</div>
+</div>
+</div>
+<!-- Trust Indicator -->
+<div class="mt-3 flex items-center justify-between px-2.5 py-2 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">lock_open</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fonds libérés au vendeur</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">Vérifié</span>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-2 mt-3 pt-1">
+<button class="flex-1 h-11 rounded-full bg-tertiary-container/15 text-tertiary flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">rate_review</span>
+<span class="font-label-md text-label-md font-semibold">Avis (+500 F)</span>
+</button>
+<button class="flex-1 h-11 rounded-full bg-surface-container-highest text-white flex items-center justify-center gap-1.5 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">autorenew</span>
+<span class="font-label-md text-label-md">Recommander</span>
+</button>
+</div>
+</div>
+<!-- Assurance Banner -->
+<div class="w-full mt-2 p-3.5 rounded-xl bg-surface-container-lowest flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-secondary-container/20 flex items-center justify-center text-secondary flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-white font-bold">Garantie DROPP Escrow</span>
+<span class="font-body-sm text-body-sm text-outline mt-0.5">Votre argent n'est remis au grossiste qu'après confirmation de conformité.</span>
+</div>
+</div>
+</div>
+</div></main><nav class="fixed bottom-0 inset-x-0 w-full z-50 pb-safe bg-surface-container-lowest/95 backdrop-blur-2xl shadow-[0_-2px_12px_rgba(0,0,0,0.6)]" data-active-classes="text-primary-container font-semibold"><div class="flex justify-around items-center h-16 px-space-xs relative"><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-on-surface-variant transition-colors" data-path="accueil" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm mt-0.5">Accueil</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-primary-container font-semibold transition-colors relative" data-path="marche" href="#"><span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-label-sm text-label-sm mt-0.5">Marché</span><span class="w-1.5 h-1.5 rounded-full bg-primary-container mt-0.5"></span></a><a aria-label="Créer un drop" class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] -mt-5 group" data-path="creer-un-drop" href="#"><div class="w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center shadow-lg shadow-primary-container/40 transition-transform active:scale-95"><span class="material-symbols-outlined text-[28px]">add</span></div></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-on-surface-variant transition-colors relative" data-path="messages" href="#"><div class="relative"><span class="material-symbols-outlined text-[24px]">chat_bubble</span><span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-primary-container rounded-full ring-2 ring-surface-container-lowest"></span></div><span class="font-label-sm text-label-sm mt-0.5">Messages</span></a><a class="flex flex-col items-center justify-center min-w-[56px] min-h-[44px] text-on-surface-variant transition-colors" data-path="profil" href="#"><span class="material-symbols-outlined text-[24px]">person</span><span class="font-label-sm text-label-sm mt-0.5">Profil</span></a></div></nav></body></html>

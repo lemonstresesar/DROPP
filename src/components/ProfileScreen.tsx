@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
+  AlertCircle,
   BadgeCheck,
   Bookmark,
   Download,
@@ -9,6 +10,7 @@ import {
   Monitor,
   Moon,
   Play,
+  RefreshCw,
   ShieldAlert,
   ShieldCheck,
   Store,
@@ -27,9 +29,20 @@ import type {
   ShopProfile,
   UserSession,
   WalletTransaction,
+  WithdrawalRequestRecord,
 } from '../types/dropp';
 import { formatCompactCount, formatFcfa } from '../utils/formatters';
 import { buildCloudinaryMediaUrl } from '../utils/cloudinary';
+import {
+  canRequestVendorKyc,
+  canSendMessage,
+  canUseWalletAndReferral,
+  canViewOwnSalesOrders,
+  isAdminUser,
+  isApprovedVendorUser,
+  isPendingVendorUser,
+  isSuspendedVendor,
+} from '../utils/permissions';
 import { WalletAndOrdersPanel } from './WalletAndOrdersPanel';
 
 interface ProfileScreenProps {
@@ -39,13 +52,20 @@ interface ProfileScreenProps {
   themePref: ThemePreference;
   onChangeTheme: (pref: ThemePreference) => void;
   session: UserSession | null;
+  firebaseUid: string | null;
+  profileLoading: boolean;
+  profileError: string | null;
+  onRetryProfile: () => void;
   isOnline: boolean;
   viewedShop: ShopProfile | null;
+  shops: ShopProfile[];
   posts: FeedPost[];
+  likedIds: string[];
   bookmarkedIds: string[];
   followedShopIds: string[];
   orders: OrderRecord[];
   transactions: WalletTransaction[];
+  withdrawalRequests: WithdrawalRequestRecord[];
   notifications: AppNotification[];
   notifPrefs: NotificationPrefs;
   appRating: number;
@@ -72,11 +92,19 @@ interface ProfileScreenProps {
   onRateOrder: (orderId: string) => void;
   onReorder: (order: OrderRecord) => void;
   onOpenCart: () => void;
-  onDeposit: (amountFcfa: number, methodLabel: string) => boolean;
-  onWithdraw: (amountFcfa: number, methodLabel: string) => boolean;
+  onDeposit: (
+    amountFcfa: number,
+    method: 'mtn_momo' | 'orange_money',
+    phone: string
+  ) => Promise<{ ok: boolean; error?: string }>;
+  onWithdraw: (
+    amountFcfa: number,
+    method: 'mtn_momo' | 'orange_money',
+    phone: string
+  ) => Promise<{ ok: boolean; error?: string }>;
   onToggleNotifPref: (key: keyof NotificationPrefs) => void;
   onMarkAllNotifsRead: () => void;
-  onApplyReferralCode: (code: string) => boolean;
+  onApplyReferralCode: (code: string) => Promise<boolean> | boolean;
   onSubmitAppRating: (stars: number) => void;
 }
 
@@ -87,13 +115,20 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   themePref,
   onChangeTheme,
   session,
+  firebaseUid,
+  profileLoading,
+  profileError,
+  onRetryProfile,
   isOnline,
   viewedShop,
+  shops,
   posts,
+  likedIds,
   bookmarkedIds,
   followedShopIds,
   orders,
   transactions,
+  withdrawalRequests,
   notifications,
   notifPrefs,
   appRating,
@@ -135,6 +170,13 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
   const [showIosGuide, setShowIosGuide] = useState(false);
 
   const activeShop = viewedShop;
+  const myShop = useMemo(
+    () =>
+      session?.shopId
+        ? shops.find((s) => s.shopId === session.shopId || s.ownerId === session.uid) || null
+        : null,
+    [session, shops]
+  );
 
   const shopPosts = useMemo(() => {
     if (activeShop) return posts.filter((p) => p.shopId === activeShop.shopId);
@@ -142,12 +184,11 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
     return posts.filter((p) => bookmarkedIds.includes(p.postId));
   }, [activeShop, session, posts, bookmarkedIds]);
 
-  const roleLabel =
-    session?.role === 'admin'
-      ? t.profile.roleAdmin
-      : session?.role === 'vendor'
-      ? t.profile.roleVendor
-      : t.profile.roleClient;
+  const roleLabel = isAdminUser(session)
+    ? t.profile.roleAdmin
+    : session?.role === 'vendor'
+    ? t.profile.roleVendor
+    : t.profile.roleClient;
 
   const availableTabs = useMemo(() => {
     if (activeShop) {
@@ -156,6 +197,9 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
         { id: 'products' as const, label: t.profile.tabProducts },
         { id: 'info' as const, label: t.profile.tabInfo },
       ];
+    }
+    if (session && isAdminUser(session)) {
+      return [{ id: 'notifs' as const, label: t.profile.tabNotifs }];
     }
     if (session) {
       return [
@@ -174,11 +218,12 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
   const effectiveTab = availableTabs.some((item) => item.id === profileTab)
     ? profileTab
-    : 'posts';
+    : availableTabs[0]?.id || 'posts';
 
-  const isApprovedVendor =
-    session?.role === 'admin' ||
-    (session?.role === 'vendor' && session.vendorStatus === 'approved');
+  const isApprovedVendor = isApprovedVendorUser(session);
+  const isPendingVendor = isPendingVendorUser(session);
+  const isSuspended = isSuspendedVendor(session);
+  const showShopNegotiateBtn = !session || canSendMessage(session);
 
   return (
     <div className="h-full overflow-y-auto bg-[var(--dropp-bg)] pb-28 lg:pb-12">
@@ -240,117 +285,234 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 
             <p className="text-xs text-[var(--dropp-muted)] leading-relaxed">{activeShop.bio}</p>
 
-            <button
-              type="button"
-              onClick={() => onMessageShop(activeShop)}
-              className="w-full sm:w-auto min-h-[44px] px-6 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors shadow-md shadow-[#FF5A1F]/25"
-            >
-              <MessageSquare className="w-4 h-4" aria-hidden="true" />
-              <span>{t.product.negotiateBtn}</span>
-            </button>
-          </section>
-        ) : session ? (
-          <section className="p-6 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-5 shadow-xl">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
-              <div className="w-20 h-20 rounded-full bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] flex items-center justify-center text-2xl font-bold text-[var(--dropp-text)] shrink-0 shadow-inner">
-                {session.displayName.slice(0, 2).toUpperCase()}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap">
-                  <h1 className="text-xl font-bold text-[var(--dropp-text)] truncate">{session.displayName}</h1>
-                  {session.isCertified && (
-                    <BadgeCheck className="w-5 h-5 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
-                  )}
-                </div>
-                <p className="text-xs text-[var(--dropp-muted)] mt-1">
-                  {session.email} · <span className="font-semibold text-[var(--dropp-text)]">{roleLabel}</span> · {session.city}
-                </p>
-              </div>
+            {showShopNegotiateBtn && (
               <button
                 type="button"
-                onClick={onSignOut}
-                aria-label={t.auth.signOut}
-                className="min-h-[40px] px-3.5 rounded-xl bg-[var(--dropp-surface-alt)] hover:border-[var(--dropp-border-strong)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)] inline-flex items-center gap-1.5 transition-colors"
+                onClick={() => onMessageShop(activeShop)}
+                className="w-full sm:w-auto min-h-[44px] px-6 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center justify-center gap-2 transition-colors shadow-md shadow-[#FF5A1F]/25"
               >
-                <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{t.auth.signOut}</span>
+                <MessageSquare className="w-4 h-4" aria-hidden="true" />
+                <span>{t.product.negotiateBtn}</span>
               </button>
+            )}
+          </section>
+        ) : session ? (
+          <section className="relative p-6 rounded-3xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex flex-col items-center text-center space-y-4 shadow-xl">
+            <button
+              type="button"
+              onClick={onSignOut}
+              aria-label={t.auth.signOut}
+              className="self-end min-h-[38px] px-3 rounded-xl bg-[var(--dropp-surface-alt)] hover:border-[var(--dropp-border-strong)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)] inline-flex items-center gap-1.5 transition-colors"
+            >
+              <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>{t.auth.signOut}</span>
+            </button>
+
+            {session.avatarUrl || myShop?.avatarUrl ? (
+              <img
+                src={buildCloudinaryMediaUrl(session.avatarUrl || myShop?.avatarUrl || '', {
+                  dataSaver,
+                  isThumbnail: true,
+                })}
+                alt={session.displayName}
+                referrerPolicy="no-referrer"
+                className="w-24 h-24 rounded-full object-cover border-4 border-black shadow-md"
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full bg-[var(--dropp-surface-alt)] border-4 border-[var(--dropp-border-strong)] flex items-center justify-center text-2xl font-bold text-[var(--dropp-text)] shadow-inner">
+                {session.displayName.slice(0, 2).toUpperCase()}
+              </div>
+            )}
+
+            <div className="space-y-1">
+              <div className="flex flex-wrap items-center justify-center gap-1.5">
+                <h1 className="text-xl font-bold text-[var(--dropp-text)]">{session.displayName}</h1>
+                {session.isCertified && (
+                  <BadgeCheck className="w-5 h-5 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
+                )}
+              </div>
+              <p className="text-xs text-[var(--dropp-muted)] break-all">
+                {session.email} · <span className="font-semibold text-[var(--dropp-text)]">{roleLabel}</span> · {session.city}
+              </p>
+              {myShop?.bio && (
+                <p className="text-xs text-[var(--dropp-muted)] max-w-md mx-auto pt-1 leading-relaxed">
+                  {myShop.bio}
+                </p>
+              )}
             </div>
 
-            {session.role === 'vendor' && session.vendorStatus === 'pending' && (
-              <div className="p-3.5 rounded-xl bg-[#F5A524]/15 border border-[#F5A524]/40 flex items-start gap-2.5 text-xs text-[#9A5B00] dark:text-[#FCD34D]">
+            {!isAdminUser(session) && (
+              <div className="grid grid-cols-3 gap-6 w-full py-3 border-y border-[var(--dropp-border)]">
+                <div>
+                  <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
+                    {formatCompactCount(
+                      myShop ? myShop.followingCount : followedShopIds.length,
+                      lang
+                    )}
+                  </div>
+                  <div className="text-[11px] text-[var(--dropp-muted)]">
+                    {t.profile.followingCount}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
+                    {formatCompactCount(myShop ? myShop.followersCount : 0, lang)}
+                  </div>
+                  <div className="text-[11px] text-[var(--dropp-muted)]">
+                    {t.profile.followersCount}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
+                    {formatCompactCount(myShop ? myShop.likesCount : likedIds.length, lang)}
+                  </div>
+                  <div className="text-[11px] text-[var(--dropp-muted)]">
+                    {t.profile.likesCount}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {isPendingVendor && (
+              <div className="w-full p-3.5 rounded-xl bg-[#F5A524]/15 border border-[#F5A524]/40 flex items-start gap-2.5 text-left text-xs text-[#9A5B00] dark:text-[#FCD34D]">
                 <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
                 <span>{t.profile.vendorPendingBanner}</span>
               </div>
             )}
 
+            {isSuspended && (
+              <div className="w-full p-3.5 rounded-xl bg-[#E5484D]/15 border border-[#E5484D]/40 flex items-start gap-2.5 text-left text-xs text-[#B42328] dark:text-[#FCA5A5]">
+                <ShieldAlert className="w-4 h-4 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>{t.profile.vendorSuspendedBanner}</span>
+              </div>
+            )}
+
             {/* Quick Actions (Vendor Studio / KYC / Admin) */}
-            <div className="flex flex-wrap gap-2 pt-1 border-t border-[var(--dropp-border)]">
-              {isApprovedVendor ? (
-                <button
-                  type="button"
-                  onClick={() => onOpenVendorStudio('publish')}
-                  className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors shadow-md shadow-[#FF5A1F]/20"
-                >
-                  <Store className="w-4 h-4" aria-hidden="true" />
-                  <span>{t.profile.openVendorStudioBtn}</span>
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => onOpenVendorStudio('kyc')}
-                  className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
-                >
-                  <Store className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
-                  <span>{t.profile.becomeVendorBtn}</span>
-                </button>
-              )}
+            {(isApprovedVendor ||
+              canViewOwnSalesOrders(session) ||
+              isPendingVendor ||
+              canRequestVendorKyc(session) ||
+              isAdminUser(session)) && (
+              <div className="w-full flex flex-wrap justify-center gap-2 pt-1">
+                {isApprovedVendor && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenVendorStudio('publish')}
+                    className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-2 transition-colors shadow-md shadow-[#FF5A1F]/20"
+                  >
+                    <Store className="w-4 h-4" aria-hidden="true" />
+                    <span>{t.profile.openVendorStudioBtn}</span>
+                  </button>
+                )}
 
-              {session.role === 'admin' && (
+                {!isApprovedVendor && canViewOwnSalesOrders(session) && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenVendorStudio('orders')}
+                    className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+                  >
+                    <Store className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+                    <span>{t.profile.openVendorOrdersReadOnlyBtn}</span>
+                  </button>
+                )}
+
+                {!isApprovedVendor && isPendingVendor && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenVendorStudio('kyc')}
+                    className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[#F5A524]/40 text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+                  >
+                    <Store className="w-4 h-4 text-[#F5A524]" aria-hidden="true" />
+                    <span>{t.sheets.openKycModal}</span>
+                  </button>
+                )}
+
+                {canRequestVendorKyc(session) && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenVendorStudio('kyc')}
+                    className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-2 transition-colors"
+                  >
+                    <Store className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+                    <span>{t.profile.becomeVendorBtn}</span>
+                  </button>
+                )}
+
+                {isAdminUser(session) && (
+                  <button
+                    type="button"
+                    onClick={onOpenAdminConsole}
+                    className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-accent)]/60 hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-bold inline-flex items-center gap-2 transition-colors"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+                    <span>{t.profile.openAdminBtn}</span>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Wallet & Referral summary cards (NOT shown for Admin) */}
+            {canUseWalletAndReferral(session) && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={onOpenAdminConsole}
-                  className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-accent)]/60 hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-bold inline-flex items-center gap-2 transition-colors"
+                  onClick={() => setProfileTab('wallet')}
+                  className="p-4 rounded-2xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] flex items-center justify-between text-left transition-colors"
                 >
-                  <ShieldCheck className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
-                  <span>{t.profile.openAdminBtn}</span>
-                </button>
-              )}
-            </div>
-
-            {/* Wallet & Referral summary cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => setProfileTab('wallet')}
-                className="p-4 rounded-2xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] flex items-center justify-between text-left transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <Wallet className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
-                  <div>
-                    <div className="text-xs text-[var(--dropp-muted)]">{t.profile.walletLabel}</div>
-                    <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
-                      {formatFcfa(session.walletBalanceFcfa)}
+                  <div className="flex items-center gap-3">
+                    <Wallet className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
+                    <div>
+                      <div className="text-xs text-[var(--dropp-muted)]">{t.profile.walletLabel}</div>
+                      <div className="text-base font-bold text-[var(--dropp-text)] tabular-nums">
+                        {formatFcfa(session.walletBalanceFcfa)}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] text-[var(--dropp-muted)] block">{t.profile.escrowLabel}</span>
-                  <span className="text-xs font-bold text-[var(--dropp-text)] tabular-nums">{formatFcfa(session.pendingEscrowFcfa)}</span>
-                </div>
-              </button>
-
-              <div className="p-4 rounded-2xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] flex items-center justify-between">
-                <div>
-                  <div className="text-xs text-[var(--dropp-muted)]">{t.profile.referralLabel}</div>
-                  <div className="text-sm font-bold text-[var(--dropp-text)] font-mono tracking-wide mt-0.5">
-                    {session.referralCode}
+                  <div className="text-right">
+                    <span className="text-[10px] text-[var(--dropp-muted)] block">{t.profile.escrowLabel}</span>
+                    <span className="text-xs font-bold text-[var(--dropp-text)] tabular-nums">{formatFcfa(session.pendingEscrowFcfa)}</span>
                   </div>
+                </button>
+
+                <div className="p-4 rounded-2xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] flex items-center justify-between">
+                  <div>
+                    <div className="text-xs text-[var(--dropp-muted)]">{t.profile.referralLabel}</div>
+                    <div className="text-sm font-bold text-[var(--dropp-text)] font-mono tracking-wide mt-0.5">
+                      {session.referralCode}
+                    </div>
+                  </div>
+                  <span className="text-[11px] font-semibold text-[#FF5A1F] bg-[#FF5A1F]/10 px-2.5 py-1 rounded-lg">
+                    +500 FCFA
+                  </span>
                 </div>
-                <span className="text-[11px] font-semibold text-[#FF5A1F] bg-[#FF5A1F]/10 px-2.5 py-1 rounded-lg">
-                  +500 FCFA
-                </span>
               </div>
+            )}
+          </section>
+        ) : firebaseUid ? (
+          <section className="p-6 rounded-3xl bg-[var(--dropp-surface)] border border-[#E5484D]/50 text-center space-y-4 shadow-xl">
+            <AlertCircle className="w-10 h-10 text-[#FCA5A5] mx-auto" aria-hidden="true" />
+            <h1 className="text-lg font-bold text-[var(--dropp-text)]">{t.errors.profileLoadTitle}</h1>
+            <p className="text-xs text-[var(--dropp-muted)] max-w-md mx-auto leading-relaxed">
+              {profileError || t.errors.profileLoadDesc}
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
+              <button
+                type="button"
+                disabled={profileLoading}
+                onClick={onRetryProfile}
+                className="min-h-[44px] px-5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white font-bold text-xs inline-flex items-center gap-2 disabled:opacity-50"
+              >
+                <RefreshCw className={`w-4 h-4 ${profileLoading ? 'animate-spin' : ''}`} aria-hidden="true" />
+                <span>{t.errors.retry}</span>
+              </button>
+              <button
+                type="button"
+                onClick={onSignOut}
+                className="min-h-[44px] px-5 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] text-[var(--dropp-text)] font-semibold text-xs inline-flex items-center gap-2"
+              >
+                <LogOut className="w-4 h-4" aria-hidden="true" />
+                <span>{t.auth.signOut}</span>
+              </button>
             </div>
           </section>
         ) : (
@@ -377,7 +539,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                   key={tabItem.id}
                   type="button"
                   onClick={() => setProfileTab(tabItem.id)}
-                  className={`flex-1 min-w-[100px] min-h-[44px] px-3 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  className={`flex-1 min-w-fit min-h-[44px] px-4 text-xs font-semibold border-b-2 transition-colors whitespace-nowrap shrink-0 ${
                     active
                       ? 'border-[var(--dropp-accent)] text-[var(--dropp-text)]'
                       : 'border-transparent text-[var(--dropp-muted)] hover:text-[var(--dropp-text)]'
@@ -456,7 +618,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                     className="w-14 h-16 rounded-xl object-cover shrink-0 bg-black"
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="text-sm font-semibold text-[var(--dropp-text)] truncate">{post.title}</div>
+                    <div className="text-sm font-semibold text-[var(--dropp-text)]">{post.title}</div>
                     <div className="text-xs text-[var(--dropp-muted)] mt-1 tabular-nums flex items-center gap-2">
                       <span className="font-bold text-[var(--dropp-accent)] text-sm">{formatFcfa(post.priceFcfa)}</span>
                       <span>·</span>
@@ -502,6 +664,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
                 isOnline={isOnline}
                 orders={orders}
                 transactions={transactions}
+                withdrawalRequests={withdrawalRequests}
                 notifications={notifications}
                 notifPrefs={notifPrefs}
                 appRating={appRating}

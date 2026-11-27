@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;background-color:#131313;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-surface-variant": "#e4beb3", "secondary-fixed-dim": "#4edea3", "primary-fixed": "#ffdbd0", "inverse-primary": "#ae3200", "primary": "#ffb59e", "on-secondary-container": "#00311f", "primary-fixed-dim": "#ffb59e", "surface-container-lowest": "#0e0e0e", "tertiary": "#ffb95f", "outline": "#ab897f", "on-tertiary": "#472a00", "on-primary": "#5e1700", "inverse-surface": "#e5e2e1", "error": "#ffb4ab", "outline-variant": "#5b4038", "secondary-fixed": "#6ffbbe", "on-error-container": "#ffdad6", "tertiary-fixed-dim": "#ffb95f", "surface-container-low": "#1c1b1b", "on-secondary": "#003824", "surface-container-high": "#2a2a2a", "tertiary-fixed": "#ffddb8", "secondary": "#4edea3", "on-primary-fixed": "#3a0b00", "on-background": "#e5e2e1", "inverse-on-surface": "#313030", "surface-dim": "#131313", "on-tertiary-container": "#402500", "surface-variant": "#353534", "on-error": "#690005", "on-secondary-fixed": "#002113", "on-primary-fixed-variant": "#852400", "error-container": "#93000a", "secondary-container": "#00a572", "surface-tint": "#ffb59e", "background": "#131313", "surface-bright": "#393939", "surface": "#131313", "surface-container-highest": "#353534", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#005236", "on-surface": "#e5e2e1", "primary-container": "#ff5a1f", "on-primary-container": "#541400", "on-tertiary-fixed": "#2a1700", "tertiary-container": "#cc8200", "on-tertiary-fixed-variant": "#653e00" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-md": "1rem", "margin-mobile": "0.75rem", "margin-desktop": "2rem", "space-xl": "2.25rem", "gutter": "0.75rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "margin": "1rem", "space-lg": "1.5rem" }, fontFamily: { "label-md": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "price-card": ["Space Grotesk"], "display": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "display-mobile": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Space Grotesk"], "body-md": ["Plus Jakarta Sans"], "price-hero": ["Space Grotesk"] }, fontSize: { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "price-card": ["18px", { "lineHeight": "22px", "fontWeight": "700" }], "display": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-mobile": ["30px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-lg": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "price-hero": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/80 backdrop-blur-xl pt-safe shadow-[0_1px_12px_rgba(0,0,0,0.6)]"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-white text-[22px]">local_shipping</span></div><div class="flex flex-col"><div class="flex items-center gap-1"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">DROPP</span><span class="font-label-sm text-label-sm text-primary-container bg-surface-container px-1 py-0.5 rounded">GROS</span></div><span class="font-body-sm text-body-sm text-on-surface-variant truncate max-w-[130px]">Douala • Yaoundé</span></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center relative text-on-surface hover:text-primary-container transition-colors"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-6 space-y-space-md">
+<!-- Analytics Sub-Header & Live Status Tag -->
+<section class="px-margin-mobile pt-space-xs flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-fixed">Données Synchronisées • Entrepôt Akwa</span>
+</div>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded-full text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary">bolt</span>
+<span>Temps Réel</span>
+</div>
+</div>
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Tableau Analytique</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Surveillez vos flux de grossiste et la cadence d'expédition au Cameroun.</p>
+</div>
+<!-- Period Filter Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-1" role="tablist">
+<button class="shrink-0 px-3.5 py-1.5 rounded-full bg-primary-container text-white font-label-md text-label-md shadow-[0_2px_8px_rgba(255,90,31,0.35)] transition-transform active:scale-95">
+        7 Derniers Jours
+      </button>
+<button class="shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+        30 Jours
+      </button>
+<button class="shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+        Ce Mois
+      </button>
+<button class="shrink-0 px-3.5 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors">
+        Année 2025
+      </button>
+</div>
+</section>
+<!-- Key Metrics 2x2 Bento Grid -->
+<section class="px-margin-mobile">
+<div class="grid grid-cols-2 gap-space-xs">
+<!-- Metric 1: Revenue -->
+<div class="col-span-2 bg-surface-container-low rounded-xl p-space-md shadow-md relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-28 h-28 rounded-full bg-primary-container/10 blur-2xl pointer-events-none"></div>
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Chiffre d'Affaires Brut</span>
+<div class="w-7 h-7 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 mb-2">
+<span class="font-price-hero text-price-hero text-white tracking-tight">3 850 000</span>
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase">FCFA</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="inline-flex items-center gap-1 text-secondary font-label-sm text-label-sm bg-secondary-container/20 px-2 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+18.4% vs S-1</span>
+</div>
+<span class="text-on-surface-variant text-[11px]">MTN MoMo • Orange • Cash</span>
+</div>
+</div>
+<!-- Metric 2: Boxes Dispatched -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Colis Expédiés</span>
+<div class="w-6 h-6 rounded-md bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[15px]">inventory</span>
+</div>
+</div>
+<div class="flex items-baseline gap-1 my-1">
+<span class="font-display-mobile text-display-mobile text-white">42</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ctns</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm pt-1">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+<span>+6 cartons</span>
+</div>
+</div>
+<!-- Metric 3: Average B2B Basket -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-sm text-label-sm uppercase text-on-surface-variant">Panier B2B</span>
+<div class="w-6 h-6 rounded-md bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[15px]">shopping_cart_checkout</span>
+</div>
+</div>
+<div class="flex items-baseline gap-1 my-1">
+<span class="font-price-card text-price-card text-white">128 300</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">F</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm pt-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+5.2%</span>
+</div>
+</div>
+<!-- Metric 4: Dispute / Claim Rate -->
+<div class="col-span-2 bg-surface-container-low rounded-xl p-space-md shadow-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary-container/25 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">verified_user</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-white">0.8%</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container/30 text-secondary-fixed font-label-sm text-label-sm">Conformité Or</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Taux litige / réclamation revendeurs</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">check_circle</span>
+</div>
+</div>
+</section>
+<!-- Interactive Daily Sales Flow Chart -->
+<section class="px-margin-mobile">
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white">Cadence Hebdomadaire</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Volume quotidien en FCFA</span>
+</div>
+<div class="flex items-center gap-2 font-label-sm text-label-sm">
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span> Normal
+          </span>
+<span class="inline-flex items-center gap-1 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Pic
+          </span>
+</div>
+</div>
+<!-- Bar Chart Visual -->
+<div class="pt-4 pb-1">
+<div class="h-36 flex items-end justify-between gap-2 px-1">
+<!-- Lun: 420K -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="font-label-sm text-[10px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">420k</span>
+<div class="w-full bg-primary-container/70 hover:bg-primary-container transition-all rounded-t-sm" style="height: 53%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">L</span>
+</div>
+<!-- Mar: 380K -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="font-label-sm text-[10px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">380k</span>
+<div class="w-full bg-primary-container/70 hover:bg-primary-container transition-all rounded-t-sm" style="height: 48%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">M</span>
+</div>
+<!-- Mer: 690K (Arrivage) -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group relative">
+<span class="absolute -top-3 font-label-sm text-[9px] bg-surface-container-highest px-1 rounded text-primary-fixed">Arrivage</span>
+<div class="w-full bg-primary-container hover:bg-primary transition-all rounded-t-sm" style="height: 88%;"></div>
+<span class="font-label-sm text-label-sm text-primary-fixed">M</span>
+</div>
+<!-- Jeu: 510K -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="font-label-sm text-[10px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">510k</span>
+<div class="w-full bg-primary-container/70 hover:bg-primary-container transition-all rounded-t-sm" style="height: 65%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">J</span>
+</div>
+<!-- Ven: 780K (Pic Vente) -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group relative">
+<div class="absolute -top-4 w-5 h-5 rounded-full bg-secondary flex items-center justify-center text-on-secondary shadow-lg animate-bounce">
+<span class="material-symbols-outlined text-[13px]">star</span>
+</div>
+<div class="w-full bg-secondary hover:bg-secondary-fixed transition-all rounded-t-sm shadow-[0_0_12px_rgba(78,222,163,0.3)]" style="height: 100%;"></div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">V</span>
+</div>
+<!-- Sam: 620K -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="font-label-sm text-[10px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">620k</span>
+<div class="w-full bg-primary-container/70 hover:bg-primary-container transition-all rounded-t-sm" style="height: 79%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">S</span>
+</div>
+<!-- Dim: 450K -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+<span class="font-label-sm text-[10px] text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">450k</span>
+<div class="w-full bg-primary-container/60 hover:bg-primary-container transition-all rounded-t-sm" style="height: 57%;"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">D</span>
+</div>
+</div>
+</div>
+<!-- Best Day Highlight Banner -->
+<div class="bg-surface-container-high/70 rounded-lg p-2.5 flex items-start gap-2.5">
+<div class="w-6 h-6 rounded-md bg-secondary/20 flex items-center justify-center text-secondary shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[16px]">celebration</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface leading-snug">
+<strong class="text-white font-label-md">Meilleur jour : Vendredi</strong> (780 000 FCFA expédiés en direct de l'entrepôt Akwa pour les réassorts weekend).
+        </p>
+</div>
+</div>
+</section>
+<!-- Top Performing Drops & Products -->
+<section class="px-margin-mobile flex flex-col space-y-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-white">Top Drops les Plus Rentables</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Classement par volume de commande et traction vidéo</p>
+</div>
+<button class="font-label-sm text-label-sm text-primary-container hover:underline">Voir Tout</button>
+</div>
+<div class="flex flex-col space-y-space-xs">
+<!-- Product Item 1 -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-space-sm shadow-sm relative overflow-hidden">
+<div class="w-16 h-16 rounded-lg bg-surface-container-highest shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="High quality bulk stack of trendy running sneakers sport shoes neatly arranged in commercial warehouse in Douala Cameroon warm industrial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHBdJYZwkh_clU51JnNxDGc9KL5QMHPqaTRZBSPYd94uhCPxvQVEEEmU0jMWW62BEN0kWcMd-cWiS8e6CLnq_BKyrFtG-7iEpt45ctCpA0Cx5-dWeovS9HL5OzLzUvU8hm9xDxS5Qsf-ntZSiQLwqrTNeTtBf0UkVsCZl0L4pL-vj_ermgwsSUatSP5T2DNRD-mevHfeyZDsnRMSKErGlZ0Qfa9e0qjateNc4mXL4"/>
+<div class="absolute top-1 left-1 bg-primary-container text-white font-label-sm text-[9px] px-1 rounded-sm">#1</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-label-lg text-label-lg text-white truncate">Lot 50x Sneakers Air Pro 2025</h3>
+<span class="font-price-card text-[15px] text-primary shrink-0">1 296 000 F</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-1.5 py-0.2 rounded">180 paires</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">• Expédié Akwa</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-on-surface-variant font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px] text-tertiary">videocam</span>
+<span>24.5K vues TikTok Live B2B</span>
+</div>
+</div>
+</div>
+<!-- Product Item 2 -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-space-sm shadow-sm relative overflow-hidden">
+<div class="w-16 h-16 rounded-lg bg-surface-container-highest shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Master wholesale carton packed with retail boxes of wireless TWS bluetooth earbuds gadget electronic stock dark background bright accent colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUbIrleG3n5HswgtRsVCb9TRg2ZWeOetnxuJvzuXULKDPxFku9njDpeiHGwnYMwyCQfOC4Ev3ia6-NnaRlxze1MJF9Hd-ZLhwinR1kWZK-usbuHxTBc2ujvidxoubBC6JgZIoQM3wVpnGecddt3XMO0t9yIHPlqWQSqkw9an1JCSrCMKplC-tkxeU-bPDmjZSLYt408s1HqH7sl67hRNCzhW7Huq7A3-yejD58gH0"/>
+<div class="absolute top-1 left-1 bg-surface-container-high text-on-surface font-label-sm text-[9px] px-1 rounded-sm">#2</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-label-lg text-label-lg text-white truncate">Cartons 100x Écouteurs TWS</h3>
+<span class="font-price-card text-[15px] text-primary shrink-0">864 000 F</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-1.5 py-0.2 rounded">8 cartons</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">• Stock direct</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-on-surface-variant font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px] text-tertiary">videocam</span>
+<span>18.2K vues TikTok B2B</span>
+</div>
+</div>
+</div>
+<!-- Product Item 3 -->
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-space-sm shadow-sm relative overflow-hidden">
+<div class="w-16 h-16 rounded-lg bg-surface-container-highest shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Industrial bale of wholesale premium cream women dresses imported fashion garments packed tightly in commercial warehouse with tags" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRtLxzGN-nTr8pbBzfoJ58cJzUXp95iGrxbLK-wXFqP4XQlKM6-zdpUZucStGXXeR-HcVy2HSThVQStZlVG086inmaQslp0Jbx8S8CsPfpZC5SNOJjfaBOi5CjhNSmUHoKOQoauzMKzGoqOdoRGt1mBuDnKoxiVoYVpg5vth9dlUB1ciY4ppBlS_WjM03xvDzZ6a7U3ydXDeegcuSJBwnjxY7ALgLjn_Ig4cA48J8"/>
+<div class="absolute top-1 left-1 bg-surface-container-high text-on-surface font-label-sm text-[9px] px-1 rounded-sm">#3</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-label-lg text-label-lg text-white truncate">Balots Friperie Robes Crème</h3>
+<span class="font-price-card text-[15px] text-primary shrink-0">270 000 F</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-1.5 py-0.2 rounded">6 balots</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">• Import UK</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-on-surface-variant font-label-sm text-[11px]">
+<span class="material-symbols-outlined text-[13px] text-tertiary">videocam</span>
+<span>12.1K vues TikTok B2B</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Geographic Distribution of Wholesale Buyers -->
+<section class="px-margin-mobile">
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md space-y-space-sm">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-white">Acheteurs par Région</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pénétration du réseau de revendeurs DROPP</p>
+</div>
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+</div>
+</div>
+<!-- Region Breakdown Bars -->
+<div class="space-y-3 pt-1">
+<!-- Douala -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md text-white">Douala</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">(Marché Central, Akwa, Bonabéri)</span>
+</div>
+<span class="font-label-md text-label-md text-primary-fixed">58%</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-primary-container rounded-full" style="width: 58%;"></div>
+</div>
+</div>
+<!-- Yaoundé -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md text-white">Yaoundé</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">(Mokolo, Mvan, Centre-ville)</span>
+</div>
+<span class="font-label-md text-label-md text-secondary-fixed">32%</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 32%;"></div>
+</div>
+</div>
+<!-- Villes Secondaires -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="font-label-md text-label-md text-white">Villes Secondaires</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant">(Bafoussam, Kribi, Bamenda via agences)</span>
+</div>
+<span class="font-label-md text-label-md text-tertiary">10%</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-tertiary rounded-full" style="width: 10%;"></div>
+</div>
+</div>
+</div>
+<div class="pt-2 flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant bg-surface-container-high/40 p-2.5 rounded-lg">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-secondary">local_shipping</span>
+<span>94% acheminés via agences partenaires (Garantie 24h)</span>
+</span>
+</div>
+</div>
+</section>
+<!-- Accounting & Report Export Section -->
+<section class="px-margin-mobile pt-1">
+<button class="w-full h-13 py-3.5 px-4 rounded-full bg-surface-container-high hover:bg-surface-variant active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-white font-label-lg text-label-lg shadow-lg" id="download-report-btn">
+<span class="material-symbols-outlined text-[20px] text-primary-container">file_download</span>
+<span>Télécharger le rapport hebdomadaire PDF / Excel</span>
+</button>
+<p class="font-label-sm text-label-sm text-center text-on-surface-variant mt-2">
+      Certifié conforme pour déclarations fiscales &amp; DSF Cameroun
+    </p>
+</section>
+</div>
+<script>
+  // Simple interactive feedback for export button
+  const exportBtn = document.getElementById('download-report-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      const originalText = exportBtn.innerHTML;
+      exportBtn.innerHTML = `
+        <span class="material-symbols-outlined text-[20px] animate-spin text-secondary">progress_activity</span>
+        <span class="text-secondary">Génération de la balance 7J...</span>
+      `;
+      setTimeout(() => {
+        exportBtn.innerHTML = `
+          <span class="material-symbols-outlined text-[20px] text-secondary">done_all</span>
+          <span class="text-white">Rapport téléchargé (Format OHADA/Excel)</span>
+        `;
+        setTimeout(() => {
+          exportBtn.innerHTML = originalText;
+        }, 3000);
+      }, 1200);
+    });
+  }
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_24px_rgba(0,0,0,0.85)]" data-active-classes="text-primary-container"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="accueil-grossiste" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm">Accueil</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="catalogue-produits" href="#"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-label-sm text-label-sm">Produits</span></a><a class="flex flex-col items-center justify-center min-w-[52px] h-12" data-path="nouveau-drop-live" href="#"><div class="w-11 h-11 rounded-full bg-primary-container flex items-center justify-center shadow-[0_2px_12px_rgba(255,90,31,0.5)] active:scale-95 transition-transform"><span class="material-symbols-outlined text-white text-[24px]">add</span></div></a><a aria-current="page" class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 relative transition-colors text-primary-container" data-path="gestion-commandes" href="#"><div class="relative"><span class="material-symbols-outlined text-[22px]">shopping_bag</span><span class="absolute -top-1 -right-2 bg-primary-container text-white font-label-sm text-[9px] px-1 py-0.2 rounded-full min-w-[14px] text-center">8</span></div><span class="font-label-sm text-label-sm">Ventes</span></a><a class="flex flex-col items-center justify-center gap-1 min-w-[56px] h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="boutique-vendeur" href="#"><span class="material-symbols-outlined text-[22px]">storefront</span><span class="font-label-sm text-label-sm">Boutique</span></a></div></nav></body></html>

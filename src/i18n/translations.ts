@@ -146,6 +146,9 @@ export interface DroppDictionary {
     recommendedTitle: string;
     rfqBannerBtn: string;
     promoTag: string;
+    applyFiltersBtn: string;
+    demoBadge: string;
+    activeFiltersLabel: string;
   };
   product: {
     detailTitle: string;
@@ -160,6 +163,7 @@ export interface DroppDictionary {
     viewShopBtn: string;
     buyNowBtn: string;
     escrowBadge: string;
+    demoBadge: string;
   };
   cart: {
     title: string;
@@ -234,6 +238,12 @@ export interface DroppDictionary {
     txEscrowRelease: string;
     txRefund: string;
     txReferralBonus: string;
+    phoneLabel: string;
+    simulatedNotice: string;
+    withdrawRequestsTitle: string;
+    statusPending: string;
+    statusApproved: string;
+    statusRejected: string;
   };
   messages: {
     title: string;
@@ -319,6 +329,19 @@ export interface DroppDictionary {
     shipOrderBtn: string;
     markDeliveredBtn: string;
     declineOrderBtn: string;
+    cloudinaryRequiredError: string;
+    chooseVideoBtn: string;
+    choosePhotosBtn: string;
+    chooseFileBtn: string;
+    noFileChosen: string;
+    kycThreePhotosRequired: string;
+    tabRfq: string;
+    kpiAvailableWallet: string;
+    kpiPendingEscrow: string;
+    kpiSalesCount: string;
+    kpiPostsCount: string;
+    backToProfile: string;
+    openRfqBtn: string;
   };
   admin: {
     title: string;
@@ -339,6 +362,36 @@ export interface DroppDictionary {
     disputeResolvedVendor: string;
     approvePostBtn: string;
     rejectPostBtn: string;
+    accessDeniedTitle: string;
+    accessDeniedDesc: string;
+    backHomeBtn: string;
+    tabOverview: string;
+    tabUsers: string;
+    tabWithdrawals: string;
+    tabCategories: string;
+    tabCommission: string;
+    tabAnnouncements: string;
+    tabAudit: string;
+    searchUsersPlaceholder: string;
+    suspendUserBtn: string;
+    reactivateUserBtn: string;
+    deleteUserBtn: string;
+    confirmDeleteUser: string;
+    approveWithdrawalBtn: string;
+    rejectWithdrawalBtn: string;
+    commissionLabel: string;
+    saveSettingsBtn: string;
+    announcementTitleLabel: string;
+    announcementMsgLabel: string;
+    announcementActiveLabel: string;
+    emptyKyc: string;
+    emptyUsers: string;
+    emptyShops: string;
+    emptyPosts: string;
+    emptyDisputes: string;
+    emptyWithdrawals: string;
+    emptyAudit: string;
+    backToProfile: string;
   };
   profile: {
     visitorTitle: string;
@@ -363,8 +416,10 @@ export interface DroppDictionary {
     roleVendor: string;
     roleAdmin: string;
     vendorPendingBanner: string;
+    vendorSuspendedBanner: string;
     becomeVendorBtn: string;
     openVendorStudioBtn: string;
+    openVendorOrdersReadOnlyBtn: string;
     openAdminBtn: string;
     languageLabel: string;
     themeLabel: string;
@@ -396,6 +451,16 @@ export interface DroppDictionary {
     title: string;
     desc: string;
     reload: string;
+    retry: string;
+    profileLoadTitle: string;
+    profileLoadDesc: string;
+    catalogLoadDesc: string;
+    emptyCatalog: string;
+    suspendedBlocked: string;
+    adminBlocked: string;
+    emailUnverified: string;
+    writeFailed: string;
+    readOnlyOrdersHint: string;
   };
 }
 
@@ -547,6 +612,9 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       recommendedTitle: 'Recommandé selon vos intérêts',
       rfqBannerBtn: 'Demander un devis (RFQ)',
       promoTag: 'Promo',
+      applyFiltersBtn: 'Appliquer les filtres',
+      demoBadge: 'Démo fictive',
+      activeFiltersLabel: 'filtres actifs',
     },
     product: {
       detailTitle: 'Fiche produit grossiste',
@@ -561,6 +629,7 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       viewShopBtn: 'Voir la boutique',
       buyNowBtn: 'Commander maintenant',
       escrowBadge: 'Paiement protégé par séquestre DROPP',
+      demoBadge: 'Démo fictive',
     },
     cart: {
       title: 'Panier multi-vendeurs',
@@ -635,6 +704,12 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       txEscrowRelease: 'Libération séquestre',
       txRefund: 'Remboursement commande',
       txReferralBonus: 'Bonus parrainage (+500 FCFA)',
+      phoneLabel: 'Numéro Mobile Money (ex : 677102030)',
+      simulatedNotice: 'Paiement Mobile Money simulé sur cet environnement de test (aucun prélèvement réel).',
+      withdrawRequestsTitle: 'Demandes de retrait',
+      statusPending: 'En attente',
+      statusApproved: 'Approuvé',
+      statusRejected: 'Rejeté',
     },
     messages: {
       title: 'Messages & Négociations',
@@ -711,7 +786,7 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       publishMediaSelect: 'Choisir un fichier média',
       publishSubmitBtn: 'Publier dans le flux & Marché',
       videoDurationError: 'La vidéo dépasse 15 secondes. Choisissez un extrait de 15 s maximum.',
-      cloudinaryDemoHint: 'Upload signé prêt (mode démo local actif si Cloudinary non configuré).',
+      cloudinaryDemoHint: 'Téléversement signé obligatoire via Cloudinary (aucun média de démo par défaut).',
       uploadingMedia: 'Envoi sécurisé vers Cloudinary en cours…',
       uploadedCloudinary: 'Média hébergé sur Cloudinary.',
       storyTextLabel: 'Annonce Story 24 h (arrivage, promo flash…)',
@@ -720,6 +795,19 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       shipOrderBtn: 'Expédier',
       markDeliveredBtn: 'Marquer livrée',
       declineOrderBtn: 'Refuser',
+      cloudinaryRequiredError: 'Cloudinary n’est pas configuré ou le média n’a pas été sélectionné. Téléversez un vrai fichier pour publier.',
+      chooseVideoBtn: 'Choisir une vidéo (≤ 15 s)',
+      choosePhotosBtn: 'Choisir des photos (max 10)',
+      chooseFileBtn: 'Choisir une photo',
+      noFileChosen: 'Aucun fichier sélectionné',
+      kycThreePhotosRequired: 'Les 3 photos (CNI recto, CNI verso et selfie) sont obligatoires.',
+      tabRfq: 'Devis (RFQ)',
+      kpiAvailableWallet: 'Solde disponible',
+      kpiPendingEscrow: 'En séquestre',
+      kpiSalesCount: 'Ventes confirmées',
+      kpiPostsCount: 'Publications',
+      backToProfile: '← Mon profil',
+      openRfqBtn: 'Répondre aux devis (RFQ)',
     },
     admin: {
       title: 'Console Super Admin DROPP',
@@ -740,6 +828,36 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       disputeResolvedVendor: 'Résolu : fonds libérés au vendeur',
       approvePostBtn: 'Publier',
       rejectPostBtn: 'Masquer',
+      accessDeniedTitle: 'Accès refusé — Espace Super Admin',
+      accessDeniedDesc: 'Cette page est strictement réservée au Super Administrateur DROPP vérifié côté serveur.',
+      backHomeBtn: 'Retour à l’accueil',
+      tabOverview: 'Vue globale',
+      tabUsers: 'Utilisateurs',
+      tabWithdrawals: 'Retraits',
+      tabCategories: 'Catégories',
+      tabCommission: 'Commission',
+      tabAnnouncements: 'Annonces',
+      tabAudit: 'Journal d’audit',
+      searchUsersPlaceholder: 'Rechercher par nom, e-mail, UID ou rôle…',
+      suspendUserBtn: 'Suspendre',
+      reactivateUserBtn: 'Réactiver',
+      deleteUserBtn: 'Supprimer',
+      confirmDeleteUser: 'Confirmer suppression',
+      approveWithdrawalBtn: 'Approuver',
+      rejectWithdrawalBtn: 'Rejeter',
+      commissionLabel: 'Taux de commission plateforme (%)',
+      saveSettingsBtn: 'Enregistrer les réglages',
+      announcementTitleLabel: 'Titre de l’annonce globale',
+      announcementMsgLabel: 'Message affiché aux utilisateurs',
+      announcementActiveLabel: 'Afficher la bannière d’annonce',
+      emptyKyc: 'Aucun dossier KYC vendeur soumis pour le moment.',
+      emptyUsers: 'Aucun utilisateur trouvé pour cette recherche.',
+      emptyShops: 'Aucune boutique enregistrée pour le moment.',
+      emptyPosts: 'Aucune publication à modérer pour le moment.',
+      emptyDisputes: 'Aucun litige ouvert ou archivé pour le moment.',
+      emptyWithdrawals: 'Aucune demande de retrait en attente ou traitée.',
+      emptyAudit: 'Aucune action administrative enregistrée dans le journal.',
+      backToProfile: '← Mon profil',
     },
     profile: {
       visitorTitle: 'Bienvenue sur DROPP',
@@ -764,8 +882,10 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       roleVendor: 'Vendeur',
       roleAdmin: 'Super Admin',
       vendorPendingBanner: 'Vérification d’identité en attente — publication et commandes suspendues jusqu’à validation.',
+      vendorSuspendedBanner: 'Boutique suspendue — vos publications sont masquées et les actions sont bloquées. Vos commandes restent consultables en lecture seule.',
       becomeVendorBtn: 'Devenir vendeur (KYC CNI)',
       openVendorStudioBtn: 'Ouvrir l’Espace Vendeur',
+      openVendorOrdersReadOnlyBtn: 'Voir mes commandes (lecture seule)',
       openAdminBtn: 'Console Super Admin',
       languageLabel: 'Langue de l’interface',
       themeLabel: 'Apparence (Thème)',
@@ -797,6 +917,16 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       title: 'Un incident est survenu',
       desc: 'L’interface a rencontré une erreur inattendue. Vos données locales sont préservées.',
       reload: 'Recharger l’application',
+      retry: 'Réessayer',
+      profileLoadTitle: 'Impossible de charger votre profil',
+      profileLoadDesc: 'La session serveur n’a pas répondu ou le compte administrateur n’est pas encore configuré.',
+      catalogLoadDesc: 'Impossible de lire les produits depuis Firestore pour le moment.',
+      emptyCatalog: 'Aucune publication disponible dans le catalogue pour l’instant.',
+      suspendedBlocked: 'Compte vendeur suspendu : cette action est désactivée.',
+      adminBlocked: 'Le compte Super Admin modère la plateforme et n’effectue pas d’achat, de like ou de publication vendeur.',
+      emailUnverified: 'Vérifiez votre adresse e-mail via le lien reçu avant de soumettre une commande ou un dossier KYC.',
+      writeFailed: 'Échec de l’enregistrement dans la base partagée. Réessayez.',
+      readOnlyOrdersHint: 'Mode lecture seule : boutique suspendue, les changements de statut sont bloqués.',
     },
   },
   en: {
@@ -946,6 +1076,9 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       recommendedTitle: 'Recommended from your interests',
       rfqBannerBtn: 'Request a Quote (RFQ)',
       promoTag: 'Deal',
+      applyFiltersBtn: 'Apply filters',
+      demoBadge: 'Demo sample',
+      activeFiltersLabel: 'active filters',
     },
     product: {
       detailTitle: 'Wholesale product sheet',
@@ -960,6 +1093,7 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       viewShopBtn: 'View shop',
       buyNowBtn: 'Order now',
       escrowBadge: 'Protected by DROPP Escrow',
+      demoBadge: 'Demo sample',
     },
     cart: {
       title: 'Multi-vendor cart',
@@ -1034,6 +1168,12 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       txEscrowRelease: 'Escrow payout released',
       txRefund: 'Order refund',
       txReferralBonus: 'Referral bonus (+500 FCFA)',
+      phoneLabel: 'Mobile Money phone (e.g., 677102030)',
+      simulatedNotice: 'Simulated Mobile Money flow for testing (no real funds are charged).',
+      withdrawRequestsTitle: 'Withdrawal requests',
+      statusPending: 'Pending',
+      statusApproved: 'Approved',
+      statusRejected: 'Rejected',
     },
     messages: {
       title: 'Messages & Negotiation',
@@ -1110,7 +1250,7 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       publishMediaSelect: 'Select media file',
       publishSubmitBtn: 'Publish to Feed & Market',
       videoDurationError: 'Video exceeds 15 seconds. Please select a clip of 15s or less.',
-      cloudinaryDemoHint: 'Signed upload ready (using local demo media when Cloudinary is not configured).',
+      cloudinaryDemoHint: 'Signed upload via Cloudinary is required (no default demo video).',
       uploadingMedia: 'Uploading securely to Cloudinary…',
       uploadedCloudinary: 'Media hosted on Cloudinary.',
       storyTextLabel: '24h Story caption (new stock, flash promo…)',
@@ -1119,6 +1259,19 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       shipOrderBtn: 'Ship',
       markDeliveredBtn: 'Mark delivered',
       declineOrderBtn: 'Decline',
+      cloudinaryRequiredError: 'Cloudinary upload is required. Select a file and make sure Cloudinary is configured.',
+      chooseVideoBtn: 'Choose video (≤ 15s)',
+      choosePhotosBtn: 'Choose photos (max 10)',
+      chooseFileBtn: 'Choose photo',
+      noFileChosen: 'No file selected',
+      kycThreePhotosRequired: 'All 3 photos (ID front, ID back, and selfie) are mandatory.',
+      tabRfq: 'RFQs',
+      kpiAvailableWallet: 'Available wallet',
+      kpiPendingEscrow: 'In escrow',
+      kpiSalesCount: 'Completed sales',
+      kpiPostsCount: 'Posts',
+      backToProfile: '← My profile',
+      openRfqBtn: 'Reply to RFQs',
     },
     admin: {
       title: 'DROPP Super Admin Console',
@@ -1139,6 +1292,36 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       disputeResolvedVendor: 'Resolved: released to vendor',
       approvePostBtn: 'Publish',
       rejectPostBtn: 'Hide',
+      accessDeniedTitle: 'Access Denied — Super Admin Only',
+      accessDeniedDesc: 'This screen is strictly restricted to the server-verified DROPP Super Admin.',
+      backHomeBtn: 'Back to Home',
+      tabOverview: 'Overview',
+      tabUsers: 'Users',
+      tabWithdrawals: 'Withdrawals',
+      tabCategories: 'Categories',
+      tabCommission: 'Commission',
+      tabAnnouncements: 'Announcements',
+      tabAudit: 'Audit log',
+      searchUsersPlaceholder: 'Search by name, email, UID, or role…',
+      suspendUserBtn: 'Suspend',
+      reactivateUserBtn: 'Reactivate',
+      deleteUserBtn: 'Delete',
+      confirmDeleteUser: 'Confirm deletion',
+      approveWithdrawalBtn: 'Approve',
+      rejectWithdrawalBtn: 'Reject',
+      commissionLabel: 'Platform commission rate (%)',
+      saveSettingsBtn: 'Save settings',
+      announcementTitleLabel: 'Global announcement title',
+      announcementMsgLabel: 'Banner message shown to users',
+      announcementActiveLabel: 'Show announcement banner',
+      emptyKyc: 'No vendor KYC applications submitted yet.',
+      emptyUsers: 'No users match this search.',
+      emptyShops: 'No shops registered yet.',
+      emptyPosts: 'No posts to moderate right now.',
+      emptyDisputes: 'No open or archived disputes yet.',
+      emptyWithdrawals: 'No pending or processed withdrawal requests.',
+      emptyAudit: 'No admin audit entries recorded yet.',
+      backToProfile: '← My profile',
     },
     profile: {
       visitorTitle: 'Welcome to DROPP',
@@ -1163,8 +1346,10 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       roleVendor: 'Vendor',
       roleAdmin: 'Super Admin',
       vendorPendingBanner: 'Identity verification pending — publishing and orders locked until approved.',
+      vendorSuspendedBanner: 'Shop suspended — your posts are hidden and actions are locked. You can still view your sales orders in read-only mode.',
       becomeVendorBtn: 'Become a seller (ID KYC)',
       openVendorStudioBtn: 'Open Vendor Studio',
+      openVendorOrdersReadOnlyBtn: 'View sales orders (read-only)',
       openAdminBtn: 'Super Admin Console',
       languageLabel: 'Interface language',
       themeLabel: 'Appearance (Theme)',
@@ -1196,6 +1381,16 @@ export const TRANSLATIONS: Record<LanguageCode, DroppDictionary> = {
       title: 'Something went wrong',
       desc: 'The interface encountered an unexpected error. Your local cache is safe.',
       reload: 'Reload app',
+      retry: 'Retry',
+      profileLoadTitle: 'Unable to load your profile',
+      profileLoadDesc: 'The session server did not respond or is missing configuration.',
+      catalogLoadDesc: 'Unable to load products from Firestore right now.',
+      emptyCatalog: 'No published items in the catalog yet.',
+      suspendedBlocked: 'Suspended vendor account: this action is disabled.',
+      adminBlocked: 'Super Admin moderates the platform and does not buy, like, or publish as a vendor.',
+      emailUnverified: 'Please verify your email address before placing orders or submitting KYC.',
+      writeFailed: 'Failed to save changes to Firestore. Please retry.',
+      readOnlyOrdersHint: 'Read-only mode: shop suspended, status changes are blocked.',
     },
   },
 };

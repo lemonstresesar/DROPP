@@ -18,6 +18,7 @@ import type {
 } from '../types/dropp';
 import { formatFcfa } from '../utils/formatters';
 import { groupCartByVendor } from '../utils/commerce';
+import { canBuy } from '../utils/permissions';
 
 interface CartCheckoutDrawerProps {
   t: DroppDictionary;
@@ -34,7 +35,7 @@ interface CartCheckoutDrawerProps {
     deliveryCity: string;
     deliveryNeighborhood: string;
     deliveryPhone: string;
-  }) => { ok: boolean; reason?: string };
+  }) => Promise<{ ok: boolean; reason?: string }>;
   onViewOrders: () => void;
   onClose: () => void;
 }
@@ -73,7 +74,7 @@ export const CartCheckoutDrawer: React.FC<CartCheckoutDrawerProps> = ({
     [groups]
   );
 
-  const handlePay = () => {
+  const handlePay = async () => {
     setErrorMsg('');
     if (!isOnline) {
       setErrorMsg(t.network.offlineOrderBlocked);
@@ -83,11 +84,15 @@ export const CartCheckoutDrawer: React.FC<CartCheckoutDrawerProps> = ({
       onRequireAuth();
       return;
     }
+    if (!canBuy(session)) {
+      setErrorMsg(t.errors.suspendedBlocked);
+      return;
+    }
     if (isProcessing) return;
 
     setIsProcessing(true);
-    setTimeout(() => {
-      const result = onCheckout({
+    try {
+      const result = await onCheckout({
         idempotencyKey: attemptSeed,
         paymentMethod,
         simulateMobileSuccess: simulateSuccess,
@@ -95,11 +100,9 @@ export const CartCheckoutDrawer: React.FC<CartCheckoutDrawerProps> = ({
         deliveryNeighborhood,
         deliveryPhone,
       });
-      setIsProcessing(false);
       if (result.ok) {
         setCheckoutDone(true);
       } else {
-        // Generate fresh idempotency key for retry after explicit failure
         setAttemptSeed(`chk-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`);
         if (result.reason === 'insufficient_wallet') {
           setErrorMsg(t.cart.errInsufficientWallet);
@@ -107,11 +110,15 @@ export const CartCheckoutDrawer: React.FC<CartCheckoutDrawerProps> = ({
           setErrorMsg(t.cart.errMobileFailed);
         } else if (result.reason === 'invalid_address') {
           setErrorMsg(t.cart.errInvalidAddress);
+        } else if (result.reason === 'email_unverified') {
+          setErrorMsg(t.errors.emailUnverified);
         } else {
-          setErrorMsg(t.errors.desc);
+          setErrorMsg(t.errors.writeFailed);
         }
       }
-    }, 350);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "inverse-on-surface": "#313030", "on-primary-fixed-variant": "#852400", "tertiary-fixed": "#ffddb8", "on-secondary": "#003824", "on-secondary-fixed-variant": "#005236", "secondary": "#4edea3", "primary-container": "#ff5a1f", "surface-container-high": "#2a2a2a", "on-secondary-fixed": "#002113", "surface": "#131313", "primary-fixed-dim": "#ffb59e", "on-surface-variant": "#e4beb3", "outline": "#ab897f", "on-primary": "#5e1700", "surface-tint": "#ffb59e", "surface-container": "#201f1f", "surface-dim": "#131313", "on-tertiary": "#472a00", "tertiary-fixed-dim": "#ffb95f", "on-surface": "#e5e2e1", "error": "#ffb4ab", "outline-variant": "#5b4038", "primary": "#ffb59e", "secondary-container": "#00a572", "on-primary-container": "#541400", "inverse-surface": "#e5e2e1", "on-primary-fixed": "#3a0b00", "surface-container-lowest": "#0e0e0e", "on-error": "#690005", "background": "#131313", "secondary-fixed-dim": "#4edea3", "tertiary": "#ffb95f", "on-error-container": "#ffdad6", "on-tertiary-fixed": "#2a1700", "surface-container-highest": "#353534", "on-tertiary-fixed-variant": "#653e00", "surface-container-low": "#1c1b1b", "on-background": "#e5e2e1", "secondary-fixed": "#6ffbbe", "primary-fixed": "#ffdbd0", "surface-bright": "#393939", "inverse-primary": "#ae3200", "surface-variant": "#353534", "tertiary-container": "#cc8200", "on-tertiary-container": "#402500", "on-secondary-container": "#00311f", "error-container": "#93000a" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "margin": "1rem", "margin-mobile": "0.75rem", "gutter": "0.75rem", "margin-desktop": "2rem", "space-md": "1rem", "space-xl": "2.25rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem" }, fontFamily: { "headline-md": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "display-mobile": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "label-md": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "price-card": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "body-sm": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "display": ["Space Grotesk"], "price-hero": ["Space Grotesk"], "label-lg": ["Space Grotesk"] }, fontSize: { "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "display-mobile": ["30px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "price-card": ["18px", { "lineHeight": "22px", "fontWeight": "700" }], "headline-sm": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "display": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "price-hero": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;min-height:100vh;margin:0;padding:0;}body{background-color:#000000;color:#e5e2e1;overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface-container-lowest text-on-surface select-none"><div class="fixed top-0 inset-x-0 z-50 pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between"><button aria-label="Fermer" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container-lowest/60 backdrop-blur-xl text-on-surface hover:bg-surface-container-high transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">close</span></button><div class="flex items-center gap-space-sm"><button aria-label="Flash" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container-lowest/60 backdrop-blur-xl text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">flash_off</span></button><button aria-label="Retourner caméra" class="w-11 h-11 flex items-center justify-center rounded-full bg-surface-container-lowest/60 backdrop-blur-xl text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[22px]">flip_camera_android</span></button></div></div></div><main class="relative w-full min-h-screen bg-surface-container-lowest flex flex-col justify-between"><div class="flex flex-col w-full relative select-none">
+<!-- Dynamic HUD Overlay for TikTok/Reels Style Recording Studio -->
+<div class="w-full flex flex-col justify-between py-space-sm px-margin-mobile gap-space-md">
+<!-- Top Segmented 15s Progress Bar & Audio Selector -->
+<div class="flex flex-col w-full gap-space-xs">
+<!-- 15s Segments Progress Bar (Divided into 3 segments) -->
+<div class="flex items-center gap-1.5 w-full px-1">
+<div class="h-1.5 flex-1 rounded-full bg-primary-container shadow-[0_0_8px_rgba(255,90,31,0.8)] relative overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-2/3 bg-on-surface rounded-full opacity-40"></div>
+</div>
+<div class="h-1.5 flex-1 rounded-full bg-surface-container-high/70 backdrop-blur-md"></div>
+<div class="h-1.5 flex-1 rounded-full bg-surface-container-high/70 backdrop-blur-md"></div>
+<div class="px-2 py-0.5 rounded-full bg-surface-container-lowest/80 backdrop-blur-md ml-1 shadow-sm">
+<span class="font-label-sm text-label-sm text-primary tracking-wider font-bold">04.8s / 15s</span>
+</div>
+</div>
+<!-- Center Audio Badge & Quick Context Selector -->
+<div class="flex items-center justify-center w-full mt-1">
+<button class="group flex items-center gap-space-xs px-3.5 py-1.5 rounded-full bg-surface-container/70 backdrop-blur-xl hover:bg-surface-container-high transition-transform active:scale-95 shadow-md" type="button">
+<span class="material-symbols-outlined text-primary text-[18px] animate-pulse" style="font-variation-settings: 'FILL' 1;">music_note</span>
+<span class="font-label-md text-label-md text-on-surface truncate max-w-[210px]">Tendance Douala : Afrobeats B2B Beat</span>
+<span class="material-symbols-outlined text-outline text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Central Viewfinder Box & Wholesale Product Framing Area -->
+<div class="relative w-full aspect-[9/13] rounded-2xl overflow-hidden bg-surface-container-lowest flex items-center justify-center shadow-2xl">
+<!-- Simulated Camera Background (Photorealistic Supplier Context) -->
+<div class="absolute inset-0 bg-cover bg-center opacity-85 scale-[1.02]" data-alt="Vertical high resolution smartphone camera screen view inside a bustling wholesale electronics warehouse in Akwa Douala Cameroon. Neatly stacked branded cardboard shipment boxes with yellow strapping bands, clear LED ring light reflection, vibrant commercial atmosphere, ultra detailed textures, high-contrast dark room aesthetics." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdexDRnnOhAYHazHg0RkJNX2TEYdGJ1mgydAaj2e0pRVwaYVyc3h5rETQNrg5GOYUpcVaeoT2vKfgwr6YJIjUwysxrAm7sUyTozZjmPdkAdEFNYuOWg8JSOdH8Vc8_9mEo9Xg3h3hOTheizaFLJnYAQ1MF8Emb-i270Ixz545zjP7C2aV-hzBpJUMJlzzvdlNTRT3nri5_pjgml-y0yIZnysNWI0iOlVsSb-j2yj0')">
+</div>
+<!-- Viewfinder Overlay: Grid 3x3 for Crisp Packshot Framing -->
+<div class="absolute inset-0 pointer-events-none p-3">
+<div class="w-full h-full rounded-xl relative">
+<!-- Horizontal Guideline 1 -->
+<div class="absolute top-1/3 left-0 right-0 h-[1px] bg-on-surface/15"></div>
+<!-- Horizontal Guideline 2 -->
+<div class="absolute top-2/3 left-0 right-0 h-[1px] bg-on-surface/15"></div>
+<!-- Vertical Guideline 1 -->
+<div class="absolute left-1/3 top-0 bottom-0 w-[1px] bg-on-surface/15"></div>
+<!-- Vertical Guideline 2 -->
+<div class="absolute left-2/3 top-0 bottom-0 w-[1px] bg-on-surface/15"></div>
+<!-- Crosshairs & Product Alignment Bracket Center -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-44 h-44 rounded-xl flex items-center justify-center">
+<!-- Center Focus Pulse Ring -->
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center animate-ping"></div>
+<div class="absolute w-2 h-2 rounded-full bg-primary shadow-[0_0_10px_#ff5a1f]"></div>
+<!-- Corner Brackets for Wholesale Packaging Alignment -->
+<div class="absolute top-0 left-0 w-4 h-4 rounded-tl-md bg-primary-container/90"></div>
+<div class="absolute top-0 right-0 w-4 h-4 rounded-tr-md bg-primary-container/90"></div>
+<div class="absolute bottom-0 left-0 w-4 h-4 rounded-bl-md bg-primary-container/90"></div>
+<div class="absolute bottom-0 right-0 w-4 h-4 rounded-br-md bg-primary-container/90"></div>
+</div>
+</div>
+</div>
+<!-- Top Seller Advice Pill inside Cam -->
+<div class="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest/80 backdrop-blur-xl shadow-lg">
+<span class="material-symbols-outlined text-secondary text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide">Mode Vendeur B2B : Carton scellé ou lot</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-bold shadow-md">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary animate-ping"></span>
+<span>REC 15s</span>
+</div>
+</div>
+<!-- Right HUD Vertical Control Column -->
+<div class="absolute top-12 right-2.5 flex flex-col gap-2.5 z-20">
+<!-- Flip Camera -->
+<button class="group flex flex-col items-center gap-0.5 p-1" type="button">
+<div class="w-11 h-11 rounded-full bg-surface-container/70 backdrop-blur-xl flex items-center justify-center text-on-surface group-hover:bg-primary-container group-hover:text-on-primary-container transition-all shadow-lg active:scale-90">
+<span class="material-symbols-outlined text-[20px]">flip_camera_android</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium drop-shadow-sm">Tourner</span>
+</button>
+<!-- Speed Selector 1x/2x/3x -->
+<button class="group flex flex-col items-center gap-0.5 p-1" type="button">
+<div class="w-11 h-11 rounded-full bg-surface-container/70 backdrop-blur-xl flex items-center justify-center text-primary group-hover:bg-primary-container group-hover:text-on-primary-container transition-all shadow-lg active:scale-90">
+<span class="font-headline-sm text-headline-sm font-bold">1x</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium drop-shadow-sm">Vitesse</span>
+</button>
+<!-- Product Clarity Filter -->
+<button class="group flex flex-col items-center gap-0.5 p-1" type="button">
+<div class="w-11 h-11 rounded-full bg-surface-container/70 backdrop-blur-xl flex items-center justify-center text-on-surface group-hover:bg-primary-container group-hover:text-on-primary-container transition-all shadow-lg active:scale-90">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium drop-shadow-sm">Clarté</span>
+</button>
+<!-- Timer (3s / 10s) -->
+<button class="group flex flex-col items-center gap-0.5 p-1" type="button">
+<div class="w-11 h-11 rounded-full bg-surface-container/70 backdrop-blur-xl flex items-center justify-center text-on-surface group-hover:bg-primary-container group-hover:text-on-primary-container transition-all shadow-lg active:scale-90">
+<span class="material-symbols-outlined text-[20px]">timer</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium drop-shadow-sm">Retard.</span>
+</button>
+<!-- Flash Active Pill -->
+<button class="group flex flex-col items-center gap-0.5 p-1" type="button">
+<div class="w-11 h-11 rounded-full bg-surface-container/70 backdrop-blur-xl flex items-center justify-center text-tertiary group-hover:bg-primary-container group-hover:text-on-primary-container transition-all shadow-lg active:scale-90">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">flash_on</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-medium drop-shadow-sm">Flash</span>
+</button>
+</div>
+<!-- Merchant Live Interactive Floating Tags (Stickers preview on viewport) -->
+<div class="absolute bottom-4 left-3 flex flex-col gap-2 z-10">
+<!-- Price FCFA Badge -->
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-surface-container-lowest/90 backdrop-blur-xl shadow-xl">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_8px_#4edea3]"></span>
+<span class="font-price-card text-price-card text-primary font-bold">14 500 FCFA</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">/ carton (12 pcs)</span>
+</div>
+<!-- Logistics Hub Badge -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-high/85 backdrop-blur-md shadow-md w-fit">
+<span class="material-symbols-outlined text-tertiary text-[15px]">warehouse</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Stock Akwa, Douala • Dispo immédiate</span>
+</div>
+</div>
+</div>
+<!-- Bottom Capture Console & Mode Carousel -->
+<div class="flex flex-col w-full gap-space-sm pt-1">
+<!-- Horizontal Mode Scroll (Text Carousel) -->
+<div class="flex items-center justify-center gap-5 w-full overflow-x-auto py-1 px-4 scrollbar-none">
+<button class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+          Photos (10 max)
+        </button>
+<button class="relative px-3 py-1 font-headline-sm text-headline-sm text-primary font-bold whitespace-nowrap bg-primary-container/15 rounded-full shadow-inner" type="button">
+          Vidéo 15s
+          <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-1 rounded-full bg-primary-container"></span>
+</button>
+<button class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors whitespace-nowrap" type="button">
+          Story 24h
+        </button>
+<button class="font-label-md text-label-md text-outline hover:text-on-surface transition-colors whitespace-nowrap flex items-center gap-1" type="button">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+          Live Drop Usine
+        </button>
+</div>
+<!-- Action Buttons Row: Gallery Import | Massive Record Trigger | B2B Stickers -->
+<div class="flex items-center justify-between px-margin-mobile w-full">
+<!-- Left: Gallery Media Importer with 10 Photos Badge -->
+<button aria-label="Importer depuis la galerie" class="group flex flex-col items-center gap-1 active:scale-95 transition-transform" type="button">
+<div class="relative w-14 h-14 rounded-2xl overflow-hidden bg-surface-container-high shadow-lg">
+<div class="w-full h-full bg-cover bg-center" data-alt="Close up thumbnail of stacked electronic accessories boxes and wholesale cartons ready for packaging in a shop shelf Douala Cameroon, sharp warm commercial product shot." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYa85i4fmwwEGhO5BaUPl6K4AJg6SrjgGVGR5WR8X0TysDObLJZRMhNycGXivnfV26Zsmocb0Xb_YSmlqMAHL-gO6Ca2g0Ffd8uELNTkU-XitA3SQ6ctP3gJId9E54TRsvMPm1Fl4fyMYQ5JVSGvPLxrm2Cuo12fwYnwRMwEfqmRxAoRbegl0P3R_j1bwbd2UNPCEJrbPW3gojzpt18uYdK1LSeuRb6d484zKpq9o')">
+</div>
+<div class="absolute inset-0 bg-surface-container-lowest/30"></div>
+<span class="material-symbols-outlined absolute inset-0 m-auto text-on-surface text-[22px] drop-shadow-md">add_photo_alternate</span>
+<!-- Badge 10 Max -->
+<div class="absolute top-1 right-1 px-1 rounded bg-primary-container font-label-sm text-[8px] text-on-primary-container font-bold leading-tight shadow-sm">
+              MAX 10
+            </div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Importer</span>
+</button>
+<!-- Center: Massive Circular 15s Record Button -->
+<div class="relative flex items-center justify-center">
+<!-- Pulse Track for Active Hold -->
+<div class="w-24 h-24 rounded-full bg-primary-container/20 flex items-center justify-center animate-pulse"></div>
+<button aria-label="Enregistrer vidéo 15 secondes" class="absolute w-20 h-20 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-[0_0_28px_rgba(255,90,31,0.55)] transition-transform active:scale-90 focus:outline-none" id="recordTriggerBtn" type="button">
+<!-- Outer Neon Ring Indicator -->
+<div class="w-18 h-18 w-[72px] h-[72px] rounded-full bg-primary-container p-1 flex items-center justify-center">
+<div class="w-full h-full rounded-full bg-primary flex items-center justify-center transition-all group-active:rounded-xl">
+<!-- Inner Red/Orange Core -->
+<div class="w-7 h-7 rounded-full bg-on-primary-container shadow-inner"></div>
+</div>
+</div>
+</button>
+</div>
+<!-- Right: Commercial Stickers & Wholesale Overlays Picker -->
+<button aria-label="Stickers et Prix FCFA" class="group flex flex-col items-center gap-1 active:scale-95 transition-transform" type="button">
+<div class="w-14 h-14 rounded-2xl bg-surface-container-high/90 backdrop-blur-xl flex flex-col items-center justify-center text-primary shadow-lg hover:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-[26px]" style="font-variation-settings: 'FILL' 1;">loyalty</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Stickers B2B</span>
+</button>
+</div>
+<!-- Quick Fast-Tag Tray for Instant Commercial Badging -->
+<div class="flex items-center gap-2 px-margin-mobile overflow-x-auto py-1 scrollbar-none">
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container/90 text-on-surface hover:bg-surface-container-high text-xs whitespace-nowrap active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-secondary text-[16px]">payments</span>
+<span class="font-label-sm text-label-sm font-semibold">+ Prix FCFA</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container/90 text-on-surface hover:bg-surface-container-high text-xs whitespace-nowrap active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-primary text-[16px]">inventory_2</span>
+<span class="font-label-sm text-label-sm font-semibold">Min. 5 Cartons</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container/90 text-on-surface hover:bg-surface-container-high text-xs whitespace-nowrap active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-tertiary text-[16px]">local_shipping</span>
+<span class="font-label-sm text-label-sm font-semibold">Douala &gt; Yaoundé 24h</span>
+</button>
+<button class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-surface-container/90 text-on-surface hover:bg-surface-container-high text-xs whitespace-nowrap active:scale-95 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-secondary text-[16px]">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm font-semibold">MoMo / OM Accepté</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    // Micro-interaction for capture trigger and tactile visual feedback
+    (function initCameraTriggers() {
+      const trigger = document.getElementById('recordTriggerBtn');
+      if (!trigger) return;
+
+      let isRecording = false;
+
+      trigger.addEventListener('click', () => {
+        isRecording = !isRecording;
+        if (isRecording) {
+          trigger.classList.add('scale-105');
+          const innerCore = trigger.querySelector('.rounded-full.bg-on-primary-container');
+          if (innerCore) {
+            innerCore.classList.remove('rounded-full');
+            innerCore.classList.add('rounded-sm');
+          }
+        } else {
+          trigger.classList.remove('scale-105');
+          const innerCore = trigger.querySelector('.rounded-sm.bg-on-primary-container');
+          if (innerCore) {
+            innerCore.classList.remove('rounded-sm');
+            innerCore.classList.add('rounded-full');
+          }
+        }
+      });
+    })();
+  </script>
+</div></main><div class="fixed bottom-0 inset-x-0 z-50 pb-safe"><div class="h-28 px-margin-desktop flex items-center justify-between"><button aria-label="Galerie d'images" class="w-12 h-12 rounded-xl bg-surface-container/80 backdrop-blur-xl flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[26px]">photo_library</span></button><button aria-label="Enregistrer vidéo B2B" class="w-20 h-20 rounded-full border-4 border-primary-container p-1 flex items-center justify-center transition-transform active:scale-95"><div class="w-full h-full rounded-full bg-primary-container flex items-center justify-center shadow-[0_0_20px_rgba(255,90,31,0.6)]"><div class="w-6 h-6 rounded bg-on-surface"></div></div></button><button aria-label="Filtres vidéo" class="w-12 h-12 rounded-xl bg-surface-container/80 backdrop-blur-xl flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[26px]">auto_awesome</span></button></div></div></body></html>

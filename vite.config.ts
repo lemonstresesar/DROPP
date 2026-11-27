@@ -51,6 +51,7 @@ export default defineConfig(() => {
           cleanupOutdatedCaches: true,
           skipWaiting: true,
           clientsClaim: true,
+          navigateFallbackDenylist: [/^\/api\//, /^\/manifest\.webmanifest$/, /^\/sw\.js$/],
           globPatterns: [
             'index.html',
             'assets/index-*.{js,css}',

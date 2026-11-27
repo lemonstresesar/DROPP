@@ -8,20 +8,29 @@ import {
   ShoppingBag,
   SlidersHorizontal,
   Star,
+  X,
 } from 'lucide-react';
 import type { DroppDictionary } from '../i18n/translations';
 import type {
   FeedPost,
   MarketplaceCategory,
   MarketSortOption,
+  PlatformSettings,
+  UserSession,
 } from '../types/dropp';
 import { formatFcfa } from '../utils/formatters';
 import { buildCloudinaryMediaUrl } from '../utils/cloudinary';
 import { filterAndSortMarketPosts } from '../utils/commerce';
+import { canBuy, canCreateRfq, canRespondToRfq } from '../utils/permissions';
 
 interface MarketScreenProps {
   t: DroppDictionary;
+  session: UserSession | null;
   posts: FeedPost[];
+  platformSettings?: PlatformSettings;
+  catalogLoading?: boolean;
+  catalogError?: string | null;
+  onRetryCatalog?: () => void;
   likedIds: string[];
   recentlyViewedIds: string[];
   compareIds: string[];
@@ -36,8 +45,7 @@ interface MarketScreenProps {
   onOpenRfq: () => void;
 }
 
-const CATEGORIES: Array<'ALL' | MarketplaceCategory> = [
-  'ALL',
+const ALL_CATEGORIES: MarketplaceCategory[] = [
   'Mode',
   'Électronique',
   'Beauté',
@@ -46,11 +54,26 @@ const CATEGORIES: Array<'ALL' | MarketplaceCategory> = [
   'Autre',
 ];
 
-const NEIGHBORHOODS = ['ALL', 'Akwa', 'Bastos', 'Bonapriso', 'Ndokoti', 'Mokolo', 'Mboppi', 'Bonamoussadi', 'Mvan'];
+const NEIGHBORHOODS = [
+  'ALL',
+  'Akwa',
+  'Bastos',
+  'Bonapriso',
+  'Ndokoti',
+  'Mokolo',
+  'Mboppi',
+  'Bonamoussadi',
+  'Mvan',
+];
 
 export const MarketScreen: React.FC<MarketScreenProps> = ({
   t,
+  session,
   posts,
+  platformSettings,
+  catalogLoading,
+  catalogError,
+  onRetryCatalog,
   likedIds,
   recentlyViewedIds,
   compareIds,
@@ -64,16 +87,40 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
   onOpenCart,
   onOpenRfq,
 }) => {
+  const showCartBtn = !session || canBuy(session);
+  const showRfqBtn = !session || canCreateRfq(session) || canRespondToRfq(session);
+
   const [query, setQuery] = useState(initialQuery);
   const [category, setCategory] = useState<'ALL' | MarketplaceCategory>('ALL');
   const [city, setCity] = useState<'ALL' | 'Douala' | 'Yaoundé'>('ALL');
   const [neighborhood, setNeighborhood] = useState('ALL');
   const [certifiedOnly, setCertifiedOnly] = useState(false);
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [filtersDrawerOpen, setFiltersDrawerOpen] = useState(false);
   const [maxPriceStr, setMaxPriceStr] = useState('');
   const [maxMoqStr, setMaxMoqStr] = useState('');
   const [minRating, setMinRating] = useState(0);
   const [sortBy, setSortBy] = useState<MarketSortOption>('recommended');
+
+  const categories = useMemo<Array<'ALL' | MarketplaceCategory>>(() => {
+    const enabled =
+      platformSettings?.enabledCategories && platformSettings.enabledCategories.length > 0
+        ? platformSettings.enabledCategories
+        : ALL_CATEGORIES;
+    return ['ALL', ...enabled];
+  }, [platformSettings?.enabledCategories]);
+
+  const activeFiltersCount = useMemo(() => {
+    let count = 0;
+    if (category !== 'ALL') count += 1;
+    if (city !== 'ALL') count += 1;
+    if (neighborhood !== 'ALL') count += 1;
+    if (certifiedOnly) count += 1;
+    if (maxPriceStr.trim()) count += 1;
+    if (maxMoqStr.trim()) count += 1;
+    if (minRating > 0) count += 1;
+    if (sortBy !== 'recommended') count += 1;
+    return count;
+  }, [category, city, neighborhood, certifiedOnly, maxPriceStr, maxMoqStr, minRating, sortBy]);
 
   const filtered = useMemo(() => {
     const maxPrice = maxPriceStr ? Number(maxPriceStr) : null;
@@ -121,44 +168,50 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
 
   return (
     <div className="h-full overflow-y-auto bg-[var(--dropp-bg)] pb-24 lg:pb-8">
-      <div className="max-w-5xl mx-auto px-4 pt-5 space-y-4">
-        {/* Top Row: Title + Cart + RFQ */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="max-w-5xl mx-auto px-4 pt-4 space-y-3.5">
+        {/* Compact Top Header: Title + RFQ + Cart */}
+        <div className="flex flex-wrap items-center justify-between gap-2.5">
           <div>
-            <h1 className="text-2xl font-bold text-[var(--dropp-text)] tracking-tight">{t.market.title}</h1>
-            <p className="text-xs text-[var(--dropp-muted)] mt-0.5">
+            <h1 className="text-xl font-bold text-[var(--dropp-text)] tracking-tight">
+              {t.market.title}
+            </h1>
+            <p className="text-xs text-[var(--dropp-muted)]">
               {t.market.subtitle} · {filtered.length} {t.market.resultsCount}
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={onOpenRfq}
-              className="min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] text-xs font-semibold text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-            >
-              <FileText className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
-              <span>{t.market.rfqBannerBtn}</span>
-            </button>
+            {showRfqBtn && (
+              <button
+                type="button"
+                onClick={onOpenRfq}
+                className="min-h-[42px] px-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] text-xs font-semibold text-[var(--dropp-text)] inline-flex items-center gap-1.5"
+              >
+                <FileText className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+                <span>{t.market.rfqBannerBtn}</span>
+              </button>
+            )}
 
-            <button
-              type="button"
-              onClick={onOpenCart}
-              aria-label={t.actions.cart}
-              className="relative min-h-[44px] px-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-1.5 transition-colors"
-            >
-              <ShoppingBag className="w-4 h-4" aria-hidden="true" />
-              <span>{t.actions.cart}</span>
-              {cartCount > 0 && (
-                <span className="ml-0.5 px-1.5 py-0.5 rounded-full bg-black text-white text-[11px] tabular-nums">
-                  {cartCount}
-                </span>
-              )}
-            </button>
+            {showCartBtn && (
+              <button
+                type="button"
+                onClick={onOpenCart}
+                aria-label={t.actions.cart}
+                className="relative min-h-[42px] px-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-1.5 transition-colors"
+              >
+                <ShoppingBag className="w-4 h-4" aria-hidden="true" />
+                <span>{t.actions.cart}</span>
+                {cartCount > 0 && (
+                  <span className="ml-0.5 px-1.5 py-0.5 rounded-full bg-black text-white text-[11px] tabular-nums">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Search Input + Filter Toggle */}
+        {/* Single Compact Search + Filters Drawer Trigger (Products show immediately below!) */}
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
             <Search
@@ -176,134 +229,20 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
           </div>
           <button
             type="button"
-            onClick={() => setShowAdvancedFilters((v) => !v)}
+            onClick={() => setFiltersDrawerOpen(true)}
             className={`min-h-[44px] px-3.5 rounded-xl border text-xs font-semibold inline-flex items-center gap-1.5 shrink-0 ${
-              showAdvancedFilters
+              activeFiltersCount > 0
                 ? 'border-[var(--dropp-accent)] bg-[var(--dropp-accent)]/15 text-[var(--dropp-text)]'
                 : 'border-[var(--dropp-border)] bg-[var(--dropp-surface)] text-[var(--dropp-text)]'
             }`}
           >
             <SlidersHorizontal className="w-4 h-4" aria-hidden="true" />
-            <span>{t.market.filtersBtn}</span>
+            <span>
+              {t.market.filtersBtn}
+              {activeFiltersCount > 0 ? ` (${activeFiltersCount})` : ''}
+            </span>
           </button>
         </div>
-
-        {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-          {CATEGORIES.map((cat) => {
-            const active = category === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setCategory(cat)}
-                className={`min-h-[44px] px-3.5 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-colors ${
-                  active
-                    ? 'bg-[var(--dropp-text)] text-[var(--dropp-bg)]'
-                    : 'bg-[var(--dropp-surface)] text-[var(--dropp-muted)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] hover:text-[var(--dropp-text)]'
-                }`}
-              >
-                {cat === 'ALL' ? t.market.allCategories : cat}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Primary Filters & Sort */}
-        <div className="flex flex-wrap items-center gap-2.5">
-          <select
-            aria-label={t.auth.cityLabel}
-            value={city}
-            onChange={(e) => setCity(e.target.value as 'ALL' | 'Douala' | 'Yaoundé')}
-            className="min-h-[44px] px-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)]"
-          >
-            <option value="ALL">{t.market.allCities}</option>
-            <option value="Douala">Douala</option>
-            <option value="Yaoundé">Yaoundé</option>
-          </select>
-
-          <select
-            aria-label={t.cart.neighborhoodLabel}
-            value={neighborhood}
-            onChange={(e) => setNeighborhood(e.target.value)}
-            className="min-h-[44px] px-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)]"
-          >
-            {NEIGHBORHOODS.map((n) => (
-              <option key={n} value={n}>
-                {n === 'ALL' ? t.market.allNeighborhoods : n}
-              </option>
-            ))}
-          </select>
-
-          <select
-            aria-label={t.market.sortLabel}
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as MarketSortOption)}
-            className="min-h-[44px] px-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)]"
-          >
-            <option value="recommended">{t.market.sortRecommended}</option>
-            <option value="price_asc">{t.market.sortPriceAsc}</option>
-            <option value="price_desc">{t.market.sortPriceDesc}</option>
-            <option value="rating_desc">{t.market.sortRating}</option>
-            <option value="popular">{t.market.sortPopular}</option>
-            <option value="moq_asc">{t.market.sortMoqAsc}</option>
-          </select>
-
-          <label className="inline-flex items-center gap-2 text-xs text-[var(--dropp-text)] min-h-[44px] cursor-pointer px-2">
-            <input
-              type="checkbox"
-              checked={certifiedOnly}
-              onChange={(e) => setCertifiedOnly(e.target.checked)}
-              className="w-4 h-4 accent-[#FF5A1F]"
-            />
-            <span>{t.market.certifiedOnly}</span>
-          </label>
-        </div>
-
-        {/* Advanced Filters Drawer */}
-        {showAdvancedFilters && (
-          <div className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] grid grid-cols-1 sm:grid-cols-4 gap-3 items-end">
-            <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
-              <span>{t.market.maxPriceLabel}</span>
-              <input
-                type="number"
-                value={maxPriceStr}
-                onChange={(e) => setMaxPriceStr(e.target.value)}
-                placeholder="50000"
-                className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-[var(--dropp-text)]"
-              />
-            </label>
-            <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
-              <span>{t.market.maxMoqLabel}</span>
-              <input
-                type="number"
-                value={maxMoqStr}
-                onChange={(e) => setMaxMoqStr(e.target.value)}
-                placeholder="10"
-                className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-[var(--dropp-text)]"
-              />
-            </label>
-            <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
-              <span>{t.market.minRatingLabel}</span>
-              <select
-                value={minRating}
-                onChange={(e) => setMinRating(Number(e.target.value))}
-                className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-[var(--dropp-text)]"
-              >
-                <option value={0}>Toutes</option>
-                <option value={4.5}>4.5+</option>
-                <option value={4.8}>4.8+</option>
-              </select>
-            </label>
-            <button
-              type="button"
-              onClick={resetAll}
-              className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] text-xs font-semibold text-[var(--dropp-text)]"
-            >
-              {t.market.resetFilters}
-            </button>
-          </div>
-        )}
 
         {/* Comparator Strip if >= 1 selected */}
         {compareIds.length > 0 && (
@@ -323,8 +262,41 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
         )}
 
         {/* Product Grid */}
-        {filtered.length === 0 ? (
-          <div className="py-16 text-center text-sm text-[var(--dropp-muted)]">{t.market.noResults}</div>
+        {catalogLoading && posts.length === 0 ? (
+          <div className="py-16 text-center space-y-3">
+            <div className="w-8 h-8 rounded-full border-2 border-[#FF5A1F] border-t-transparent animate-spin mx-auto" />
+          </div>
+        ) : catalogError && posts.length === 0 ? (
+          <div className="py-16 text-center space-y-3">
+            <p className="text-sm font-semibold text-[#FCA5A5]">{t.errors.catalogLoadDesc}</p>
+            <p className="text-xs text-[var(--dropp-muted)]">{catalogError}</p>
+            {onRetryCatalog && (
+              <button
+                type="button"
+                onClick={onRetryCatalog}
+                className="min-h-[40px] px-4 rounded-xl bg-[#FF5A1F] text-white text-xs font-bold"
+              >
+                {t.errors.retry}
+              </button>
+            )}
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="py-16 text-center text-sm text-[var(--dropp-muted)]">
+            {t.errors.emptyCatalog}
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="py-16 text-center space-y-3">
+            <p className="text-sm text-[var(--dropp-muted)]">{t.market.noResults}</p>
+            {activeFiltersCount > 0 && (
+              <button
+                type="button"
+                onClick={resetAll}
+                className="min-h-[40px] px-4 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-xs font-semibold text-[var(--dropp-text)]"
+              >
+                {t.market.resetFilters}
+              </button>
+            )}
+          </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
             {filtered.map((post) => {
@@ -354,11 +326,18 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
                       <Play className="w-4 h-4 fill-white" aria-hidden="true" />
                     </button>
 
-                    {post.promoPercent && (
-                      <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/85 border border-[#FF5A1F]/50 text-[#FF5A1F] text-[11px] font-bold">
-                        -{post.promoPercent}%
-                      </span>
-                    )}
+                    <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
+                      {post.promoPercent && (
+                        <span className="px-2 py-0.5 rounded-md bg-black/85 border border-[#FF5A1F]/50 text-[#FF5A1F] text-[11px] font-bold">
+                          -{post.promoPercent}%
+                        </span>
+                      )}
+                      {post.isDemo && (
+                        <span className="px-2 py-0.5 rounded-md bg-black/80 text-zinc-200 text-[10px] font-medium">
+                          {t.market.demoBadge}
+                        </span>
+                      )}
+                    </div>
 
                     <button
                       type="button"
@@ -376,15 +355,23 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
 
                   <div className="p-3 flex-1 flex flex-col justify-between gap-2">
                     <div>
-                      <div className="flex items-center justify-between gap-1 text-[11px] text-[var(--dropp-muted)]">
-                        <span className="inline-flex items-center gap-1 min-w-0">
-                          <span className="truncate">{post.shopName}</span>
+                      <div className="flex items-start justify-between gap-1.5 text-[11px] text-[var(--dropp-muted)]">
+                        <span className="inline-flex items-center gap-1 flex-wrap">
+                          <span className="font-medium text-[var(--dropp-text)]/90">
+                            {post.shopName}
+                          </span>
                           {post.shopCertified && (
-                            <BadgeCheck className="w-3.5 h-3.5 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
+                            <BadgeCheck
+                              className="w-3.5 h-3.5 text-[var(--dropp-accent)] shrink-0"
+                              aria-hidden="true"
+                            />
                           )}
                         </span>
                         <span className="inline-flex items-center gap-0.5 text-[#9A5B00] dark:text-[#F5A524] shrink-0 tabular-nums font-medium">
-                          <Star className="w-3 h-3 fill-[#F5A524] text-[#F5A524]" aria-hidden="true" />
+                          <Star
+                            className="w-3 h-3 fill-[#F5A524] text-[#F5A524]"
+                            aria-hidden="true"
+                          />
                           {post.rating}
                         </span>
                       </div>
@@ -417,6 +404,175 @@ export const MarketScreen: React.FC<MarketScreenProps> = ({
           </div>
         )}
       </div>
+
+      {/* Filters Drawer Overlay */}
+      {filtersDrawerOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-end sm:items-center justify-center sm:p-4"
+          onClick={() => setFiltersDrawerOpen(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={t.market.filtersBtn}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg bg-[var(--dropp-elevated)] border border-[var(--dropp-border)] rounded-t-3xl sm:rounded-2xl max-h-[88dvh] flex flex-col overflow-hidden shadow-2xl"
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--dropp-border)]">
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+                <h2 className="text-base font-bold text-[var(--dropp-text)]">
+                  {t.market.filtersBtn}
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFiltersDrawerOpen(false)}
+                aria-label={t.actions.close}
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full text-[var(--dropp-muted)] hover:text-[var(--dropp-text)]"
+              >
+                <X className="w-5 h-5" aria-hidden="true" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-5 space-y-5">
+              {/* Categories */}
+              <div className="space-y-2">
+                <div className="text-xs font-semibold text-[var(--dropp-muted)]">Catégorie</div>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((cat) => {
+                    const active = category === cat;
+                    return (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => setCategory(cat)}
+                        className={`min-h-[40px] px-3.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors ${
+                          active
+                            ? 'bg-[#FF5A1F] text-white'
+                            : 'bg-[var(--dropp-surface)] text-[var(--dropp-text)] border border-[var(--dropp-border)]'
+                        }`}
+                      >
+                        {cat === 'ALL' ? t.market.allCategories : cat}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* City, Neighborhood, Sort */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
+                  <span>{t.auth.cityLabel}</span>
+                  <select
+                    value={city}
+                    onChange={(e) => setCity(e.target.value as 'ALL' | 'Douala' | 'Yaoundé')}
+                    className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)]"
+                  >
+                    <option value="ALL">{t.market.allCities}</option>
+                    <option value="Douala">Douala</option>
+                    <option value="Yaoundé">Yaoundé</option>
+                  </select>
+                </label>
+
+                <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
+                  <span>{t.cart.neighborhoodLabel}</span>
+                  <select
+                    value={neighborhood}
+                    onChange={(e) => setNeighborhood(e.target.value)}
+                    className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)]"
+                  >
+                    {NEIGHBORHOODS.map((n) => (
+                      <option key={n} value={n}>
+                        {n === 'ALL' ? t.market.allNeighborhoods : n}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="space-y-1 text-xs text-[var(--dropp-muted)] sm:col-span-2">
+                  <span>{t.market.sortLabel}</span>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value as MarketSortOption)}
+                    className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs font-medium text-[var(--dropp-text)]"
+                  >
+                    <option value="recommended">{t.market.sortRecommended}</option>
+                    <option value="price_asc">{t.market.sortPriceAsc}</option>
+                    <option value="price_desc">{t.market.sortPriceDesc}</option>
+                    <option value="rating_desc">{t.market.sortRating}</option>
+                    <option value="popular">{t.market.sortPopular}</option>
+                    <option value="moq_asc">{t.market.sortMoqAsc}</option>
+                  </select>
+                </label>
+              </div>
+
+              {/* Price / MOQ / Rating */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
+                  <span>{t.market.maxPriceLabel}</span>
+                  <input
+                    type="number"
+                    value={maxPriceStr}
+                    onChange={(e) => setMaxPriceStr(e.target.value)}
+                    placeholder="50000"
+                    className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-[var(--dropp-text)]"
+                  />
+                </label>
+                <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
+                  <span>{t.market.maxMoqLabel}</span>
+                  <input
+                    type="number"
+                    value={maxMoqStr}
+                    onChange={(e) => setMaxMoqStr(e.target.value)}
+                    placeholder="10"
+                    className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-[var(--dropp-text)]"
+                  />
+                </label>
+                <label className="space-y-1 text-xs text-[var(--dropp-muted)]">
+                  <span>{t.market.minRatingLabel}</span>
+                  <select
+                    value={minRating}
+                    onChange={(e) => setMinRating(Number(e.target.value))}
+                    className="w-full min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-[var(--dropp-text)]"
+                  >
+                    <option value={0}>Toutes</option>
+                    <option value={4.5}>4.5+</option>
+                    <option value={4.8}>4.8+</option>
+                  </select>
+                </label>
+              </div>
+
+              <label className="inline-flex items-center gap-2.5 text-xs text-[var(--dropp-text)] min-h-[44px] cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={certifiedOnly}
+                  onChange={(e) => setCertifiedOnly(e.target.checked)}
+                  className="w-4 h-4 accent-[#FF5A1F]"
+                />
+                <span>{t.market.certifiedOnly}</span>
+              </label>
+            </div>
+
+            <div className="p-4 border-t border-[var(--dropp-border)] flex items-center gap-2.5 bg-[var(--dropp-bg)]">
+              <button
+                type="button"
+                onClick={resetAll}
+                className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-xs font-semibold text-[var(--dropp-text)]"
+              >
+                {t.market.resetFilters}
+              </button>
+              <button
+                type="button"
+                onClick={() => setFiltersDrawerOpen(false)}
+                className="flex-1 min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold"
+              >
+                {t.market.applyFiltersBtn} ({filtered.length})
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

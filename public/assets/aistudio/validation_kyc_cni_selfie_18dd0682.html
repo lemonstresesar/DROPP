@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#131313","surface-container-highest":"#353534","on-tertiary-fixed-variant":"#653e00","secondary-fixed":"#6ffbbe","tertiary-fixed":"#ffddb8","on-tertiary-fixed":"#2a1700","on-tertiary-container":"#402500","on-surface":"#e5e2e1","surface-dim":"#131313","on-error":"#690005","on-error-container":"#ffdad6","surface-variant":"#353534","primary-fixed-dim":"#ffb59e","outline-variant":"#5b4038","surface-container-low":"#1c1b1b","surface-tint":"#ffb59e","inverse-on-surface":"#313030","tertiary-fixed-dim":"#ffb95f","primary":"#ffb59e","error-container":"#93000a","on-secondary-fixed":"#002113","secondary-fixed-dim":"#4edea3","secondary":"#4edea3","surface-bright":"#393939","surface":"#131313","on-secondary-fixed-variant":"#005236","inverse-primary":"#ae3200","on-secondary":"#003824","secondary-container":"#00a572","primary-fixed":"#ffdbd0","surface-container-lowest":"#0e0e0e","on-primary-fixed-variant":"#852400","error":"#ffb4ab","tertiary":"#ffb95f","on-background":"#e5e2e1","on-primary-fixed":"#3a0b00","on-primary":"#5e1700","on-surface-variant":"#e4beb3","surface-container":"#201f1f","tertiary-container":"#cc8200","on-tertiary":"#472a00","on-primary-container":"#541400","surface-container-high":"#2a2a2a","inverse-surface":"#e5e2e1","outline":"#ab897f","on-secondary-container":"#00311f","primary-container":"#ff5a1f"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1rem","gutter-desktop":"1.5rem","margin":"1rem","space-lg":"1.5rem","margin-mobile":"0.75rem","space-xs":"0.25rem","margin-desktop":"2rem","space-sm":"0.5rem","space-xl":"2.25rem","gutter":"0.75rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"display-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"label-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"label-lg":["Space Grotesk"],"price-card":["Space Grotesk"],"label-md":["Space Grotesk"],"price-hero":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"display":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"]},"fontSize":{"headline-sm":["16px",{"lineHeight":"22px","fontWeight":"600"}],"display-mobile":["30px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.04em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"price-card":["18px",{"lineHeight":"22px","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"price-hero":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display":["40px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="flex flex-col"><div class="px-space-lg pt-space-lg pb-space-md flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-white text-[22px]">local_shipping</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">DROPP<span class="text-primary-container">.B2B</span></span><span class="font-label-sm text-label-sm text-on-surface-variant">HQ CAMEROON</span></div></div><div class="mt-space-xs inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high w-fit"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface uppercase">ADMIN CONSOLE / HQ</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-md" data-active-classes="bg-surface-container-high text-primary font-bold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Vue d'ensemble / KPIs</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="gestion-comptes" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Gestion des Comptes</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-container-high text-primary font-bold" data-path="verifications-kyc" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>Vérifications KYC &amp; Identité</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="transactions-escrow" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span>Transactions &amp; Séquestre</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="moderation-catalogue" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Modération des Drops</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="parametres-roles" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Paramètres &amp; Rôles</span></a></nav></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface">Nœud CEMAC Douala</span><span class="font-body-sm text-body-sm text-on-surface-variant">Opérationnel • 24ms</span></div></div><span class="material-symbols-outlined text-secondary text-[16px]">wifi</span></div><div class="flex items-center justify-between pt-space-xs"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface leading-tight">Marcelle E.</span><span class="font-label-sm text-label-sm text-primary">Super Admin HQ</span></div></div><a class="text-on-surface-variant hover:text-error transition-colors p-1" data-path="connexion" href="#" title="Déconnexion"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">corporate_fare</span><span>DROPP HQ</span><span class="text-outline">/</span><span class="text-on-surface font-semibold">Console Centrale</span></div><div class="relative flex items-center ml-space-md"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder-on-surface-variant pl-9 pr-space-md py-1.5 rounded-full w-80 focus:outline-none focus:bg-surface-container" placeholder="Rechercher compte, CNI, #CMD, téléphone..." type="search"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span><span class="font-label-sm text-label-sm text-secondary-fixed">Séquestre BEAC / COBAC</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">schedule</span><span>Douala (UTC+1)</span></div><button class="relative p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-xs pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Context Header Bar -->
+<div class="px-gutter-desktop py-space-md bg-surface-container-lowest flex flex-col gap-space-sm shadow-md">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-primary-container/20 text-primary-container font-label-sm text-label-sm uppercase tracking-wider">Audit Légal CEMAC / COBAC</span>
+<span class="text-outline text-label-sm">•</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Station Opérateur Douala HQ-04</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-0.5">Module d'Audit KYC &amp; Certification Marchande</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Examen des pièces d'identité CNI, vérification biométrique faciale et conformité CEMAC</p>
+</div>
+<!-- Quick Session Stats -->
+<div class="flex items-center gap-space-md self-start lg:self-auto">
+<div class="flex items-center gap-space-sm px-space-md py-1.5 rounded-lg bg-surface-container-low">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Moteur Biométrique</span>
+<span class="font-label-md text-label-md text-secondary">NeuralMatch v3.8 Active</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm px-space-md py-1.5 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Traités Aujourd'hui</span>
+<span class="font-price-card text-price-card text-on-surface">142 <span class="font-body-sm text-body-sm text-secondary font-normal">+18/h</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filter & Queue Navigation Tabs -->
+<div class="flex items-center justify-between pt-space-xs overflow-x-auto">
+<div class="flex items-center gap-space-xs p-1 rounded-xl bg-surface-container-low">
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-primary-container text-white font-label-md text-label-md transition-all">
+<span class="material-symbols-outlined text-[16px]">priority_high</span>
+<span>Dossiers Prioritaires</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-white/20 font-label-sm text-label-sm text-white">19</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">warehouse</span>
+<span>Grossistes Entrepôt</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container-high font-label-sm text-label-sm text-on-surface-variant">7</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">history_edu</span>
+<span>En Attente de Rectification</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container-high font-label-sm text-label-sm text-on-surface-variant">12</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]">task_alt</span>
+<span>Validés (24h)</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-secondary-container/30 font-label-sm text-label-sm text-secondary">84</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm hidden sm:flex">
+<span class="material-symbols-outlined text-[16px]">sort</span>
+<span>Trié par: Urgence transactionnelle • Dépôts &gt; 10M FCFA</span>
+</div>
+</div>
+</div>
+<!-- Three-Pane Inspection Workspace -->
+<div class="grid grid-cols-12 gap-0 w-full min-h-[calc(100vh-146px)]">
+<!-- LEFT PANE (25% ~ 3 cols): Queue of KYC Files -->
+<div class="col-span-12 xl:col-span-3 bg-surface-container-lowest p-space-md flex flex-col gap-space-sm shadow-sm overflow-y-auto">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">File active</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-bold">19 en attente</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1 rounded hover:bg-surface-container">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+</div>
+<!-- Search small in queue -->
+<div class="relative flex items-center mb-space-xs">
+<span class="material-symbols-outlined absolute left-2.5 text-on-surface-variant text-[16px]">search</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-sm text-body-sm pl-8 pr-3 py-1.5 rounded-lg focus:outline-none focus:bg-surface-container placeholder-on-surface-variant" placeholder="Filtrer par nom ou #KYC..." type="text"/>
+</div>
+<!-- Item Active: Paul-Alain Tchakounte -->
+<div class="p-space-sm rounded-xl bg-surface-container-high shadow-md flex flex-col gap-space-xs cursor-pointer transition-all">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">#KYC-DLA-8421</span>
+</div>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-bold">98% match</span>
+</div>
+<div class="flex items-center gap-space-sm mt-1">
+<div class="relative w-12 h-12 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait photo de face d'un commercant camerounais sérieux en chemise sombre pour dossier d'identification officielle fond neutre studio eclairage doux netteté photographique professionnelle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnTY7SaqkMsdSat5Pv3JahDrWoZXV9zHiFAm9o12nWGzgWstiOopP7QpREXtP_vsQ_qH7YlM4Cq7KtpN07DzUuzVSERXGxLycNutdpHtnwVRJTOxKGAbNgBF2bJFsm09klJ0eSswjW3z8szoeSZryYAL4vkSRZ8m4pDi74oB9T0oASYE_4dPmEsdGdRZ8ZYGlKsUY7HvZp7NZD7EB7YFBAdDi9uB17_j5-jPHuBQE"/>
+<div class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-surface-container-lowest text-[10px]">check</span>
+</div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Paul-Alain Tchakounte</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Entrepôt Textile Akwa, Douala</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-1.5 py-0.5 rounded bg-tertiary/10 text-tertiary font-label-sm text-label-sm font-semibold">Marchand Or</span>
+<span class="text-on-surface-variant text-[11px]">• CNI 2021-2031</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-primary">hourglass_top</span> 14 min d'attente
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Plafond: 50M FCFA</span>
+</div>
+</div>
+<!-- Item 2: Suzanne Ngono -->
+<div class="p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col gap-space-xs cursor-pointer">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-mono">#KYC-YDE-7933</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-bold">94% match</span>
+</div>
+<div class="flex items-center gap-space-sm mt-1">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait photoréaliste d'une jeune grossiste camerounaise moderne en tenue d'affaires souriant sobrement eclairage net haute definition studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBY5xIPq2XiQhieYISfjRpFHdWdaZL6i2EX7meauuvyDlIN3Lz_WaV-C3IvCDUKaStNvD-VTGByS2JhPKu0RX83ORDm-pncdTVH1ZW3Ep1nk7l5fTmcew7odCMQqeoAFVTPEb38O7Wot-p08y8KcEgaMCV3XXvZfnGVBrSycgV6o5dk6zuZ4pgHOcA4oN7BtX21yUuLQhXU3a-sgb7XDr20niPuphqbah6yqDVsfJA"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Suzanne Ngono B.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Cosmétiques Marché Mokolo, Yaoundé</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Grossiste Standard</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">hourglass_empty</span> 28 min
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Plafond: 15M FCFA</span>
+</div>
+</div>
+<!-- Item 3: Ibrahim Mamadou -->
+<div class="p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col gap-space-xs cursor-pointer">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-mono">#KYC-BFO-4109</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-tertiary/15 text-tertiary font-bold">78% attention</span>
+</div>
+<div class="flex items-center gap-space-sm mt-1">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait d'un homme d'affaires camerounais du grand nord en boubou traditionnel moderne regard attentif fond de magasin commercial eclairage ecrans" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDv56VAp2ObT9TfUaiahDHCNocASoksQl4fTpoUqsHYtWYVhBfFkK8Jgha5lm_cd9vkMyzIwWj_7Teq5caSeaxea3K2mzppPpqz9izYhwLlXsJaeOH6Vsydu-nd3t8UI1jFUrJ-Bqdc7T9J-lo9wF8oyS5V9Va_i-f3AAVYL7vfluJk9RviFeMX7yeR3v199lGQfVy5wr7vVH6cg9TXHiPH9Jt91JY6ZooVH0bnfc"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Ibrahim Mamadou Bello</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Import Quincaillerie Bafoussam</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-1.5 py-0.5 rounded bg-error/15 text-error font-label-sm text-label-sm">Reflet Recto détecté</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">hourglass_empty</span> 41 min
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Plafond: 15M FCFA</span>
+</div>
+</div>
+<!-- Item 4: Carine Bella -->
+<div class="p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container transition-all flex flex-col gap-space-xs cursor-pointer">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-mono">#KYC-DLA-8422</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-secondary/10 text-secondary font-bold">96% match</span>
+</div>
+<div class="flex items-center gap-space-sm mt-1">
+<div class="w-12 h-12 rounded-lg overflow-hidden bg-surface-container shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait photo professionnelle d'une gestionnaire de boutique camerounaise a Douala coiffure soignee eclairage de studio pour document officiel de voyage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-gw3vwhcRN4_2Gebhv4FN0uc2_O_RoWQhmLQL21YueZOQbY1TCe5hOtJjfuEaryBeIsGWl0wSfYElJ3Yv-C0Y5VVbc_u3ll1tTSySZheD0o8m46ypTqr28uC5r7uWOnhojAHWql2o6HzghGHyHd6eD9ALhU4eVsoMVIKNAQkuao674uvj8zA1YLI5gEtcV0KAxzLaGOSk5NZqdy1_W6edXfH3ppVDcixacVBLPHQ"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate leading-tight">Carine Bella Ebanda</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Électronique Bonamoussadi, DLA</span>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-1.5 py-0.5 rounded bg-tertiary/10 text-tertiary font-label-sm text-label-sm font-semibold">Marchand Or</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">hourglass_empty</span> 55 min
+          </span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Plafond: 50M FCFA</span>
+</div>
+</div>
+<!-- Live Queue Batch Helper -->
+<div class="mt-auto pt-space-sm p-space-sm rounded-xl bg-surface-container-lowest flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Conformité ANIF / BEAC active</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Auto-Sync</span>
+</div>
+</div>
+<!-- CENTER PANE (50% ~ 6 cols): Forensic Inspection Deck -->
+<div class="col-span-12 xl:col-span-6 bg-background p-space-md flex flex-col gap-space-md overflow-y-auto">
+<!-- Dossier Lead Card -->
+<div class="p-space-md rounded-2xl bg-surface-container-low shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="px-space-xs py-1 rounded bg-secondary/15 text-secondary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">psychology</span> OCR &amp; Biométrie Validés
+            </div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Soumis le 24 Mai 2025 à 10:28 (Douala GMT+1)</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-2 py-1 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">zoom_in</span> Loupe x4
+            </button>
+<button class="px-2 py-1 rounded bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">invert_colors</span> Infrarouge / UV
+            </button>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Paul-Alain Tchakounte Kemayou</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Né le 14/09/1986 • Nationalité: Camerounaise • ID Fiscal: M098612450091X</p>
+</div>
+<div class="text-right">
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Score Global Confiance</div>
+<div class="font-price-hero text-price-hero text-secondary flex items-center justify-end gap-1">
+<span>99.2</span><span class="text-headline-sm font-normal text-on-surface-variant">/100</span>
+</div>
+</div>
+</div>
+</div>
+<!-- VISUAL COMPARATOR (Recto CNI + Verso CNI + Selfie) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- Recto CNI with OCR Bounding Boxes -->
+<div class="rounded-xl bg-surface-container-low p-space-sm flex flex-col gap-space-xs relative group overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span> Recto CNI
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary/15 text-secondary font-label-sm text-label-sm">DGSN Certifié</span>
+</div>
+<div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Carte nationale d'identite camerounaise CNI biometrique face avant sur table sombre avec entete Republique du Cameroun, photo officielle en vignette, filigrane securise, sceau d'Etat et mentions officielles nettes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApO3sj2SICZqJG2VDZztdGxvG48ofsGLtHogOqKKaFjxmhUM6Rg7oxHQSZdT6SafQ3w94tjjDFWzRP6ud_CNrFyZ3UjXhdpYWfWhYzgZ87oLQy_h2ickqykwyCaPPHi41LmxX-oV0LE0nKmduJUa92BSf5GLNf5vlIo1uAKxoJ468yChdlDpLRLkmPmqJDRRUQ6rpujRTlFAHvLou0G_BjfYPIOU51rgnvSfrqU8U"/>
+<!-- AI OCR Detection Bounding Box Overlays -->
+<div class="absolute top-2 left-2 right-12 p-1 rounded bg-secondary-container/20 text-secondary font-mono text-[9px] font-bold shadow-sm pointer-events-none">
+              OCR: REPUBLIQUE DU CAMEROUN
+            </div>
+<div class="absolute bottom-8 left-16 right-2 p-1 rounded bg-secondary-container/20 text-secondary font-mono text-[9px] font-bold shadow-sm pointer-events-none">
+              NOM: TCHAKOUNTE K. PAUL-ALAIN
+            </div>
+<div class="absolute bottom-2 left-16 right-8 p-0.5 rounded bg-secondary-container/20 text-secondary font-mono text-[9px] font-bold shadow-sm pointer-events-none">
+              CNI N°: 118492019
+            </div>
+<div class="absolute top-8 left-2 w-14 h-16 rounded bg-primary-container/20 flex items-center justify-center pointer-events-none">
+<span class="material-symbols-outlined text-primary text-[14px]">face</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm mt-0.5">
+<span>Filigrane: Conforme</span>
+<span class="text-secondary font-bold">Netteté: 99%</span>
+</div>
+</div>
+<!-- Verso CNI with MRZ Scanner -->
+<div class="rounded-xl bg-surface-container-low p-space-sm flex flex-col gap-space-xs relative group overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">flip</span> Verso CNI
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary/15 text-secondary font-label-sm text-label-sm">MRZ Valide</span>
+</div>
+<div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Verso d'une carte d'identite nationale camerounaise biometrique montrant bande de lecture optique MRZ en bas, empreinte digitale stylisee et signatures officielles en haute resolution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM1sKBgZlzD4MXo43t-HOvMlUHD_8YsrUf3QrQQ_OCGaAXXDMH7o9ma_-j838M9wp8-OBm9UJp3oYYWss9SkJ0G2Qy-jZZHNHQ59PKP-mdHRQBOps6dMuW6RpvypGdQ6jDbKwUJ8oCimgLTTxbiodRSrogkYjUBpfQ6NLPxNibmcATRX6Tx9F2Lf6HLtfO5gXjuG3xihbu6QZn5z3iYKHhzgcf5SWcl3Vi4wMM-60"/>
+<!-- MRZ Bounding Scan -->
+<div class="absolute bottom-2 inset-x-2 p-1 rounded bg-secondary-container/30 text-secondary font-mono text-[8px] leading-tight font-bold shadow-sm pointer-events-none">
+              IDCM1184920197&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br/>
+              8609142M3101158CMR&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;6
+            </div>
+<div class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-surface-container-highest/80 text-on-surface font-label-sm text-label-sm">
+              Exp: 15/01/2031
+            </div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm mt-0.5">
+<span>4 Coins: Visibles</span>
+<span class="text-secondary font-bold">Checksum: 100%</span>
+</div>
+</div>
+<!-- Live Biometric Selfie with Facial Mesh Layer -->
+<div class="rounded-xl bg-surface-container-low p-space-sm flex flex-col gap-space-xs relative group overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">face_retouching_natural</span> Selfie Direct
+            </span>
+<span class="px-1.5 py-0.5 rounded bg-secondary/15 text-secondary font-label-sm text-label-sm">Liveness OK</span>
+</div>
+<div class="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Selfie biométrique en direct haute resolution d'un homme camerounais tenant le regard droit avec traceurs faciaux biometriques virtuels eclairage smartphone net et sans reflet" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUQcAnkD3-4UOI7EYUCerLeOfFzHrvPZw2SqyZa4HvLl0NsPH5rQBXbsc-VMD2WbOf8DukdllMjevlFso7fVNWb0N696TZLBeuSg0g-ZED220YfcLlI8_68jymIAxRf-dQOZb9PVJHOq5tcqjsHz71xmIuZyYTiIZTGD0xwiq8KBiDQYM_Rwg1pnDMpNdletaX0rwUq0kANpsDKzPstGkvEyte2LZMmNEe1aapgL4"/>
+<!-- SVG Biometric Alignment Mesh Graphic Overlay -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none text-secondary/60" fill="none" viewbox="0 0 200 150" xmlns="http://www.w3.org/2000/svg">
+<circle cx="100" cy="65" r="38" stroke="currentColor" stroke-dasharray="3 3" stroke-width="1"></circle>
+<circle cx="85" cy="58" fill="currentColor" fill-opacity="0.7" r="4"></circle>
+<circle cx="115" cy="58" fill="currentColor" fill-opacity="0.7" r="4"></circle>
+<line stroke="currentColor" stroke-width="0.8" x1="85" x2="115" y1="58" y2="58"></line>
+<path d="M100 62 L100 76 L94 80 L106 80" stroke="currentColor" stroke-width="0.8"></path>
+<path d="M86 92 Q100 100 114 92" stroke="currentColor" stroke-width="1.2"></path>
+<rect height="95" rx="12" stroke="currentColor" stroke-dasharray="4 4" stroke-width="1" width="96" x="52" y="18"></rect>
+</svg>
+<div class="absolute bottom-2 left-2 px-1.5 py-0.5 rounded bg-surface-container-lowest/90 text-secondary font-mono text-[9px] font-bold">
+              IA Match: 99.2%
+            </div>
+<div class="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-secondary text-surface-container-lowest font-label-sm text-label-sm font-bold">
+              VIVANT (Anti-Spoofing)
+            </div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm mt-0.5">
+<span>Pose 3D: Frontale 0.2°</span>
+<span class="text-secondary font-bold">Correspondance CNI: Élevée</span>
+</div>
+</div>
+</div>
+<!-- OCR vs USER SUBMITTED DATA COMPARISON TABLE -->
+<div class="rounded-2xl bg-surface-container-low p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">difference</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Rapprochement Automatisé OCR • Formulaire Marchand</h3>
+</div>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-secondary/10 text-secondary font-bold">8/8 Champs Validés</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-sm">
+<!-- Row 1: Nom et Prénoms -->
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Nom &amp; Prénoms</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> 100% Concordance
+              </span>
+</div>
+<div class="flex items-center justify-between text-on-surface text-body-sm pt-1">
+<div>
+<span class="text-[10px] text-on-surface-variant block">Extraction OCR (CNI)</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">TCHAKOUNTE K. PAUL-ALAIN</span>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-on-surface-variant block">Saisie Marchand</span>
+<span class="font-headline-sm text-headline-sm text-secondary">Paul-Alain Tchakounte Kemayou</span>
+</div>
+</div>
+</div>
+<!-- Row 2: Numéro CNI -->
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Numéro National CNI</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Registre DGSN
+              </span>
+</div>
+<div class="flex items-center justify-between text-on-surface text-body-sm pt-1">
+<div>
+<span class="text-[10px] text-on-surface-variant block">Extraction OCR</span>
+<span class="font-headline-sm text-headline-sm font-mono text-on-surface">118492019</span>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-on-surface-variant block">Saisie Marchand</span>
+<span class="font-headline-sm text-headline-sm font-mono text-secondary">118492019</span>
+</div>
+</div>
+</div>
+<!-- Row 3: Date de Naissance -->
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Date de Naissance</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Âge: 38 ans (Majeur)
+              </span>
+</div>
+<div class="flex items-center justify-between text-on-surface text-body-sm pt-1">
+<div>
+<span class="text-[10px] text-on-surface-variant block">Extraction OCR</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">14/09/1986</span>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-on-surface-variant block">Saisie Marchand</span>
+<span class="font-headline-sm text-headline-sm text-secondary">14/09/1986</span>
+</div>
+</div>
+</div>
+<!-- Row 4: Validité & Expiration -->
+<div class="p-space-sm rounded-xl bg-surface-container flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Date d'Expiration</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-secondary font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Valide (6 ans restants)
+              </span>
+</div>
+<div class="flex items-center justify-between text-on-surface text-body-sm pt-1">
+<div>
+<span class="text-[10px] text-on-surface-variant block">Extraction OCR</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">15/01/2031</span>
+</div>
+<div class="text-right">
+<span class="text-[10px] text-on-surface-variant block">Saisie Marchand</span>
+<span class="font-headline-sm text-headline-sm text-secondary">15/01/2031</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Money & Settlement Account Check -->
+<div class="p-space-sm rounded-xl bg-surface-container-highest/60 flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">phone_android</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Numéro Portefeuille Marchand Associé</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-mono">+237 699 82 14 00 (MTN MoMo Business • Titulaire certifié conforme)</span>
+</div>
+</div>
+<span class="px-2 py-1 rounded bg-secondary-container/30 text-secondary font-label-sm text-label-sm font-bold">KYC Telco Match</span>
+</div>
+</div>
+</div>
+<!-- RIGHT PANE (25% ~ 3 cols): Compliance Audit Checklist & Final Decision Execution -->
+<div class="col-span-12 xl:col-span-3 bg-surface-container-lowest p-space-md flex flex-col gap-space-md shadow-sm overflow-y-auto">
+<!-- Checklist Section -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between pb-1">
+<span class="font-label-md text-label-md text-on-surface uppercase tracking-wider">Contrôle Auditeur Humain</span>
+<span class="text-[11px] font-mono text-primary font-bold">OBLIGATOIRE (4/4)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-xs">Vérifiez manuellement les critères réglementaires avant de débloquer les flux escrow.</p>
+<div class="flex flex-col gap-2">
+<!-- Check 1 -->
+<label class="flex items-start gap-space-xs p-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-surface-container-high text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">CNI non expirée</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Validité confirmée jusqu'en Janvier 2031</span>
+</div>
+</label>
+<!-- Check 2 -->
+<label class="flex items-start gap-space-xs p-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-surface-container-high text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Lisibilité intégrale 4 coins</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Aucun rognage, bords et micro-textes visibles</span>
+</div>
+</label>
+<!-- Check 3 -->
+<label class="flex items-start gap-space-xs p-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-surface-container-high text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Absence de reflets masquants</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Flash absorbé, pas d'occlusion sur la photo d'identité</span>
+</div>
+</label>
+<!-- Check 4 -->
+<label class="flex items-start gap-space-xs p-space-xs rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors cursor-pointer">
+<input checked="" class="mt-1 w-4 h-4 rounded bg-surface-container-high text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Concordance biométrique réelle</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-snug">Similarité faciale &gt;95% avec vivacité attestée</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Decision Execution Tray -->
+<div class="p-space-sm rounded-2xl bg-surface-container-low flex flex-col gap-space-sm mt-auto shadow-sm">
+<span class="font-label-sm text-label-sm text-on-surface uppercase font-bold tracking-wider">Arbitrage &amp; Décision Immédiate</span>
+<!-- Level Selector for Approval -->
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant">Plafond séquestre autorisé :</label>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="py-1.5 px-2 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-all text-center" id="cap-15m" onclick="selectCap('15M')">
+              15.000.000 FCFA
+            </button>
+<button class="py-1.5 px-2 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-bold shadow transition-all text-center" id="cap-50m" onclick="selectCap('50M')">
+              50.000.000 FCFA (Or)
+            </button>
+</div>
+</div>
+<!-- Primary Action: Big Green Approval -->
+<button class="w-full py-3.5 px-space-md rounded-full bg-secondary text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-xs shadow-md hover:bg-secondary-fixed transition-all active:scale-[0.98]" onclick="approveKYC()">
+<span class="material-symbols-outlined text-[20px]">verified</span>
+<span>Valider &amp; Certifier Marchand Or</span>
+</button>
+<!-- Divider -->
+<div class="w-full h-px bg-surface-container-highest my-0.5"></div>
+<!-- Reject Workflow Module -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant flex items-center justify-between">
+<span>Motif de rejet précis :</span>
+<span class="text-error font-bold text-[10px]">Notifiera le marchand</span>
+</label>
+<select class="w-full bg-surface-container-high text-on-surface font-body-sm text-body-sm p-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-error" id="reject-reason">
+<option value="verso_flou">Verso flou ou code MRZ illisible</option>
+<option value="doc_expire">Document expiré ou périmé</option>
+<option value="selfie_invalide">Selfie non conforme / mauvaise luminosité</option>
+<option value="fraude_suspectee">Fraude d'identité ou falsification suspectée</option>
+<option value="nom_incoherent">Incohérence entre nom CNI et compte bancaire/MoMo</option>
+</select>
+<textarea class="w-full bg-surface-container text-on-surface font-body-sm text-body-sm p-2 rounded-lg focus:outline-none focus:bg-surface-container-high placeholder-on-surface-variant resize-none" placeholder="Message d'explication envoyé par SMS &amp; WhatsApp (+237)..." rows="2"></textarea>
+<button class="w-full py-2.5 px-space-md rounded-full bg-error-container text-on-error-container hover:bg-error hover:text-on-error font-label-md text-label-md font-semibold flex items-center justify-center gap-1 transition-all" onclick="rejectKYC()">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+<span>Rejeter avec Notification</span>
+</button>
+</div>
+<!-- Physical Field Audit Escalation (Amber Button) -->
+<button class="w-full py-2.5 px-space-md rounded-full bg-tertiary-container text-on-tertiary font-label-md text-label-md font-semibold flex items-center justify-center gap-space-xs hover:bg-tertiary-fixed-dim transition-all" onclick="requestFieldInspection()">
+<span class="material-symbols-outlined text-[18px]">storefront</span>
+<span>Demander inspection terrain à Akwa</span>
+</button>
+<!-- Audit Trail Footnote -->
+<div class="text-center text-[10px] text-on-surface-variant font-mono">
+          Horodatage blockchain: TX-KYC-CMR-20250524-8421
+        </div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function selectCap(tier) {
+    const b15 = document.getElementById('cap-15m');
+    const b50 = document.getElementById('cap-50m');
+    if (tier === '15M') {
+      b15.className = 'py-1.5 px-2 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-bold shadow transition-all text-center';
+      b50.className = 'py-1.5 px-2 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-all text-center';
+    } else {
+      b50.className = 'py-1.5 px-2 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-bold shadow transition-all text-center';
+      b15.className = 'py-1.5 px-2 rounded-lg bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm hover:text-on-surface transition-all text-center';
+    }
+  }
+
+  function approveKYC() {
+    alert('Dossier #KYC-DLA-8421 approuvé avec succès. Le compte Paul-Alain Tchakounte a été promu Marchand Or (Plafond 50M FCFA). Notification émise via SMS/WhatsApp.');
+  }
+
+  function rejectKYC() {
+    const reason = document.getElementById('reject-reason').value;
+    alert('Dossier rejeté pour le motif: ' + reason + '. Invitation de rectification transmise au marchand.');
+  }
+
+  function requestFieldInspection() {
+    alert('Ordre de mission terrain généré pour l\'équipe DROPP Hub Douala Akwa. Inspecteur désigné: Christian Mbarga.');
+  }
+</script></main></div></body></html>

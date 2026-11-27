@@ -12,12 +12,12 @@ import type {
   WalletTransaction,
 } from '../types/dropp';
 
-export const IMG_WAX = '/src/assets/images/dropp_fashion_wax_1795722706123.jpg';
-export const IMG_SNEAKERS = '/src/assets/images/dropp_fashion_sneakers_1795722706360.jpg';
-export const IMG_AUDIO = '/src/assets/images/dropp_tech_audio_1795722705978.jpg';
-export const IMG_SOLAR = '/src/assets/images/dropp_tech_solar_1795722706669.jpg';
-export const IMG_KARITE = '/src/assets/images/dropp_beauty_karite_1795722705911.jpg';
-export const IMG_PENJA = '/src/assets/images/dropp_food_penja_1795722706624.jpg';
+export const IMG_WAX = '/src/assets/images/dropp_fashion_wax_1795722706123.webp';
+export const IMG_SNEAKERS = '/src/assets/images/dropp_fashion_sneakers_1795722706360.webp';
+export const IMG_AUDIO = '/src/assets/images/dropp_tech_audio_1795722705978.webp';
+export const IMG_SOLAR = '/src/assets/images/dropp_tech_solar_1795722706669.webp';
+export const IMG_KARITE = '/src/assets/images/dropp_beauty_karite_1795722705911.webp';
+export const IMG_PENJA = '/src/assets/images/dropp_food_penja_1795722706624.webp';
 
 export const DEMO_SHOPS: ShopProfile[] = [
   {
@@ -32,9 +32,9 @@ export const DEMO_SHOPS: ShopProfile[] = [
     isPremium: true,
     vendorStatus: 'approved',
     memberSinceYear: 2023,
-    rating: 0,
+    rating: 4.9,
     salesCount: 0,
-    responseRate: 100,
+    responseRate: 98,
     followersCount: 0,
     followingCount: 0,
     likesCount: 0,
@@ -44,6 +44,7 @@ export const DEMO_SHOPS: ShopProfile[] = [
     storyPreviewText: 'Arrivage Wax Hollandais & Sneakers Akwa — remises à partir de 10 pièces.',
     storyMediaUrl: IMG_WAX,
     isOnline: true,
+    isDemo: true,
   },
   {
     shopId: 'shop-bastos-tech',
@@ -57,9 +58,9 @@ export const DEMO_SHOPS: ShopProfile[] = [
     isPremium: false,
     vendorStatus: 'approved',
     memberSinceYear: 2024,
-    rating: 0,
+    rating: 4.7,
     salesCount: 0,
-    responseRate: 100,
+    responseRate: 95,
     followersCount: 0,
     followingCount: 0,
     likesCount: 0,
@@ -69,6 +70,7 @@ export const DEMO_SHOPS: ShopProfile[] = [
     storyPreviewText: 'Nouveau lot d’écouteurs ANC et kits solaires 245W disponibles en stock Yaoundé.',
     storyMediaUrl: IMG_AUDIO,
     isOnline: true,
+    isDemo: true,
   },
   {
     shopId: 'shop-ndokoti-energie',
@@ -82,9 +84,9 @@ export const DEMO_SHOPS: ShopProfile[] = [
     isPremium: true,
     vendorStatus: 'approved',
     memberSinceYear: 2022,
-    rating: 0,
+    rating: 4.8,
     salesCount: 0,
-    responseRate: 100,
+    responseRate: 97,
     followersCount: 0,
     followingCount: 0,
     likesCount: 0,
@@ -94,6 +96,7 @@ export const DEMO_SHOPS: ShopProfile[] = [
     storyPreviewText: 'Livraison express Douala & Yaoundé sous 24h pour toute commande >= 5 kits.',
     storyMediaUrl: IMG_SOLAR,
     isOnline: true,
+    isDemo: true,
   },
   {
     shopId: 'shop-ouest-terroir',
@@ -107,9 +110,9 @@ export const DEMO_SHOPS: ShopProfile[] = [
     isPremium: false,
     vendorStatus: 'approved',
     memberSinceYear: 2023,
-    rating: 0,
+    rating: 4.9,
     salesCount: 0,
-    responseRate: 100,
+    responseRate: 99,
     followersCount: 0,
     followingCount: 0,
     likesCount: 0,
@@ -119,6 +122,7 @@ export const DEMO_SHOPS: ShopProfile[] = [
     storyPreviewText: 'Récolte fraîche de Penja conditionnée en bocaux et sachets kraft 500g.',
     storyMediaUrl: IMG_PENJA,
     isOnline: false,
+    isDemo: true,
   },
   {
     shopId: 'shop-bonapriso-bio',
@@ -132,7 +136,7 @@ export const DEMO_SHOPS: ShopProfile[] = [
     isPremium: false,
     vendorStatus: 'pending',
     memberSinceYear: 2026,
-    rating: 0,
+    rating: 4.6,
     salesCount: 0,
     responseRate: 100,
     followersCount: 0,
@@ -142,6 +146,7 @@ export const DEMO_SHOPS: ShopProfile[] = [
     bio: 'Cosmétiques naturels au beurre de karité fouetté et sérums à l’hibiscus. Boutique en attente de validation.',
     hasActiveStory: false,
     isOnline: false,
+    isDemo: true,
   },
 ];
 
@@ -187,9 +192,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.9,
     status: 'published',
     createdAt: '2026-11-24T09:00:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-02',
@@ -229,9 +235,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.7,
     status: 'published',
     createdAt: '2026-11-24T11:30:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-03',
@@ -272,9 +279,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.8,
     status: 'published',
     createdAt: '2026-11-23T17:15:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-04',
@@ -316,9 +324,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.9,
     status: 'published',
     createdAt: '2026-11-23T14:00:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-05',
@@ -357,9 +366,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.9,
     status: 'published',
     createdAt: '2026-11-22T16:40:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-06',
@@ -398,9 +408,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.8,
     status: 'published',
     createdAt: '2026-11-22T12:10:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-07',
@@ -434,9 +445,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.8,
     status: 'published',
     createdAt: '2026-11-21T15:00:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-08',
@@ -472,9 +484,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.6,
     status: 'published',
     createdAt: '2026-11-21T10:20:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-09',
@@ -508,9 +521,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.8,
     status: 'published',
     createdAt: '2026-11-20T18:00:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-10',
@@ -544,9 +558,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.9,
     status: 'published',
     createdAt: '2026-11-20T09:15:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-11',
@@ -581,9 +596,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.9,
     status: 'published',
     createdAt: '2026-11-19T14:45:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-12',
@@ -618,9 +634,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.7,
     status: 'published',
     createdAt: '2026-11-19T08:30:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-13',
@@ -654,9 +671,10 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.8,
     status: 'published',
     createdAt: '2026-11-18T17:00:00Z',
+    isDemo: true,
   },
   {
     postId: 'post-14',
@@ -690,11 +708,158 @@ export const DEMO_POSTS: FeedPost[] = [
     commentsCount: 0,
     bookmarksCount: 0,
     sharesCount: 0,
-    rating: 0,
+    rating: 4.7,
     status: 'published',
     createdAt: '2026-11-18T11:00:00Z',
+    isDemo: true,
   },
 ];
+
+export const DEMO_COMMENTS_BY_POST: Record<string, PostComment[]> = {
+  'post-01': [
+    {
+      commentId: 'CMT-DEMO-01',
+      postId: 'post-01',
+      authorId: 'demo-buyer-1',
+      authorName: 'Clarisse N. (Démo)',
+      text: 'Finitions très propres ! Le lot de 15 pièces est livré avec cintres ?',
+      createdAt: '2026-11-25T10:15:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+    {
+      commentId: 'CMT-DEMO-02',
+      postId: 'post-01',
+      authorId: 'demo-buyer-2',
+      authorName: 'Serge Mbappé (Démo)',
+      text: 'Reçu à Yaoundé via Finexs en 24h, mes clientes ont adoré le tissu.',
+      createdAt: '2026-11-25T14:20:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+  ],
+  'post-02': [
+    {
+      commentId: 'CMT-DEMO-03',
+      postId: 'post-02',
+      authorId: 'demo-buyer-3',
+      authorName: 'Boris T. (Démo)',
+      text: 'Le boîtier charge bien en USB-C ? Je veux prendre un carton de 30.',
+      createdAt: '2026-11-25T09:10:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+    {
+      commentId: 'CMT-DEMO-04',
+      postId: 'post-02',
+      authorId: 'demo-buyer-4',
+      authorName: 'Mireille K. (Démo)',
+      text: 'Bon son ANC même au marché Mokolo, très bon rapport qualité/prix.',
+      createdAt: '2026-11-25T16:45:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+  ],
+  'post-03': [
+    {
+      commentId: 'CMT-DEMO-05',
+      postId: 'post-03',
+      authorId: 'demo-buyer-5',
+      authorName: 'Alain F. (Démo)',
+      text: 'Tient toute la nuit avec mon routeur Wi-Fi et deux ampoules LED.',
+      createdAt: '2026-11-24T19:00:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+  ],
+  'post-04': [
+    {
+      commentId: 'CMT-DEMO-06',
+      postId: 'post-04',
+      authorId: 'demo-buyer-6',
+      authorName: 'Kevin D. (Démo)',
+      text: 'Dispo en pointure 42 à Akwa aujourd’hui ?',
+      createdAt: '2026-11-24T12:30:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+  ],
+  'post-05': [
+    {
+      commentId: 'CMT-DEMO-07',
+      postId: 'post-05',
+      authorId: 'demo-buyer-7',
+      authorName: 'Hôtel Mfoundi (Démo)',
+      text: 'Arôme exceptionnel, nos clients demandent toujours le poivre de Penja.',
+      createdAt: '2026-11-23T11:10:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+  ],
+  'post-06': [
+    {
+      commentId: 'CMT-DEMO-08',
+      postId: 'post-06',
+      authorId: 'demo-buyer-8',
+      authorName: 'Institut Ébène (Démo)',
+      text: 'Texture fouettée parfaite pour la revente en institut.',
+      createdAt: '2026-11-23T15:50:00Z',
+      deliveryStatus: 'sent',
+      isDemo: true,
+    },
+  ],
+};
+
+export const DEMO_REVIEWS_BY_POST: Record<string, ProductReview[]> = {
+  'post-01': [
+    {
+      reviewId: 'REV-DEMO-01',
+      postId: 'post-01',
+      authorId: 'demo-buyer-2',
+      authorName: 'Boutique Élégance Biyem-Assi (Démo)',
+      rating: 5,
+      comment: 'Lot de 15 ensembles vendu en 4 jours. Tissu épais et coupe fidèle.',
+      createdAt: '2026-11-25T16:00:00Z',
+      isDemo: true,
+    },
+  ],
+  'post-02': [
+    {
+      reviewId: 'REV-DEMO-02',
+      postId: 'post-02',
+      authorId: 'demo-buyer-4',
+      authorName: 'Phone Plus Mokolo (Démo)',
+      rating: 5,
+      comment: 'Aucun retour SAV sur les 20 premiers packs reçus à Yaoundé.',
+      createdAt: '2026-11-25T12:00:00Z',
+      isDemo: true,
+    },
+  ],
+  'post-03': [
+    {
+      reviewId: 'REV-DEMO-03',
+      postId: 'post-03',
+      authorId: 'demo-buyer-5',
+      authorName: 'Pharmacie Bonabéri (Démo)',
+      rating: 5,
+      comment: 'Indispensable pendant les coupures. Batterie LiFePO4 très stable.',
+      createdAt: '2026-11-24T20:00:00Z',
+      isDemo: true,
+    },
+  ],
+  'post-04': [
+    {
+      reviewId: 'REV-DEMO-04',
+      postId: 'post-04',
+      authorId: 'demo-buyer-6',
+      authorName: 'Akwa Shoes Corner (Démo)',
+      rating: 5,
+      comment: 'Semelle confortable et boîtes solides pour la livraison en gros.',
+      createdAt: '2026-11-24T13:30:00Z',
+      isDemo: true,
+    },
+  ],
+};
 
 export const INITIAL_COMMENTS_BY_POST: Record<string, PostComment[]> = {};
 

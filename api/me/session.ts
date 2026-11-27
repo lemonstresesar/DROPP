@@ -1,4 +1,9 @@
-import { resolveAuthoritativePolicy, verifyFirebaseIdToken } from '../_lib/droppAuth';
+import {
+  AuthError,
+  ServerConfigError,
+  extractBearerToken,
+  resolveAuthoritativeSession,
+} from '../_lib/droppAuth.js';
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
@@ -6,32 +11,26 @@ export default async function handler(req: any, res: any) {
     return;
   }
 
-  const authHeader = req.headers?.authorization || '';
-  const token =
-    typeof authHeader === 'string' && authHeader.startsWith('Bearer ')
-      ? authHeader.slice(7).trim()
-      : '';
-
+  const token = extractBearerToken(req);
   if (!token) {
     res.status(401).json({ error: 'Jeton d’authentification requis.' });
     return;
   }
 
   try {
-    const verified = await verifyFirebaseIdToken(token);
-    const profile = resolveAuthoritativePolicy(
-      verified.sub,
-      verified.email,
-      verified.name,
-      Boolean(verified.email_verified)
-    );
-    res.status(200).json({
-      ...profile,
-      avatarUrl: verified.picture || undefined,
-    });
+    const session = await resolveAuthoritativeSession(token);
+    res.status(200).json(session);
   } catch (err) {
-    res.status(401).json({
-      error: err instanceof Error ? err.message : 'Jeton Firebase invalide.',
+    if (err instanceof AuthError) {
+      res.status(err.status).json({ error: err.message });
+      return;
+    }
+    if (err instanceof ServerConfigError) {
+      res.status(err.status).json({ error: err.message });
+      return;
+    }
+    res.status(500).json({
+      error: err instanceof Error ? err.message : 'Erreur serveur lors du chargement du profil.',
     });
   }
 }

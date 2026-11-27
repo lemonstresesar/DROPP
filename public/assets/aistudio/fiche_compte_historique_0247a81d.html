@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#131313","surface-container-highest":"#353534","on-tertiary-fixed-variant":"#653e00","secondary-fixed":"#6ffbbe","tertiary-fixed":"#ffddb8","on-tertiary-fixed":"#2a1700","on-tertiary-container":"#402500","on-surface":"#e5e2e1","surface-dim":"#131313","on-error":"#690005","on-error-container":"#ffdad6","surface-variant":"#353534","primary-fixed-dim":"#ffb59e","outline-variant":"#5b4038","surface-container-low":"#1c1b1b","surface-tint":"#ffb59e","inverse-on-surface":"#313030","tertiary-fixed-dim":"#ffb95f","primary":"#ffb59e","error-container":"#93000a","on-secondary-fixed":"#002113","secondary-fixed-dim":"#4edea3","secondary":"#4edea3","surface-bright":"#393939","surface":"#131313","on-secondary-fixed-variant":"#005236","inverse-primary":"#ae3200","on-secondary":"#003824","secondary-container":"#00a572","primary-fixed":"#ffdbd0","surface-container-lowest":"#0e0e0e","on-primary-fixed-variant":"#852400","error":"#ffb4ab","tertiary":"#ffb95f","on-background":"#e5e2e1","on-primary-fixed":"#3a0b00","on-primary":"#5e1700","on-surface-variant":"#e4beb3","surface-container":"#201f1f","tertiary-container":"#cc8200","on-tertiary":"#472a00","on-primary-container":"#541400","surface-container-high":"#2a2a2a","inverse-surface":"#e5e2e1","outline":"#ab897f","on-secondary-container":"#00311f","primary-container":"#ff5a1f"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1rem","gutter-desktop":"1.5rem","margin":"1rem","space-lg":"1.5rem","margin-mobile":"0.75rem","space-xs":"0.25rem","margin-desktop":"2rem","space-sm":"0.5rem","space-xl":"2.25rem","gutter":"0.75rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"display-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"label-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"label-lg":["Space Grotesk"],"price-card":["Space Grotesk"],"label-md":["Space Grotesk"],"price-hero":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"display":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"]},"fontSize":{"headline-sm":["16px",{"lineHeight":"22px","fontWeight":"600"}],"display-mobile":["30px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.04em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"price-card":["18px",{"lineHeight":"22px","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"price-hero":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display":["40px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="flex flex-col"><div class="px-space-lg pt-space-lg pb-space-md flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-white text-[22px]">local_shipping</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">DROPP<span class="text-primary-container">.B2B</span></span><span class="font-label-sm text-label-sm text-on-surface-variant">HQ CAMEROON</span></div></div><div class="mt-space-xs inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high w-fit"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface uppercase">ADMIN CONSOLE / HQ</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-md" data-active-classes="bg-surface-container-high text-primary font-bold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Vue d'ensemble / KPIs</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg transition-colors bg-surface-container-high text-primary font-bold" data-path="gestion-comptes" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Gestion des Comptes</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="verifications-kyc" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>Vérifications KYC &amp; Identité</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="transactions-escrow" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span>Transactions &amp; Séquestre</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="moderation-catalogue" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Modération des Drops</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="parametres-roles" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Paramètres &amp; Rôles</span></a></nav></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface">Nœud CEMAC Douala</span><span class="font-body-sm text-body-sm text-on-surface-variant">Opérationnel • 24ms</span></div></div><span class="material-symbols-outlined text-secondary text-[16px]">wifi</span></div><div class="flex items-center justify-between pt-space-xs"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface leading-tight">Marcelle E.</span><span class="font-label-sm text-label-sm text-primary">Super Admin HQ</span></div></div><a class="text-on-surface-variant hover:text-error transition-colors p-1" data-path="connexion" href="#" title="Déconnexion"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">corporate_fare</span><span>DROPP HQ</span><span class="text-outline">/</span><span class="text-on-surface font-semibold">Console Centrale</span></div><div class="relative flex items-center ml-space-md"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder-on-surface-variant pl-9 pr-space-md py-1.5 rounded-full w-80 focus:outline-none focus:bg-surface-container" placeholder="Rechercher compte, CNI, #CMD, téléphone..." type="search"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span><span class="font-label-sm text-label-sm text-secondary-fixed">Séquestre BEAC / COBAC</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">schedule</span><span>Douala (UTC+1)</span></div><button class="relative p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-xs pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="p-space-lg flex flex-col gap-space-lg max-w-[1560px] mx-auto w-full">
+<!-- Action Bar & Breadcrumbs -->
+<div class="flex flex-wrap items-center justify-between gap-space-md bg-surface-container-low px-space-lg py-space-md rounded-xl">
+<div class="flex items-center gap-space-sm min-w-0">
+<a class="inline-flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors py-1 px-space-xs" data-path="gestion-comptes" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span>Retour à la liste des comptes</span>
+</a>
+<span class="text-outline-variant font-label-sm text-label-sm">/</span>
+<span class="font-label-sm text-label-sm text-secondary-fixed bg-secondary-container/20 px-space-sm py-0.5 rounded-full">Grossiste Actif • CEMAC Douala</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs">
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-all shadow-sm" id="btn-export">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">download</span>
+<span>Exporter dossier complet</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-all shadow-sm" id="btn-notify">
+<span class="material-symbols-outlined text-[18px] text-tertiary">send</span>
+<span>Envoyer notification officielle</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md transition-all shadow-sm" id="btn-limits">
+<span class="material-symbols-outlined text-[18px] text-secondary">tune</span>
+<span>Ajuster les plafonds MoMo</span>
+</button>
+<button class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-full bg-error-container hover:opacity-90 text-on-error-container font-label-md text-label-md transition-all shadow-sm" id="btn-suspend">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Suspendre le compte</span>
+</button>
+</div>
+</div>
+<!-- Merchant Dossier Top Card -->
+<div class="relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-xl">
+<!-- Ambient Banner Background -->
+<div class="relative h-44 w-full bg-surface-container-high overflow-hidden" data-alt="High-contrast dark cinematic wide view of a modern logistics warehouse in Akwa Douala Cameroon, rows of stacked wholesale consumer electronics and fabrics illuminated by warm industrial lighting, vibrant orange tones in deep shadows." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDj5YTGyIBkCoAobG5RRGkDuHtXw4zK0yJhYhfyFpNyOG-uhf01OYAdEPOs-YCI8nPPQkPbAUEqUwesMd6qRf5A6m7lpFAfMbZ0x20r0cfrKaKVLb1gbNl41w0jEJCcyyFBhJ8CfFBggrL5fcuOPXcbiHmHCgilN3RYUN478ek6MbE_1mfXe45L3QA9Qb5TUg9yXtyT9d5wYWLELU9yq-TZEdmPSHlJ1k8sNNqmRDk')">
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/60 to-transparent"></div>
+<div class="absolute top-4 right-4 flex items-center gap-space-xs bg-surface-container-lowest/80 backdrop-blur-md px-space-md py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wide">Terminal Actif • Douala Akwa Hub</span>
+</div>
+</div>
+<!-- Header Content Overlay -->
+<div class="relative px-space-lg pb-space-lg -mt-16 flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
+<div class="flex flex-col sm:flex-row items-start sm:items-end gap-space-lg">
+<!-- Merchant Avatar with Verification Tier -->
+<div class="relative w-28 h-28 rounded-xl bg-surface-container-high overflow-hidden shadow-2xl flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Portrait photography of an authoritative African wholesale commerce director in Douala wearing modern tailored navy apparel in front of commercial inventory crates, vibrant lighting with sharp warm rim light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQvPtIGig-YsADgUM8pTtPmH1DaHM0BoDMSkyl0cU5aPv-7zQL3mxTXAR10DHKsFR6NI6KV1WVsMqZX-Kv0OvQrvY2nhvJIt55IgNG3SRAMvhE7Wh7jElFuksPQx1Wt-TQ5osIFVuNcqvYKpWCJsZABSPEgMwBBDoGp0ZntfO-zE7x6dPhZCwidAe1mls3ipIEtPEl2LCdPr4jte8fDwHxFx72zXv4enq-MqENh-8"/>
+<div class="absolute bottom-1 right-1 w-6 h-6 rounded-full bg-secondary flex items-center justify-center text-on-secondary shadow-md" title="Niveau KYC 3 Valide">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">KmerChic Import &amp; Wholesale</h1>
+<span class="font-label-md text-label-md text-on-surface-variant font-mono">@KmerChic_Douala</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-space-sm py-0.5 rounded text-primary">#ACT-2024-8421</span>
+</div>
+<!-- Chips Bar -->
+<div class="flex flex-wrap items-center gap-space-xs mt-1">
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-tertiary-container/30 text-tertiary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+                Grossiste Certifié Or
+              </span>
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-secondary-container/20 text-secondary-fixed font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">storefront</span>
+                Boutique Premium Active
+              </span>
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified_user</span>
+                Niveau KYC 3 (Entrepôt inspecté)
+              </span>
+</div>
+<!-- Meta / Geo Details -->
+<div class="flex flex-wrap items-center gap-space-md text-on-surface-variant font-body-sm text-body-sm mt-space-xs">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">phone_iphone</span>
+<span class="font-mono text-on-surface font-semibold">+237 677 82 91 04</span>
+<span class="font-label-sm text-label-sm text-secondary-fixed bg-secondary-container/30 px-1 rounded ml-1">MTN MoMo Marchand</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+<span>contact@kmerchic-b2b.cm</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">warehouse</span>
+<span>Hangar D-14, Boulevard de la Liberté, Akwa Douala</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Summary Snapshot -->
+<div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-space-sm rounded-xl">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Statut Séquestre COBAC</span>
+<span class="font-label-md text-label-md text-secondary font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Fonds Garantis 100%
+            </span>
+</div>
+</div>
+</div>
+<!-- 4 Core Performance Metrics Grid -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-px bg-surface-container-high">
+<div class="bg-surface-container-lowest p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Chiffre d'Affaires Brut</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-on-surface font-bold font-price-hero">38.4M</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">FCFA</span>
+</div>
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>+18.4% ce mois</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Avis Marchands &amp; Score</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-tertiary font-bold font-price-hero">4.9</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">/ 5.0</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">380 avis certifiés B2B</span>
+</div>
+<div class="bg-surface-container-lowest p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Taux de Litiges Ouverts</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-secondary font-bold font-price-hero">0</span>
+<span class="font-label-sm text-label-sm text-secondary">litige actif</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary-fixed">Exemplarité opérationnelle</span>
+</div>
+<div class="bg-surface-container-lowest p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Délai Moyen Expédition</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-headline-lg text-headline-lg text-primary font-bold font-price-hero">4h 30</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Dépôt hub Finexs / Danay</span>
+</div>
+</div>
+</div>
+<!-- Asymmetric 2-Column Split: 40% Admin Rigor / 60% Operational Flow -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT COLUMN: Legal, Financial Limits, Internal HQ Audits (40% / 5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- 1. Informations Légales & CEMAC -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-primary">policy</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Conformité Légale CEMAC</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-space-sm py-0.5 rounded-full flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+              Dossier Validé
+            </span>
+</div>
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Registre du Commerce (RCCM)</span>
+<div class="flex items-center justify-between">
+<span class="font-mono font-headline-sm text-headline-sm text-on-surface">RC/DLA/2022/B/1458</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Greffe du Tribunal de Première Instance de Douala</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Numéro Identifiant Unique (NIU / DGI)</span>
+<div class="flex items-center justify-between">
+<span class="font-mono font-headline-sm text-headline-sm text-on-surface">M092217482910P</span>
+<span class="font-label-sm text-label-sm text-secondary-fixed bg-secondary-container/20 px-2 py-0.5 rounded">Attestation à jour</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Direction Générale des Impôts Littoral 1</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Bail Commercial Hangar Akwa</span>
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface font-semibold">Lot 214-B • Enregistré Notaire</span>
+<button class="text-primary hover:underline font-label-sm text-label-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+<span>Voir acte</span>
+</button>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Superficie stockage : 450 m² sécurisé</span>
+</div>
+</div>
+</div>
+<!-- 2. Paramètres Financiers & Plafonds MoMo -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-secondary">payments</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Finances &amp; Plafonds MoMo</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">COBAC / BEAC REG</span>
+</div>
+<div class="flex flex-col gap-space-md">
+<!-- Progress Bar of Monthly Limits -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Plafond Mensuel de Retrait</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-mono">50 000 000 FCFA</span>
+</div>
+<!-- Bar -->
+<div class="w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-primary rounded-full" style="width: 76%;"></div>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Consommé : 38 420 000 FCFA (76%)</span>
+<span class="text-secondary font-bold">Reste : 11.58M FCFA</span>
+</div>
+</div>
+<!-- Parameters Stack -->
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Canal de Réception</span>
+<span class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+                  MTN MoMo Pro
+                </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-mono">ID: MOMO-CM-9941</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Taux Commission DROPP</span>
+<span class="font-headline-sm text-headline-sm text-secondary font-bold font-mono">0.00%</span>
+<span class="font-body-sm text-body-sm text-secondary-fixed">Offre Grossiste Or 2024</span>
+</div>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">security</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Garantie Séquestre Dropp Protect</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Libération automatique à confirmation agence</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary font-bold">ACTIF</span>
+</div>
+</div>
+</div>
+<!-- 3. Notes d'Audit Internes HQ -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-tertiary">history_edu</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Notes d'Audit Terrain HQ</h2>
+</div>
+<button class="text-primary hover:text-on-surface text-label-sm font-label-sm inline-flex items-center gap-1" id="btn-add-note">
+<span class="material-symbols-outlined text-[14px]">add</span>
+<span>Ajouter note</span>
+</button>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Timeline item 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-primary font-bold">Marc N. (Lead Auditeur Littoral)</span>
+<span>14/09/2024 à 16:30</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Visite d'inspection physique réalisée avec succès au Hangar D-14 Akwa. Stock physique vérifié sur 4 200 cartons de textile et accessoires. Personnel formé aux protocoles d'emballage anti-fraude DROPP.</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-2 py-0.5 rounded">Rapport #AUD-DLA-881</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Conformité 100%</span>
+</div>
+</div>
+<!-- Timeline item 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="text-on-surface font-semibold">Marcelle E. (Super Admin HQ)</span>
+<span>02/08/2024 à 11:15</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface">Élévation manuelle du plafond mensuel de 25M à 50M FCFA suite à l'historique sans incident de paiement sur 6 mois consécutifs.</p>
+</div>
+</div>
+<!-- Add Quick Note Box -->
+<div class="pt-space-xs flex gap-space-xs">
+<input class="bg-surface-container-low text-on-surface placeholder-on-surface-variant font-body-sm text-body-sm px-space-md py-2 rounded-lg flex-1 focus:outline-none focus:bg-surface-container" placeholder="Ajouter une observation confidentielle..." type="text"/>
+<button class="bg-primary text-on-primary font-label-sm text-label-sm px-space-md py-2 rounded-lg hover:opacity-90">Publier</button>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Interactive Tabs, Orders Table, Escrow, Logs (60% / 7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Tabs Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md overflow-hidden flex flex-col">
+<!-- Navigation Tabs Bar -->
+<div class="flex items-center gap-space-xs p-space-sm bg-surface-container-low overflow-x-auto">
+<button class="tab-btn px-space-md py-2 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md transition-all flex items-center gap-space-xs whitespace-nowrap active" data-tab="tab-orders">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+<span>Commandes Récentes (42)</span>
+</button>
+<button class="tab-btn px-space-md py-2 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-space-xs whitespace-nowrap" data-tab="tab-escrow">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span>Séquestre Escrow (84)</span>
+</button>
+<button class="tab-btn px-space-md py-2 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-space-xs whitespace-nowrap" data-tab="tab-security">
+<span class="material-symbols-outlined text-[18px]">shield</span>
+<span>Sécurité &amp; Connexions</span>
+</button>
+<button class="tab-btn px-space-md py-2 rounded-lg hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all flex items-center gap-space-xs whitespace-nowrap" data-tab="tab-drops">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+<span>Drops Actifs (14)</span>
+</button>
+</div>
+<!-- Tab Content 1: Commandes Récentes -->
+<div class="p-space-lg flex flex-col gap-space-md tab-pane" id="tab-orders">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Flux de Ventes B2B en Cours</span>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-2 py-0.5 rounded-full">Temps Réel</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm">Filtrer par agence</button>
+<button class="px-space-sm py-1 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm">Tous statuts</button>
+</div>
+</div>
+<!-- Orders Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-space-sm px-space-md rounded-l-lg">ID Commande &amp; Client</th>
+<th class="py-space-sm px-space-sm">Produits &amp; Qte</th>
+<th class="py-space-sm px-space-sm">Montant Total</th>
+<th class="py-space-sm px-space-sm">Transporteur</th>
+<th class="py-space-sm px-space-sm">Séquestre</th>
+<th class="py-space-sm px-space-md rounded-r-lg text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-high">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-mono font-bold">#CMD-2024-9104</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Boutique Yaoundé Mokolo (Alice M.)</span>
+<span class="font-label-sm text-label-sm text-primary">Aujourd'hui à 11:42</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Robes Soie Wax B2B</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lot de 50 pièces</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-mono">1 250 000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">FCFA</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-tertiary bg-tertiary-container/20 px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+                        Finexs Express DLA→YAO
+                      </span>
+</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-space-sm py-1 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                        Bloqué Séquestre
+                      </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface transition-colors" title="Inspecter Transaction">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-mono font-bold">#CMD-2024-9088</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Quincaillerie Ouest Bafoussam</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hier à 17:10</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Baskets Streetwear Run</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lot 120 paires</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-mono">2 160 000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">FCFA</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface bg-surface-container px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+                        Danay Express
+                      </span>
+</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary-fixed bg-secondary-container/20 px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Débloqué MoMo
+                      </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface transition-colors" title="Inspecter Transaction">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-space-md px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-mono font-bold">#CMD-2024-9041</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Hub Garoua Relais Nord</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">12/09 à 09:20</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-body-md text-body-md text-on-surface font-medium">Accessoires Téléphonie B2B</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Carton 300 câbles 65W</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-mono">450 000</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">FCFA</span>
+</div>
+</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-on-surface bg-surface-container px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+                        Touristique Express
+                      </span>
+</td>
+<td class="py-space-md px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-sm text-label-sm text-secondary-fixed bg-secondary-container/20 px-space-sm py-1 rounded">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                        Débloqué MoMo
+                      </span>
+</td>
+<td class="py-space-md px-space-md text-right">
+<button class="p-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface transition-colors" title="Inspecter Transaction">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table pagination / status -->
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-sm text-label-sm">
+<span>Affichage de 3 sur 42 commandes récentes</span>
+<div class="flex items-center gap-1">
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface">Précédent</button>
+<button class="px-space-sm py-1 rounded bg-primary text-on-primary font-bold">1</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface">2</button>
+<button class="px-space-sm py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface">Suivant</button>
+</div>
+</div>
+</div>
+<!-- Tab Content 2: Escrow Séquestre Details (Hidden by default, toggled via JS) -->
+<div class="p-space-lg flex flex-col gap-space-md tab-pane hidden" id="tab-escrow">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Compte Séquestre Portefeuille Marchand</h3>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-2 py-0.5 rounded">Régulation BEAC N°02/18</span>
+</div>
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-sm text-body-sm">Solde séquestre en attente de livraison :</span>
+<span class="font-price-card text-price-card text-secondary font-mono">4 820 000 FCFA</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant font-body-sm text-body-sm">Fonds libérés sur MTN MoMo (Dernières 24h) :</span>
+<span class="font-price-card text-price-card text-on-surface font-mono">3 410 000 FCFA</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Les fonds des acheteurs sont cantonnés sur le compte séquestre Dropp B2B auprès de la banque partenaire agréée COBAC jusqu'à ce que le destinataire confirme la réception physique à l'agence de transport.</p>
+</div>
+<!-- Tab Content 3: Journal de Sécurité & Connexions -->
+<div class="p-space-lg flex flex-col gap-space-md tab-pane hidden" id="tab-security">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Audit de Connexions &amp; Dispositifs</h3>
+<div class="space-y-space-sm">
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">smartphone</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Samsung Galaxy S23 Ultra (SM-S918B)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Douala, Cameroun (IP: 154.72.164.22 - Orange Cameroun ASN)</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-2 py-0.5 rounded">Session Active</span>
+</div>
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[24px]">laptop_mac</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Chrome sur macOS Sonoma</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Douala Bonanjo (IP: 129.0.198.50 - Camtel Fiber)</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">13/09/2024 à 18:22</span>
+</div>
+</div>
+</div>
+<!-- Tab Content 4: Drops Actifs -->
+<div class="p-space-lg flex flex-col gap-space-md tab-pane hidden" id="tab-drops">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Vidéos Drops &amp; Catalogues en Direct</h3>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="bg-surface-container-low p-space-sm rounded-lg flex items-center gap-space-sm">
+<div class="w-16 h-20 rounded bg-surface-container-high overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Vertical product drop video preview featuring modern colorful textiles on display in Douala wholesale market stall, vibrant neon and dynamic angles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhvHwHWreJeURQZKawxEVtV1F2tabpxiCfEG3A13cuER9KbqEVKW2Yh4duXPJVHXyXg7Dxn1Mp6CBNXvvtqAFUWmK86mskkvz3R98LTkv8c8ZvHHC7e_0LExyMVlUfwb1NRoclVlmVumSHhpXlMyJzd6x41GUodzlJdCv15SZ0_oRWCQB1pkWu3KMbddRUQghNzbpCtMi3fjlPENNq2Zcthjn7OnYKwpfCTpV1uFw"/>
+<span class="absolute bottom-1 right-1 bg-surface-container-lowest/80 text-[10px] px-1 rounded text-on-surface">0:45</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">Drop Wax Hollandais 2024</span>
+<span class="font-label-sm text-label-sm text-primary">MoQ: 20 pcs • 18 500 FCFA/u</span>
+<span class="font-body-sm text-body-sm text-secondary">3 840 vues • 42 commandes</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded-lg flex items-center gap-space-sm">
+<div class="w-16 h-20 rounded bg-surface-container-high overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Vertical commercial video preview of footwear boxes stacked high in African commercial distribution warehouse, sharp contrast industrial lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_AfBjWycBe7psnQI6YvVB8sghDXkfumDinL1cdtZY3huHFKjG-U2Iam2-zwD1IwYrxb6TbtFfylP_oBGnhNxaaO9FomPTRtw97t3xZhMWOUlO0NtPyokHvrQOHksOq06iTd1x_QjxukS7DfhgeTw0ywCdjk3CSFEc4UkeTVH5lwug1qpYdlL9MgyYaQk79pDC358yYQ1heqANUZA5jYTyOshzteHRmXId9UOlxa8"/>
+<span class="absolute bottom-1 right-1 bg-surface-container-lowest/80 text-[10px] px-1 rounded text-on-surface">1:12</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">Sneakers Cargo Import Chine</span>
+<span class="font-label-sm text-label-sm text-primary">MoQ: 10 paires • 12 000 FCFA/u</span>
+<span class="font-body-sm text-body-sm text-secondary">8 120 vues • 78 commandes</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Audit Trail & Traçabilité Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px] text-primary">manage_search</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Journal d'Audit Système &amp; Traçabilité</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">IMMUTABLE LOG • SHA-256</span>
+</div>
+<div class="space-y-space-xs font-mono text-body-sm">
+<div class="flex items-start justify-between py-2 px-space-sm rounded bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="text-secondary text-[12px] font-bold">2024-09-15 14:02:11</span>
+<span class="text-on-surface">AUTHENTIFICATION_SUCCESS</span>
+<span class="text-on-surface-variant text-[12px]">(Samsung S23 Ultra • 154.72.164.22)</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm font-bold">OK</span>
+</div>
+<div class="flex items-start justify-between py-2 px-space-sm rounded bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="text-primary text-[12px] font-bold">2024-09-14 16:35:48</span>
+<span class="text-on-surface">INSPECTION_KYC3_APPROVED</span>
+<span class="text-on-surface-variant text-[12px]">(Agent Marc N. / Douala HQ)</span>
+</div>
+<span class="text-secondary font-label-sm text-label-sm font-bold">VERIFIED</span>
+</div>
+<div class="flex items-start justify-between py-2 px-space-sm rounded bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="text-tertiary text-[12px] font-bold">2024-09-12 09:21:03</span>
+<span class="text-on-surface">ESCROW_RELEASE_AUTOMATIC</span>
+<span class="text-on-surface-variant text-[12px]">(#CMD-9041 • 450 000 FCFA vers MTN MoMo)</span>
+</div>
+<span class="text-secondary-fixed font-label-sm text-label-sm font-bold">SETTLED</span>
+</div>
+<div class="flex items-start justify-between py-2 px-space-sm rounded bg-surface-container-low">
+<div class="flex items-center gap-space-sm">
+<span class="text-on-surface-variant text-[12px] font-bold">2024-08-02 11:15:20</span>
+<span class="text-on-surface">LIMIT_ADJUSTMENT</span>
+<span class="text-on-surface-variant text-[12px]">(Plafond mensuel réévalué à 50 000 000 FCFA)</span>
+</div>
+<span class="text-on-surface-variant font-label-sm text-label-sm">HQ_SUPERADMIN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Tab Switching Micro-interaction
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Clear active states
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('bg-surface-container-high', 'text-primary', 'active');
+        b.classList.add('text-on-surface-variant');
+      });
+      // Set current active
+      btn.classList.add('bg-surface-container-high', 'text-primary', 'active');
+      btn.classList.remove('text-on-surface-variant');
+
+      // Hide all panes
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.add('hidden');
+      });
+
+      // Show target pane
+      const targetId = btn.getAttribute('data-tab');
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) {
+        targetPane.classList.remove('hidden');
+      }
+    });
+  });
+
+  // Action Buttons Feedback
+  const alertAction = (id, message) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', () => {
+      const origText = el.innerHTML;
+      el.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>En cours...</span>';
+      setTimeout(() => {
+        el.innerHTML = origText;
+        alert(message);
+      }, 600);
+    });
+  };
+
+  alertAction('btn-export', 'Dossier complet exporté en PDF sécurisé (RCCM, Quittances MoMo, Logs).');
+  alertAction('btn-notify', 'Notification SMS + Push officiel envoyée au gérant du compte.');
+  alertAction('btn-limits', 'Ouverture du tiroir de configuration des plafonds CEMAC MoMo.');
+  
+  const suspendBtn = document.getElementById('btn-suspend');
+  if (suspendBtn) {
+    suspendBtn.addEventListener('click', () => {
+      if (confirm('Voulez-vous suspendre temporairement les paiements et drops de KmerChic Import & Wholesale ?')) {
+        alert('Compte suspendu pour examen complémentaire.');
+      }
+    });
+  }
+</script></main></div></body></html>

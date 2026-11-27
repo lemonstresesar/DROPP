@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;background-color:#131313;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-surface-variant": "#e4beb3", "secondary-fixed-dim": "#4edea3", "primary-fixed": "#ffdbd0", "inverse-primary": "#ae3200", "primary": "#ffb59e", "on-secondary-container": "#00311f", "primary-fixed-dim": "#ffb59e", "surface-container-lowest": "#0e0e0e", "tertiary": "#ffb95f", "outline": "#ab897f", "on-tertiary": "#472a00", "on-primary": "#5e1700", "inverse-surface": "#e5e2e1", "error": "#ffb4ab", "outline-variant": "#5b4038", "secondary-fixed": "#6ffbbe", "on-error-container": "#ffdad6", "tertiary-fixed-dim": "#ffb95f", "surface-container-low": "#1c1b1b", "on-secondary": "#003824", "surface-container-high": "#2a2a2a", "tertiary-fixed": "#ffddb8", "secondary": "#4edea3", "on-primary-fixed": "#3a0b00", "on-background": "#e5e2e1", "inverse-on-surface": "#313030", "surface-dim": "#131313", "on-tertiary-container": "#402500", "surface-variant": "#353534", "on-error": "#690005", "on-secondary-fixed": "#002113", "on-primary-fixed-variant": "#852400", "error-container": "#93000a", "secondary-container": "#00a572", "surface-tint": "#ffb59e", "background": "#131313", "surface-bright": "#393939", "surface": "#131313", "surface-container-highest": "#353534", "surface-container": "#201f1f", "on-secondary-fixed-variant": "#005236", "on-surface": "#e5e2e1", "primary-container": "#ff5a1f", "on-primary-container": "#541400", "on-tertiary-fixed": "#2a1700", "tertiary-container": "#cc8200", "on-tertiary-fixed-variant": "#653e00" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-md": "1rem", "margin-mobile": "0.75rem", "margin-desktop": "2rem", "space-xl": "2.25rem", "gutter": "0.75rem", "space-xs": "0.25rem", "gutter-desktop": "1.5rem", "margin": "1rem", "space-lg": "1.5rem" }, fontFamily: { "label-md": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "price-card": ["Space Grotesk"], "display": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "display-mobile": ["Space Grotesk"], "label-lg": ["Space Grotesk"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Space Grotesk"], "body-md": ["Plus Jakarta Sans"], "price-hero": ["Space Grotesk"] }, fontSize: { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "price-card": ["18px", { "lineHeight": "22px", "fontWeight": "700" }], "display": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "display-mobile": ["30px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-lg": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "price-hero": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/80 backdrop-blur-xl pt-safe shadow-[0_1px_12px_rgba(0,0,0,0.6)]"><div class="h-16 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Retour" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary-container transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-headline-sm text-headline-sm tracking-tight text-on-surface truncate max-w-[200px]">Détail Commande Vendeur</h1></div><div class="flex items-center gap-space-xs"><button aria-label="Imprimer bordereau" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">print</span></button><button aria-label="Centre d aide" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">help_outline</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full px-margin-mobile pb-space-xl gap-space-md">
+<!-- Header Metas & Timer Banner -->
+<div class="flex flex-col gap-space-xs mt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md uppercase tracking-wider text-primary">Commande #CMD-904</span>
+<div class="flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span>Aujourd'hui à 11:15</span>
+</div>
+</div>
+<!-- Status Alert Card -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-high p-space-md flex flex-col gap-space-sm shadow-xl">
+<div class="absolute -right-6 -bottom-6 w-28 h-28 rounded-full bg-primary-container/10 blur-xl pointer-events-none"></div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-primary-container"></span>
+</span>
+<span class="font-headline-sm text-headline-sm uppercase tracking-wide text-on-surface">À Préparer &amp; Expédier</span>
+</div>
+<span class="bg-primary-container/20 text-primary font-label-sm text-label-sm px-2.5 py-1 rounded-full uppercase">Urgent</span>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest/80 px-3 py-2 rounded-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-primary-container text-[20px] shrink-0">local_shipping</span>
+<p class="font-body-md text-body-md text-on-surface">
+          Départ coursier prévu dans <span class="font-headline-sm text-headline-sm text-primary font-bold">2h 15min</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Escrow Protection Badge -->
+<div class="rounded-xl bg-secondary-container/20 p-space-md flex items-start gap-3 shadow-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[22px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-label-md text-label-md text-secondary uppercase">Fonds Garantis Séquestre DROPP</span>
+<span class="bg-secondary-container/40 text-secondary-fixed text-[10px] font-label-sm px-2 py-0.5 rounded-full font-bold uppercase">Sécurisé</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">360 000 FCFA</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1 mt-0.5">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary"></span>
+        Bloqués sur séquestre via MTN Mobile Money
+      </p>
+</div>
+</div>
+<!-- B2B Buyer Section -->
+<div class="rounded-xl bg-surface-container p-space-md flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<h2 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Acheteur Vérifié</h2>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary/10 text-secondary font-bold">Tier Pro</span>
+</div>
+<div class="flex items-start gap-space-sm">
+<img class="w-12 h-12 rounded-full object-cover shrink-0" data-alt="Portrait professionnel de Jean-Paul Kamga, commerçant grossiste camerounais souriant dans une boutique moderne de mode à Yaoundé Mokolo, éclairage chaleureux, tonalité naturelle et authentique." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-EHRVEN96Z-4WUCLAflPGlgJTrdq3gcGwLQrWRhmORSTZkSnLCuSQgxTGfoRXywyaLFStW2alzFJQKwWs91l2gjbQSAd2cMwy_yJtHGxv0UgIIAYtYZdd2_q3fqp7wbfDCXfbsE6v6LEcLgS-lLwRfk2YDq5K0HjlARF806jMK-U5pkaztDPVF2wZr2o793p09_g7-Kwiq1E8YGV3X2ZVo2K9-DVakQf2lofMlDE"/>
+<div class="flex flex-col min-w-0 flex-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Jean-Paul Kamga</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Boutique Bella Moda • Mokolo, Yaoundé</p>
+<div class="flex items-center gap-2 mt-1">
+<div class="flex items-center text-tertiary">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm ml-0.5 text-on-surface font-bold">4.9</span>
+</div>
+<span class="text-outline-variant font-body-sm">•</span>
+<span class="font-body-sm text-body-sm text-secondary-fixed-dim">14 commandes réussies</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-1">
+<a class="flex-1 h-11 rounded-lg bg-surface-container-high hover:bg-surface-bright active:scale-95 transition flex items-center justify-center gap-2 text-on-surface font-label-md text-label-md" href="tel:+237677829104">
+<span class="material-symbols-outlined text-[18px]">call</span>
+        Appeler
+      </a>
+<a class="flex-1 h-11 rounded-lg bg-secondary/15 hover:bg-secondary/25 active:scale-95 transition flex items-center justify-center gap-2 text-secondary font-label-md text-label-md" href="https://wa.me/237677829104" target="_blank">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+        WhatsApp direct
+      </a>
+</div>
+</div>
+<!-- Order Items & Batch Breakdown -->
+<div class="rounded-xl bg-surface-container p-space-md flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<h2 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Articles du Lot Grossiste</h2>
+<span class="font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-primary-container/15 text-primary-container font-bold">Total: 50 Pcs</span>
+</div>
+<div class="flex gap-space-sm items-start">
+<img class="w-20 h-20 rounded-lg object-cover shrink-0" data-alt="Lot de cartons d'origine scellés de sneakers streetwear sportives modèle 2025, photographiés dans un entrepôt logistique B2B moderne et bien éclairé avec palette bois et étiquettes d'inspection industrielle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5LuE8aDI7oaT_ZNaZdw4WDSR9kmEQRSM_n8r72V7EmFc3MJjwusBhkRmBNK5QTF04xb5RV5VWTEXUVCAvRXTTfLIjPBhI2Ju27zDuKHu1uU5lqDp9FCesVT_5N074WzaVF7oUwMMXF-lLzJuO-aJNgIdUlR5mlydS4fyv8kDL-R_VYYbL2VdcNFl4qEOCodjovLPgomu-LTZbw2dB79pkV4r10TDIkpZFvbkY0vc"/>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label-sm text-label-sm text-tertiary uppercase">Cartons scellés d'origine</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight mt-0.5">Lot 50x Sneakers Air Pro 2025</h3>
+<div class="flex items-baseline gap-2 mt-1">
+<span class="font-price-card text-price-card text-primary font-bold">7 200 FCFA</span>
+<span class="font-body-sm text-body-sm text-outline line-through">8 500 F</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">/ paire</span>
+</div>
+</div>
+</div>
+<!-- Size & Color Breakdown -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Répartition des déclinaisons</span>
+<!-- Variant 1 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-full bg-surface-container-lowest shrink-0"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Noir / Orange</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">35 paires</span>
+</div>
+<div class="flex gap-2 flex-wrap">
+<div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container-high rounded-md flex-1 min-w-[90px]">
+<span class="font-body-sm text-body-sm text-on-surface-variant">P. 41</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">10 pcs</span>
+</div>
+<div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container-high rounded-md flex-1 min-w-[90px]">
+<span class="font-body-sm text-body-sm text-on-surface-variant">P. 42</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">15 pcs</span>
+</div>
+<div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container-high rounded-md flex-1 min-w-[90px]">
+<span class="font-body-sm text-body-sm text-on-surface-variant">P. 43</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">10 pcs</span>
+</div>
+</div>
+</div>
+<!-- Variant 2 -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-full bg-inverse-surface shrink-0"></span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Blanc / Gris</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">15 paires</span>
+</div>
+<div class="flex gap-2 flex-wrap">
+<div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container-high rounded-md flex-1 min-w-[130px]">
+<span class="font-body-sm text-body-sm text-on-surface-variant">P. 42</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">8 pcs</span>
+</div>
+<div class="flex items-center justify-between px-2.5 py-1.5 bg-surface-container-high rounded-md flex-1 min-w-[130px]">
+<span class="font-body-sm text-body-sm text-on-surface-variant">P. 44</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">7 pcs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Financial Breakdown -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md flex flex-col gap-2">
+<div class="flex justify-between items-center text-body-md font-body-md">
+<span class="text-on-surface-variant">Sous-total négocié (50 pcs)</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">360 000 FCFA</span>
+</div>
+<div class="flex justify-between items-center text-body-md font-body-md">
+<span class="text-on-surface-variant flex items-center gap-1">
+          Frais agence (payé acheteur)
+          <span class="material-symbols-outlined text-[15px] text-secondary">check_circle</span>
+</span>
+<span class="font-label-md text-label-md text-secondary">+12 000 FCFA</span>
+</div>
+<div class="h-px bg-surface-variant w-full my-1"></div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">Total reversé vendeur</span>
+<span class="font-price-hero text-price-hero text-primary font-bold">360 000 FCFA</span>
+</div>
+</div>
+</div>
+<!-- Logistics & Waybill Section -->
+<div class="rounded-xl bg-surface-container p-space-md flex flex-col gap-space-md shadow-md">
+<div class="flex items-center justify-between">
+<h2 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant">Logistique &amp; Acheminement</h2>
+<div class="flex items-center gap-1 text-secondary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Agence Officielle</span>
+</div>
+</div>
+<div class="flex flex-col gap-3 bg-surface-container-low p-space-sm rounded-lg">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-container text-[24px] mt-0.5">directions_bus</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface">Finexs Voyages</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Liaison Express Douala &gt; Yaoundé</span>
+</div>
+</div>
+<div class="flex items-start gap-3 pt-1">
+<span class="material-symbols-outlined text-tertiary text-[22px] mt-0.5">location_on</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface">Point de Retrait Colis :</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Agence Finexs Mvan, Yaoundé</span>
+</div>
+</div>
+</div>
+<!-- Scannable Waybill Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex flex-col items-center gap-space-sm text-center">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Bordereau Pré-Généré</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-variant text-primary font-mono font-bold">GUICHET EXPRESS</span>
+</div>
+<p class="font-headline-md text-headline-md font-mono font-bold tracking-widest text-on-surface mt-1">
+        FXS-DLA-99214
+      </p>
+<!-- SVG Scannable Barcode & QR Simulation -->
+<div class="w-full bg-inverse-surface rounded-lg p-3 flex flex-col items-center justify-center gap-2 mt-1">
+<!-- Dynamic inline SVG barcode -->
+<svg class="w-full h-14" preserveaspectratio="none" viewbox="0 0 280 60" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#e5e2e1" height="60" width="280" x="0" y="0"></rect>
+<g fill="#131313">
+<rect height="42" width="3" x="10" y="6"></rect>
+<rect height="42" width="2" x="15" y="6"></rect>
+<rect height="42" width="5" x="20" y="6"></rect>
+<rect height="42" width="2" x="28" y="6"></rect>
+<rect height="42" width="4" x="33" y="6"></rect>
+<rect height="42" width="1" x="40" y="6"></rect>
+<rect height="42" width="6" x="44" y="6"></rect>
+<rect height="42" width="3" x="53" y="6"></rect>
+<rect height="42" width="2" x="60" y="6"></rect>
+<rect height="42" width="5" x="65" y="6"></rect>
+<rect height="42" width="3" x="73" y="6"></rect>
+<rect height="42" width="1" x="79" y="6"></rect>
+<rect height="42" width="4" x="83" y="6"></rect>
+<rect height="42" width="2" x="91" y="6"></rect>
+<rect height="42" width="6" x="96" y="6"></rect>
+<rect height="42" width="3" x="105" y="6"></rect>
+<rect height="42" width="1" x="111" y="6"></rect>
+<rect height="42" width="5" x="115" y="6"></rect>
+<rect height="42" width="2" x="123" y="6"></rect>
+<rect height="42" width="4" x="128" y="6"></rect>
+<rect height="42" width="2" x="135" y="6"></rect>
+<rect height="42" width="5" x="140" y="6"></rect>
+<rect height="42" width="3" x="148" y="6"></rect>
+<rect height="42" width="1" x="154" y="6"></rect>
+<rect height="42" width="6" x="158" y="6"></rect>
+<rect height="42" width="2" x="167" y="6"></rect>
+<rect height="42" width="4" x="172" y="6"></rect>
+<rect height="42" width="3" x="179" y="6"></rect>
+<rect height="42" width="5" x="185" y="6"></rect>
+<rect height="42" width="1" x="193" y="6"></rect>
+<rect height="42" width="6" x="197" y="6"></rect>
+<rect height="42" width="2" x="206" y="6"></rect>
+<rect height="42" width="4" x="211" y="6"></rect>
+<rect height="42" width="3" x="218" y="6"></rect>
+<rect height="42" width="5" x="224" y="6"></rect>
+<rect height="42" width="2" x="232" y="6"></rect>
+<rect height="42" width="4" x="237" y="6"></rect>
+<rect height="42" width="1" x="244" y="6"></rect>
+<rect height="42" width="6" x="248" y="6"></rect>
+<rect height="42" width="3" x="257" y="6"></rect>
+<rect height="42" width="4" x="263" y="6"></rect>
+</g>
+<text fill="#131313" font-family="Space Grotesk, monospace" font-size="9" font-weight="700" text-anchor="middle" x="140" y="55">* FXS - DLA - 99214 *</text>
+</svg>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">qr_code_scanner</span>
+        Présenter ce code directement au guichetier de l'agence
+      </p>
+</div>
+</div>
+<!-- Operational Checklist Card -->
+<div class="rounded-xl bg-surface-container-low p-space-md flex flex-col gap-space-sm shadow-sm">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface">Étapes d'emballage requises</h3>
+<label class="flex items-center gap-3 cursor-pointer py-1">
+<input checked="" class="w-5 h-5 rounded accent-primary-container shrink-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Cartons fermés hermétiquement avec scotch DROPP</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer py-1">
+<input checked="" class="w-5 h-5 rounded accent-primary-container shrink-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Bordereau collé de façon visible sur le carton principal</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer py-1">
+<input class="w-5 h-5 rounded accent-primary-container shrink-0" type="checkbox"/>
+<span class="font-body-md text-body-md text-on-surface">Vérification des 50 paires par pointure</span>
+</label>
+</div>
+<!-- Primary Bottom Actions -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<button class="w-full h-[52px] rounded-full bg-primary-container hover:bg-inverse-primary text-on-primary font-label-lg text-label-lg uppercase tracking-wide flex items-center justify-center gap-2 shadow-xl active:scale-[0.98] transition" id="btn-confirm-shipping">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+      Confirmer Colis Prêt &amp; Notifier Transporteur
+    </button>
+<button class="w-full h-12 rounded-full bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 active:scale-[0.98] transition" id="btn-print-slip">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">print</span>
+      Imprimer Bordereau d'Expédition
+    </button>
+<button class="w-full py-2.5 text-center text-error font-body-sm text-body-sm flex items-center justify-center gap-1.5 hover:underline" id="btn-report-issue">
+<span class="material-symbols-outlined text-[16px]">warning</span>
+      Signaler une rupture / anomalie sur le stock
+    </button>
+</div>
+</div>
+<script>
+  (function() {
+    const confirmBtn = document.getElementById('btn-confirm-shipping');
+    const printBtn = document.getElementById('btn-print-slip');
+    const reportBtn = document.getElementById('btn-report-issue');
+
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', function() {
+        this.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">progress_activity</span> Notification en cours...';
+        this.classList.add('opacity-80', 'pointer-events-none');
+        setTimeout(() => {
+          this.innerHTML = '<span class="material-symbols-outlined text-[20px]">done_all</span> Coursier Notifié !';
+          this.classList.remove('bg-primary-container');
+          this.classList.add('bg-secondary-container', 'text-on-secondary-container');
+        }, 1200);
+      });
+    }
+
+    if (printBtn) {
+      printBtn.addEventListener('click', function() {
+        window.print();
+      });
+    }
+
+    if (reportBtn) {
+      reportBtn.addEventListener('click', function() {
+        alert('Ouverture du protocole de litige / rupture de stock avec le support grossiste DROPP.');
+      });
+    }
+  })();
+</script></main></body></html>

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#131313","surface-container-highest":"#353534","on-tertiary-fixed-variant":"#653e00","secondary-fixed":"#6ffbbe","tertiary-fixed":"#ffddb8","on-tertiary-fixed":"#2a1700","on-tertiary-container":"#402500","on-surface":"#e5e2e1","surface-dim":"#131313","on-error":"#690005","on-error-container":"#ffdad6","surface-variant":"#353534","primary-fixed-dim":"#ffb59e","outline-variant":"#5b4038","surface-container-low":"#1c1b1b","surface-tint":"#ffb59e","inverse-on-surface":"#313030","tertiary-fixed-dim":"#ffb95f","primary":"#ffb59e","error-container":"#93000a","on-secondary-fixed":"#002113","secondary-fixed-dim":"#4edea3","secondary":"#4edea3","surface-bright":"#393939","surface":"#131313","on-secondary-fixed-variant":"#005236","inverse-primary":"#ae3200","on-secondary":"#003824","secondary-container":"#00a572","primary-fixed":"#ffdbd0","surface-container-lowest":"#0e0e0e","on-primary-fixed-variant":"#852400","error":"#ffb4ab","tertiary":"#ffb95f","on-background":"#e5e2e1","on-primary-fixed":"#3a0b00","on-primary":"#5e1700","on-surface-variant":"#e4beb3","surface-container":"#201f1f","tertiary-container":"#cc8200","on-tertiary":"#472a00","on-primary-container":"#541400","surface-container-high":"#2a2a2a","inverse-surface":"#e5e2e1","outline":"#ab897f","on-secondary-container":"#00311f","primary-container":"#ff5a1f"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1rem","gutter-desktop":"1.5rem","margin":"1rem","space-lg":"1.5rem","margin-mobile":"0.75rem","space-xs":"0.25rem","margin-desktop":"2rem","space-sm":"0.5rem","space-xl":"2.25rem","gutter":"0.75rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"display-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"label-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"label-lg":["Space Grotesk"],"price-card":["Space Grotesk"],"label-md":["Space Grotesk"],"price-hero":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"display":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"]},"fontSize":{"headline-sm":["16px",{"lineHeight":"22px","fontWeight":"600"}],"display-mobile":["30px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.04em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"price-card":["18px",{"lineHeight":"22px","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"price-hero":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display":["40px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="flex flex-col"><div class="px-space-lg pt-space-lg pb-space-md flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-white text-[22px]">local_shipping</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">DROPP<span class="text-primary-container">.B2B</span></span><span class="font-label-sm text-label-sm text-on-surface-variant">HQ CAMEROON</span></div></div><div class="mt-space-xs inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high w-fit"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface uppercase">ADMIN CONSOLE / HQ</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-md" data-active-classes="bg-surface-container-high text-primary font-bold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Vue d'ensemble / KPIs</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="gestion-comptes" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Gestion des Comptes</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="verifications-kyc" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>Vérifications KYC &amp; Identité</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="transactions-escrow" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span>Transactions &amp; Séquestre</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="moderation-catalogue" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Modération des Drops</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="parametres-roles" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Paramètres &amp; Rôles</span></a></nav></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface">Nœud CEMAC Douala</span><span class="font-body-sm text-body-sm text-on-surface-variant">Opérationnel • 24ms</span></div></div><span class="material-symbols-outlined text-secondary text-[16px]">wifi</span></div><div class="flex items-center justify-between pt-space-xs"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface leading-tight">Marcelle E.</span><span class="font-label-sm text-label-sm text-primary">Super Admin HQ</span></div></div><a class="text-on-surface-variant hover:text-error transition-colors p-1" data-path="connexion" href="#" title="Déconnexion"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">corporate_fare</span><span>DROPP HQ</span><span class="text-outline">/</span><span class="text-on-surface font-semibold">Console Centrale</span></div><div class="relative flex items-center ml-space-md"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder-on-surface-variant pl-9 pr-space-md py-1.5 rounded-full w-80 focus:outline-none focus:bg-surface-container" placeholder="Rechercher compte, CNI, #CMD, téléphone..." type="search"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span><span class="font-label-sm text-label-sm text-secondary-fixed">Séquestre BEAC / COBAC</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">schedule</span><span>Douala (UTC+1)</span></div><button class="relative p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-xs pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="px-gutter-desktop py-space-lg flex flex-col gap-space-lg">
+<!-- Top Bar Navigation Context & System Health -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Trésorerie Centrale · CEMAC / BEAC</span>
+<span class="w-1 h-1 rounded-full bg-outline"></span>
+<span class="font-label-sm text-label-sm text-secondary-fixed">Niveau de Sécurité 4</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Opérations Financières &amp; Déblocage des Retraits MoMo</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-4xl">
+          Contrôle des demandes de virement vers comptes marchands MTN Mobile Money &amp; Orange Money Cameroun. Validation manuelle anti-blanchiment CEMAC/COBAC.
+        </p>
+</div>
+<!-- Realtime Telecom Gateways & Global Escrow -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Passerelle CAMTEL/MTN : En ligne (Latence 21ms)</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Orange Money Webhook : Actif</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-highest shadow-sm">
+<span class="material-symbols-outlined text-secondary text-[16px]">lock</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Solde Global Séquestre :</span>
+<span class="font-label-md text-label-md text-secondary font-bold">48 950 000 FCFA</span>
+</div>
+</div>
+</div>
+<!-- Financial KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Card 1 -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between shadow-md relative overflow-hidden group">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-primary-container/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Retraits en Attente de Signature</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-primary-container material-symbols-outlined text-[18px]">history_edu</span>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-price-hero text-price-hero text-on-surface tracking-tight">14 250 000 <span class="text-body-sm font-label-sm text-on-surface-variant">FCFA</span></span>
+<div class="flex items-center gap-1.5 mt-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-primary-container text-white font-label-sm text-label-sm font-bold">7 urgents</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Seuil supérieur à 1M FCFA</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-secondary/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Débloqués Aujourd'hui</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-secondary material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-price-hero text-price-hero text-secondary tracking-tight">32 400 000 <span class="text-body-sm font-label-sm text-on-surface-variant">FCFA</span></span>
+<div class="flex items-center gap-1.5 mt-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">28 opérations validées sans incident</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="absolute -right-6 -top-6 w-24 h-24 bg-error/10 rounded-full blur-xl pointer-events-none"></div>
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Retenues de Sécurité COBAC</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-error material-symbols-outlined text-[18px]">gavel</span>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-price-hero text-price-hero text-error tracking-tight">2 300 000 <span class="text-body-sm font-label-sm text-on-surface-variant">FCFA</span></span>
+<div class="flex items-center gap-1.5 mt-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-error-container text-on-error-container font-label-sm text-label-sm">Alerte Fraude</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">1 dossier sous audit bloqué</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col justify-between shadow-md relative overflow-hidden">
+<div class="flex items-start justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Frais Télécoms Récupérés</span>
+<span class="p-1.5 rounded-lg bg-surface-container-high text-tertiary material-symbols-outlined text-[18px]">percent</span>
+</div>
+<div class="mt-space-md flex flex-col">
+<span class="font-price-hero text-price-hero text-on-surface tracking-tight">48 500 <span class="text-body-sm font-label-sm text-on-surface-variant">FCFA</span></span>
+<div class="flex items-center gap-1.5 mt-space-xs">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Plafond régulateur 0.5% prélevé</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Filters & Action Bar -->
+<div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-sm bg-surface-container-lowest p-space-sm rounded-xl shadow-md">
+<div class="flex flex-wrap items-center gap-space-sm flex-1">
+<div class="relative flex items-center min-w-[280px] flex-1">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">filter_list</span>
+<input class="w-full bg-surface-container text-on-surface font-body-sm text-body-sm placeholder-on-surface-variant pl-9 pr-space-md py-2 rounded-lg focus:outline-none focus:bg-surface-container-high transition-colors" placeholder="Rechercher par #RET-ID, @boutique, CNI, +237 6xx..." type="text"/>
+</div>
+<div class="flex items-center gap-1.5 bg-surface-container p-1 rounded-lg">
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm bg-surface-container-highest text-on-surface font-bold transition-all">Tous</button>
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#ffcc00]"></span>MTN MoMo
+          </button>
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-[#ff6600]"></span>Orange Money
+          </button>
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">account_balance</span>CCA / Afriland
+          </button>
+</div>
+<div class="flex items-center gap-1 bg-surface-container p-1 rounded-lg">
+<span class="font-label-sm text-label-sm text-on-surface-variant px-space-xs">Statut :</span>
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm bg-surface-container-highest text-primary font-bold">À Signer (7)</button>
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface">Validés</button>
+<button class="px-space-sm py-1 rounded font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface">Bloqués (1)</button>
+</div>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-md py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-space-xs transition-colors">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Rapport COBAC</span>
+</button>
+<button class="px-space-md py-2 rounded-lg bg-primary-container text-white font-label-md text-label-md hover:opacity-95 transition-all shadow-md flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>Lot de Signature (3)</span>
+</button>
+</div>
+</div>
+<!-- Main Workspace : Interactive Escrow Ledger & Signature Sidebar -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Interactive Table Panel (8 Columns on XL) -->
+<div class="xl:col-span-8 bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden flex flex-col">
+<div class="px-space-md py-space-sm bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-sm text-headline-sm text-on-surface">Demandes d'Arbitrage &amp; Déblocage</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">Sélection en direct</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+<span>Synchro live BEAC</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+<tr>
+<th class="py-3 px-space-md">Réf &amp; Heure</th>
+<th class="py-3 px-space-md">Marchand &amp; Hub</th>
+<th class="py-3 px-space-md">Montant Demandé</th>
+<th class="py-3 px-space-md">Compte Télécom</th>
+<th class="py-3 px-space-md">Historique &amp; Risque</th>
+<th class="py-3 px-space-md text-right">Action Immédiate</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm">
+<!-- Row 1: Selected Item -->
+<tr class="bg-surface-container-high/60 cursor-pointer hover:bg-surface-container-high transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-primary font-bold">#RET-2025-089</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aujourd'hui, 11:42</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">KmerChic Akwa</span>
+<span class="p-0.5 rounded bg-secondary-container/20 text-secondary material-symbols-outlined text-[12px]" title="Marchand Or Vérifié">workspace_premium</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Akwa, Douala · ID #CM-DLA-842</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-bold">2 450 000 <span class="text-label-sm text-on-surface-variant">FCFA</span></span>
+<span class="font-label-sm text-label-sm text-secondary">Escrow libéré 100%</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-[#ffcc00]"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">MTN MoMo Pro</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant tracking-wider">+237 677 ••• 892</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary">0 Litige · Score 99.4%</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">128 drops livrés sans retour</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded bg-primary-container text-white font-label-sm text-label-sm font-bold shadow-sm">
+<span class="material-symbols-outlined text-[14px]">edit_document</span>
+                    En cours de signature
+                  </span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">#RET-2025-088</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aujourd'hui, 11:20</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">Ets Nkem Congo</span>
+<span class="p-0.5 rounded bg-secondary-container/20 text-secondary material-symbols-outlined text-[12px]">workspace_premium</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Marché Congo, Douala</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-bold">5 120 000 <span class="text-label-sm text-on-surface-variant">FCFA</span></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Frais déduits : 25 600 FCFA</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-[#ff6600]"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Orange Money Marchand</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant tracking-wider">+237 699 ••• 104</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary">0 Litige · KYC Or</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Historique 3 ans</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">
+                    Examiner
+                  </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">#RET-2025-087</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aujourd'hui, 10:55</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">TechZone Bonabéri</span>
+<span class="p-0.5 rounded bg-surface-container-highest text-tertiary material-symbols-outlined text-[12px]">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Ancienne Route, Bonabéri</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-bold">1 890 000 <span class="text-label-sm text-on-surface-variant">FCFA</span></span>
+<span class="font-label-sm text-label-sm text-secondary">Lot drop smartphones</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-[#ffcc00]"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">MTN MoMo Pro</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant tracking-wider">+237 680 ••• 341</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary">100% Commandes validées</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Fonds en séquestre depuis 48h</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">
+                    Examiner
+                  </button>
+</td>
+</tr>
+<!-- Row 4: Suspicious Item -->
+<tr class="bg-error-container/10 hover:bg-error-container/20 transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-error font-bold">#RET-2025-086</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aujourd'hui, 09:12</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">Global Wax Mokolo</span>
+<span class="p-0.5 rounded bg-error-container text-on-error-container material-symbols-outlined text-[12px]">warning</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Mokolo, Yaoundé</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-error font-bold">2 300 000 <span class="text-label-sm text-on-surface-variant">FCFA</span></span>
+<span class="font-label-sm text-label-sm text-error">Bloqué par règle COBAC #11</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-[#ff6600]"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">Orange Money</span>
+<span class="font-body-sm text-body-sm text-error tracking-wider">+237 690 ••• 900</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+<span class="font-label-sm text-label-sm text-error font-bold">Discordance Nom SIM vs CNI</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Nouveau compte ouvert il y a 48h</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<span class="inline-flex items-center gap-1 px-space-sm py-1 rounded bg-error-container text-on-error-container font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">block</span>
+                    Audit Actif
+                  </span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">#RET-2025-085</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Aujourd'hui, 08:30</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface">Sani Electro Mboppi</span>
+<span class="p-0.5 rounded bg-secondary-container/20 text-secondary material-symbols-outlined text-[12px]">workspace_premium</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Marché Mboppi, Douala</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col">
+<span class="font-price-card text-price-card text-on-surface font-bold">4 790 000 <span class="text-label-sm text-on-surface-variant">FCFA</span></span>
+<span class="font-label-sm text-label-sm text-secondary">Colis réceptionnés &amp; validés</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex items-center gap-space-xs">
+<div class="w-2.5 h-2.5 rounded-full bg-[#ffcc00]"></div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-bold">MTN MoMo Pro</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant tracking-wider">+237 670 ••• 212</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-secondary">0 Litige · Historique 12 mois</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">CA mensuel &gt; 40M FCFA</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md text-right">
+<button class="px-space-sm py-1 rounded bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-sm text-label-sm transition-colors">
+                    Examiner
+                  </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Ledger Footer Pagination & Volume Stats -->
+<div class="p-space-md bg-surface-container flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Affichage de 5 sur 7 demandes d'arbitrage en attente</span>
+<div class="flex items-center gap-1">
+<button class="p-1 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<span class="px-space-sm py-0.5 font-label-sm text-label-sm bg-surface-container-highest text-on-surface rounded">1</span>
+<button class="p-1 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Authorization / Cryptographic Signature Drawer (4 Columns on XL) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<div class="p-space-lg rounded-xl bg-surface-container-low shadow-2xl flex flex-col gap-space-md relative overflow-hidden">
+<div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-container via-secondary to-primary-container"></div>
+<!-- Drawer Header -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Tiroir de Signature Sécurisée</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Dossier #RET-2025-089</span>
+</div>
+<span class="px-2 py-1 rounded-full bg-secondary-container/20 text-secondary font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">format_image_left</span>
+              COBAC N+1
+            </span>
+</div>
+<!-- Merchant ID & Profile Card -->
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center gap-space-sm">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center flex-shrink-0 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait professionnel du dirigeant camerounais Paul-Alain Tchakounte Kemayou en costume cravate moderne sur fond studio sobre avec éclairage doux et contrasté" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQxUUE9aj1ir55ECgIP6ledXFEPWqhPgLFXybiw8JHV5bekZSPPtBIDTyIuVR-FlrhGWsn6WAbEsIxF-U7w7xtBxNypC7Ik6CvHpFB7F4fvponfC6w3VfqAxP6aA0hiN9NV59xzs8TNBMrHQA_N1aZRVAwLIyK7vozKv-BhYZ2zbubeE9-YtcmIODDylvmwQOhGZszPLq8rANaMcj4jPMdKq6ZdspitmnpIuEstTo"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate font-bold">Paul-Alain Tchakounte Kemayou</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Boutique : KmerChic Akwa (Douala)</span>
+<span class="font-label-sm text-label-sm text-secondary">CNI #108920192 délivrée à Douala</span>
+</div>
+</div>
+<!-- Payout Detail Breakdown -->
+<div class="p-space-md rounded-lg bg-surface-container-lowest flex flex-col gap-space-xs">
+<div class="flex justify-between items-center pb-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Montant brut séquestre</span>
+<span class="font-label-md text-label-md text-on-surface">2 462 311 FCFA</span>
+</div>
+<div class="flex justify-between items-center pb-space-xs">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Frais Passerelle Télécom (0.5%)</span>
+<span class="font-label-md text-label-md text-error">-12 311 FCFA</span>
+</div>
+<div class="flex justify-between items-center pt-space-xs bg-surface-container/40 p-2 rounded">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Net à débloquer</span>
+<span class="font-price-card text-price-card text-secondary font-bold">2 450 000 FCFA</span>
+</div>
+</div>
+<!-- Identity & Telecom Anti-Fraud Concordance Check -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Vérification de Concordance d'Identité</span>
+<div class="p-space-sm rounded-lg bg-surface-container flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Titulaire CNI Enregistrée :</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">P. TCHAKOUNTE K.</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Nom Propriétaire SIM MTN :</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">PAUL ALAIN TCHAKOUNTE</span>
+</div>
+<div class="mt-space-xs p-2 rounded bg-secondary-container/20 flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary font-bold">Concordance Biométrique : 100%</span>
+<span class="font-body-sm text-body-sm text-secondary/80">Aucune usurpation de ligne détectée.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Escrow Release Conditions & Deliveries -->
+<div class="p-space-sm rounded-lg bg-surface-container flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">inventory</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">3 Commandes B2B rattachées</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Bordereaux de livraison émargés</span>
+</div>
+</div>
+<a class="font-label-sm text-label-sm text-primary hover:underline" href="#">Voir BLs</a>
+</div>
+<!-- Admin 2FA Code Input & Cryptographic Signing -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold flex items-center justify-between">
+<span>Code Authentificateur Super Admin</span>
+<span class="text-secondary flex items-center gap-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                OTP Clé Hardware active
+              </span>
+</label>
+<div class="flex items-center gap-space-xs">
+<input class="w-full bg-surface-container-highest text-center tracking-[0.5em] font-headline-sm text-headline-sm text-secondary py-2 rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary" maxlength="6" type="password" value="849201"/>
+<button class="p-2 rounded-lg bg-surface-container-highest text-on-surface-variant hover:text-on-surface" title="Rafraîchir session">
+<span class="material-symbols-outlined text-[18px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<!-- Cryptographic Green Release Button -->
+<button class="w-full py-3.5 px-space-md rounded-full bg-secondary text-on-secondary font-label-lg text-label-lg font-bold flex items-center justify-center gap-space-xs hover:opacity-95 shadow-lg shadow-secondary/20 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-[20px]">lock_open</span>
+<span>Débloquer 2 450 000 FCFA (Signature Séquestre)</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs mt-1">
+<button class="py-2.5 px-space-sm rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm flex items-center justify-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                Demander BL
+              </button>
+<button class="py-2.5 px-space-sm rounded-full bg-error-container/20 hover:bg-error-container/40 text-error font-label-sm text-label-sm flex items-center justify-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">pause_circle</span>
+                Geler Dossier
+              </button>
+</div>
+</div>
+<div class="text-center">
+<span class="font-body-sm text-body-sm text-on-surface-variant/70">
+              Horodatage certifié SHA-256 transmis au contrôleur COBAC Douala
+            </span>
+</div>
+</div>
+<!-- Quick Audit Trail & Telecom Status Micro-Card -->
+<div class="p-space-md rounded-xl bg-surface-container-low shadow-md flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Dernière Signature Apposée</span>
+<div class="flex items-center gap-space-sm pt-space-xs">
+<div class="w-7 h-7 rounded-full bg-secondary flex items-center justify-center text-on-secondary">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold truncate">Virement MTN MoMo de 3 800 000 FCFA</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Signé par Marcelle E. (11:15:02) · Réussi</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

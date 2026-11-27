@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;min-height:100%;margin:0;padding:0;background-color:#0e0e0e;color:#e5e2e1;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-error": "#690005", "on-tertiary-fixed": "#2a1700", "surface-container-low": "#1c1b1b", "error-container": "#93000a", "secondary-container": "#00a572", "primary-fixed": "#ffdbd0", "on-primary-container": "#541400", "surface-container-lowest": "#0e0e0e", "on-tertiary": "#472a00", "surface-bright": "#393939", "tertiary-container": "#cc8200", "on-secondary-container": "#00311f", "inverse-primary": "#ae3200", "error": "#ffb4ab", "surface-tint": "#ffb59e", "outline": "#ab897f", "inverse-surface": "#e5e2e1", "surface-container": "#201f1f", "surface-container-high": "#2a2a2a", "primary-container": "#ff5a1f", "secondary": "#4edea3", "on-error-container": "#ffdad6", "on-primary": "#5e1700", "background": "#131313", "surface": "#131313", "on-tertiary-fixed-variant": "#653e00", "tertiary": "#ffb95f", "on-secondary-fixed-variant": "#005236", "surface-container-highest": "#353534", "on-primary-fixed": "#3a0b00", "tertiary-fixed": "#ffddb8", "inverse-on-surface": "#313030", "on-secondary-fixed": "#002113", "on-surface": "#e5e2e1", "on-primary-fixed-variant": "#852400", "tertiary-fixed-dim": "#ffb95f", "on-secondary": "#003824", "secondary-fixed": "#6ffbbe", "primary": "#ffb59e", "outline-variant": "#5b4038", "on-surface-variant": "#e4beb3", "on-background": "#e5e2e1", "surface-variant": "#353534", "secondary-fixed-dim": "#4edea3", "on-tertiary-container": "#402500", "surface-dim": "#131313", "primary-fixed-dim": "#ffb59e" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "space-xl": "2.25rem", "gutter-desktop": "1.5rem", "space-xs": "0.25rem", "margin-desktop": "2rem", "space-sm": "0.5rem", "margin": "1rem", "gutter": "0.75rem", "margin-mobile": "0.75rem", "space-md": "1rem" }, fontFamily: { "display": ["Space Grotesk"], "headline-sm": ["Space Grotesk"], "label-sm": ["Space Grotesk"], "display-mobile": ["Space Grotesk"], "body-sm": ["Plus Jakarta Sans"], "price-hero": ["Space Grotesk"], "label-md": ["Space Grotesk"], "price-card": ["Space Grotesk"], "headline-md": ["Space Grotesk"], "body-md": ["Plus Jakarta Sans"], "label-lg": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "headline-lg": ["Space Grotesk"] }, fontSize: { "display": ["40px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-sm": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "label-sm": ["10px", { "lineHeight": "12px", "letterSpacing": "0.04em", "fontWeight": "700" }], "display-mobile": ["30px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "price-hero": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "price-card": ["18px", { "lineHeight": "22px", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "headline-lg": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script></head><body class="bg-surface-container-lowest text-on-surface font-body-md text-body-md flex flex-col min-h-screen antialiased selection:bg-primary-container selection:text-white"><header class="fixed top-0 inset-x-0 z-50 bg-surface-container-lowest/85 backdrop-blur-xl pt-safe shadow-[0_1px_12px_rgba(0,0,0,0.5)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-xs min-w-0 flex-1"><button aria-label="Retour" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:text-white active:scale-95 transition-transform bg-surface-container-low/60 flex-shrink-0" onclick="history.back()" type="button"><span class="material-symbols-outlined text-[20px]">arrow_back_ios_new</span></button><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight truncate">Réclamation &amp; Litige</span></div><div class="flex items-center gap-space-xs flex-shrink-0"><span class="text-[11px] font-semibold text-secondary px-2 py-0.5 rounded-full bg-secondary-container/20 tracking-wider">CM 🇨🇲</span><a class="flex items-center gap-1 px-space-xs py-1 group" data-path="accueil" href="#"><span class="font-display text-headline-md tracking-tighter text-white font-bold">DROPP</span><span class="w-2 h-2 rounded-full bg-primary-container"></span></a></div></div></header><main class="flex flex-col relative w-full flex-grow px-margin-mobile pt-16 pb-safe bg-surface-container-lowest"><div class="flex flex-col w-full pb-8">
+<!-- Banner Alerte Séquestre Escrow -->
+<div class="relative overflow-hidden rounded-xl bg-error-container/40 p-space-md mb-space-md shadow-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-error-container flex items-center justify-center flex-shrink-0 text-on-error shadow-sm">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">shield_lock</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-error">Séquestre Protégé</span>
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+</div>
+<h1 class="font-headline-sm text-headline-sm text-on-surface mb-1">Garantie Escrow DROPP Activée</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Les fonds (<span class="font-headline-sm text-on-surface">128 500 FCFA</span>) sont immédiatement mis sous séquestre sécurisé. Aucun transfert vers le vendeur ne sera exécuté sans accord d'arbitrage.
+        </p>
+</div>
+</div>
+<!-- Mini Récap Commande -->
+<div class="mt-space-md pt-space-sm bg-surface-container-lowest/60 rounded-lg p-space-sm flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-11 h-11 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Lot of high quality streetwear oversized hoodies packed in cardboard boxes ready for retail in Douala Cameroon, warm neon rim lighting with deep shadows, cyber-bazaar aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQ1zpbz199e9vHJ_dz1hw7lgUiRJIS-PAWtBDFx7hNGXOE9KjkGLzChhqZXwxXgHCsD82v7k1taicSrtUjTXDTfT4u9VmFzIHtxPOiOv-XMWznwiSKj4UTDtkP6xlT40IVkU3TSEuq-vbo6fPHxNl1xLPClQJGBadSxxQKHGMmtXOZrDZ_fJ5CS4_D1QzjUe4M4eMkM9tFY9ZBKzazcKY88kCPq6-jk3A_Ew8W938"/>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1">
+<span class="font-label-sm text-label-sm text-primary-container truncate font-bold">#DRP-2025-089</span>
+<span class="text-on-surface-variant text-[10px]">•</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">@KmerChic_Douala</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface truncate">Lot 24x Hoodies Oversize Streetwear</p>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-price-card text-price-card text-white block">128 500 <span class="text-[11px] font-normal text-on-surface-variant">FCFA</span></span>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-1.5 py-0.5 rounded">MoMo Séquestré</span>
+</div>
+</div>
+</div>
+<form class="flex flex-col gap-space-md" id="dispute-form" onsubmit="event.preventDefault(); triggerSubmit();">
+<!-- Étape 1 : Motif du Litige -->
+<div class="rounded-xl bg-surface-container p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1.5">
+<span class="w-6 h-6 rounded-full bg-primary-container text-white font-headline-sm text-headline-sm flex items-center justify-center text-xs">1</span>
+          Motif de la réclamation
+        </label>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Requis</span>
+</div>
+<div class="flex flex-col gap-2" id="reasons-group">
+<!-- Option 1: Sélectionnée par défaut -->
+<label class="relative flex items-center p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-primary-container/15 group">
+<input checked="" class="peer sr-only" name="dispute_reason" type="radio" value="non-conforme"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-primary-container flex items-center justify-center mr-3 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-primary">Marchandise non conforme / défauts de fabrication</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Tailles erronées, coutures défaillantes, zips cassés</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100 ml-2 text-[20px]">check_circle</span>
+</label>
+<!-- Option 2 -->
+<label class="relative flex items-center p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-primary-container/15 group">
+<input class="peer sr-only" name="dispute_reason" type="radio" value="incomplet"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-primary-container flex items-center justify-center mr-3 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-primary">Colis incomplet ou pièces manquantes</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Quantité inférieure au bon de commande B2B</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100 ml-2 text-[20px]">check_circle</span>
+</label>
+<!-- Option 3 -->
+<label class="relative flex items-center p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-primary-container/15 group">
+<input class="peer sr-only" name="dispute_reason" type="radio" value="dommage-transport"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-primary-container flex items-center justify-center mr-3 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-primary">Marchandise endommagée durant le transport</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Incident mototaxi, carton déchiré, agence de voyage</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100 ml-2 text-[20px]">check_circle</span>
+</label>
+<!-- Option 4 -->
+<label class="relative flex items-center p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-primary-container/15 group">
+<input class="peer sr-only" name="dispute_reason" type="radio" value="non-livre"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-primary-container flex items-center justify-center mr-3 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-primary">Colis jamais livré par le transporteur</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Point de retrait non approvisionné à Douala/Ydé</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100 ml-2 text-[20px]">check_circle</span>
+</label>
+<!-- Option 5 -->
+<label class="relative flex items-center p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-primary-container/15 group">
+<input class="peer sr-only" name="dispute_reason" type="radio" value="autre"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-primary-container flex items-center justify-center mr-3 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-white opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-primary">Autre problème technique</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Erreur de bordereau ou spécification particulière</span>
+</div>
+<span class="material-symbols-outlined text-primary-container opacity-0 peer-checked:opacity-100 ml-2 text-[20px]">check_circle</span>
+</label>
+</div>
+</div>
+<!-- Étape 2 : Description Détaillée -->
+<div class="rounded-xl bg-surface-container p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1.5" for="dispute-desc">
+<span class="w-6 h-6 rounded-full bg-primary-container text-white font-headline-sm text-headline-sm flex items-center justify-center text-xs">2</span>
+          Description précise du problème
+        </label>
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">visibility</span> Médiateurs DROPP
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+        Expliquez ce qui ne correspond pas au lot commandé (tailles, couleurs, coutures, quantité reçue...).
+      </p>
+<div class="relative">
+<textarea class="w-full rounded-xl bg-surface-container-low text-on-surface p-space-sm font-body-md text-body-md placeholder:text-on-surface-variant/40 focus:outline-none focus:bg-surface-container-highest transition-colors resize-none" id="dispute-desc" rows="4">Sur les 24 hoodies reçus au magasin Akwa, 6 ont des fermetures éclair défectueuses et 2 pièces sont en taille S au lieu de L/XL.</textarea>
+<div class="absolute bottom-2.5 right-3 font-label-sm text-label-sm text-on-surface-variant/60">
+<span id="char-count">129</span> / 500
+        </div>
+</div>
+</div>
+<!-- Étape 3 : Pièces Justificatives (Upload) -->
+<div class="rounded-xl bg-surface-container p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<label class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1.5">
+<span class="w-6 h-6 rounded-full bg-primary-container text-white font-headline-sm text-headline-sm flex items-center justify-center text-xs">3</span>
+          Preuves photos &amp; vidéos
+        </label>
+<span class="font-label-sm text-label-sm text-error bg-error-container/30 px-2 py-0.5 rounded">Obligatoire</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+        Photos obligatoires pour toute contestation de séquestre (vue d'ensemble + détails des défauts).
+      </p>
+<!-- Grille Photos 3 slots -->
+<div class="grid grid-cols-3 gap-space-sm" id="evidence-gallery">
+<!-- Photo 1 Ajoutée -->
+<div class="relative aspect-square rounded-xl bg-surface-container-low overflow-hidden group shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Close up high quality photo of a damaged metallic zipper on a black heavy cotton streetwear hoodie inside a boutique packaging in Douala Cameroon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvRvZdwQdOkHj03h0YbHqT-tXzFgwxC7uBhYprP8EaTrLnpI2Ak5N6VStZLo-7HaJeRh_NuVb9e8dliu8jZACNIs_U8926SCm2JNAgBX4um4mweilXIwhUOOABJkR0fiKC6WQwVPYPX79IFwfZX_D0VYC4ybFGyV1xUUXkscd1Ls_OxCODoYRMi8OH5s3qYMNghJ3FaAxM7PxCnenGCZBdssldFL5MN4MFqUOQQQk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+<button aria-label="Supprimer photo 1" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-surface-container-lowest/80 text-error flex items-center justify-center active:scale-90 transition-transform" onclick="this.parentElement.remove()" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<span class="absolute bottom-1.5 left-2 font-label-sm text-label-sm text-white/90">Détail zip</span>
+</div>
+<!-- Photo 2 Ajoutée -->
+<div class="relative aspect-square rounded-xl bg-surface-container-low overflow-hidden group shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Open cardboard shipping parcel filled with multiple folded colored streetwear hoodies on a warehouse wooden counter in Akwa Douala" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzSlw8juhNVnmLBkFVZx306p5ZNWd6YEs7U8xpsh11PT4XWnC1erqs0Hc7s6Cp0hivYkGPzGddOr-XNy5sdWyoLrutNk7PiZW-3_VwVF35GOR4aCR3i7-FE6npSS3tVR7cdevcW5ChKwCuEhzHTbb_YEfD1XyAs56qKfa1dGkBViDpncpBvx8_bdBSGNaKyii9TyDPfHxS4a5b4-_piEtaGE3AzOwc56ugSMbvjOQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+<button aria-label="Supprimer photo 2" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-surface-container-lowest/80 text-error flex items-center justify-center active:scale-90 transition-transform" onclick="this.parentElement.remove()" type="button">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<span class="absolute bottom-1.5 left-2 font-label-sm text-label-sm text-white/90">Lot Akwa</span>
+</div>
+<!-- Bouton Upload -->
+<button class="aspect-square rounded-xl bg-surface-container-high/60 flex flex-col items-center justify-center gap-1 text-on-surface-variant hover:text-primary active:bg-surface-container-highest transition-colors" onclick="triggerUploadSim()" type="button">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">add_a_photo</span>
+</div>
+<span class="font-label-sm text-label-sm text-center px-1 leading-tight">Ajouter<br/><span class="text-[9px] text-on-surface-variant/70">Max 10 Mo</span></span>
+</button>
+</div>
+</div>
+<!-- Étape 4 : Solution souhaitée -->
+<div class="rounded-xl bg-surface-container p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<label class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-1.5">
+<span class="w-6 h-6 rounded-full bg-primary-container text-white font-headline-sm text-headline-sm flex items-center justify-center text-xs">4</span>
+          Solution commerciale demandée
+        </label>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Arbitrage</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Solution 1 -->
+<label class="relative flex items-start p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-secondary-container/15 group">
+<input class="peer sr-only" name="desired_solution" type="radio" value="remplacement"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-secondary flex items-center justify-center mr-3 mt-0.5 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-on-secondary opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-secondary">Remplacement express sous 24h</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Le vendeur échange les 8 pièces à son showroom de Bali/Douala.</span>
+</div>
+</label>
+<!-- Solution 2 : Sélectionnée -->
+<label class="relative flex items-start p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-secondary-container/15 group">
+<input checked="" class="peer sr-only" name="desired_solution" type="radio" value="remboursement-partiel"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-secondary flex items-center justify-center mr-3 mt-0.5 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-on-secondary opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-secondary">Remboursement partiel immédiat</span>
+<span class="font-label-md text-label-md text-secondary font-bold bg-secondary-container/20 px-2 py-0.5 rounded-full">32 000 FCFA</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Crédité direct sur votre portefeuille DROPP MoMo/OM. Vous conservez le reste du lot.</span>
+</div>
+</label>
+<!-- Solution 3 -->
+<label class="relative flex items-start p-3 rounded-xl bg-surface-container-high cursor-pointer transition-all active:scale-[0.99] has-[:checked]:bg-secondary-container/15 group">
+<input class="peer sr-only" name="desired_solution" type="radio" value="retour-integral"/>
+<div class="w-5 h-5 rounded-full bg-surface-container-highest peer-checked:bg-secondary flex items-center justify-center mr-3 mt-0.5 transition-colors flex-shrink-0">
+<div class="w-2 h-2 rounded-full bg-on-secondary opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<span class="font-label-md text-label-md text-on-surface block peer-checked:text-secondary">Retour intégral et remboursement total</span>
+<span class="font-label-md text-label-md text-on-surface-variant">128 500 FCFA</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Restitution des 24 pièces via le point relais DROPP Central.</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Actions & Boutons Call to Action -->
+<div class="flex flex-col gap-space-sm pt-space-xs">
+<button class="w-full h-[52px] rounded-full bg-primary-container text-white font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-lg shadow-primary-container/25 active:scale-[0.98] transition-all hover:bg-on-primary-container" id="submit-btn" type="submit">
+<span class="material-symbols-outlined text-[22px]">lock_reset</span>
+<span>Soumettre la réclamation &amp; Geler les fonds</span>
+</button>
+<button class="w-full h-11 rounded-full bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center active:scale-[0.98] transition-transform" onclick="history.back()" type="button">
+        Annuler et retourner au suivi de commande
+      </button>
+</div>
+<!-- Note de bas de page Confiance & Cadenas -->
+<div class="flex items-center justify-center gap-2 p-space-sm rounded-xl bg-surface-container-lowest/80 text-center">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Médiation DROPP Cameroun : délai d'arbitrage garanti sous 12h à Douala et Yaoundé.
+      </p>
+</div>
+</form>
+<!-- Modal / Toast de Succès (Caché au chargement) -->
+<div class="fixed inset-x-4 bottom-8 z-50 p-4 rounded-xl bg-surface-container-high shadow-2xl flex items-center gap-3 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none" id="success-toast">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary flex-shrink-0">
+<span class="material-symbols-outlined">check</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-headline-sm text-headline-sm text-on-surface">Séquestre 128 500 FCFA verrouillé !</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dossier #LIT-89 transmis à l'équipe d'Akwa.</p>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic counter on textarea
+  const textarea = document.getElementById('dispute-desc');
+  const charCount = document.getElementById('char-count');
+  if (textarea && charCount) {
+    textarea.addEventListener('input', () => {
+      charCount.textContent = textarea.value.length;
+    });
+  }
+
+  // Simulation upload interactive feedback
+  function triggerUploadSim() {
+    const gallery = document.getElementById('evidence-gallery');
+    const newSlot = document.createElement('div');
+    newSlot.className = "relative aspect-square rounded-xl bg-surface-container-low overflow-hidden group shadow-inner animate-pulse";
+    newSlot.innerHTML = `
+      <div class="w-full h-full flex flex-col items-center justify-center bg-surface-container-highest p-2 text-center">
+        <span class="material-symbols-outlined text-secondary text-[24px]">hourglass_top</span>
+        <span class="font-label-sm text-label-sm text-on-surface-variant mt-1">Téléversement...</span>
+      </div>
+    `;
+    gallery.insertBefore(newSlot, gallery.lastElementChild);
+    setTimeout(() => {
+      newSlot.className = "relative aspect-square rounded-xl bg-surface-container-low overflow-hidden group shadow-inner";
+      newSlot.innerHTML = `
+        <img src="placeholder" data-alt="Close up photograph showing sizing label tag reading size S instead of expected large on an urban streetwear hoodie" class="w-full h-full object-cover"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+        <button type="button" aria-label="Supprimer photo" onclick="this.parentElement.remove()" class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-surface-container-lowest/80 text-error flex items-center justify-center active:scale-90 transition-transform">
+          <span class="material-symbols-outlined text-[16px]">close</span>
+        </button>
+        <span class="absolute bottom-1.5 left-2 font-label-sm text-label-sm text-white/90">Tiquette taille</span>
+      `;
+    }, 800);
+  }
+
+  // Submit Feedback & Toast
+  function triggerSubmit() {
+    const btn = document.getElementById('submit-btn');
+    const toast = document.getElementById('success-toast');
+    if (!btn || !toast) return;
+
+    btn.disabled = true;
+    btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[20px]">sync</span><span>Verrouillage du séquestre...</span>`;
+
+    setTimeout(() => {
+      btn.className = "w-full h-[52px] rounded-full bg-secondary-container text-white font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-lg";
+      btn.innerHTML = `<span class="material-symbols-outlined text-[22px]">verified</span><span>Séquestre officiellement gelé</span>`;
+      
+      toast.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+      }, 4000);
+    }, 1200);
+  }
+</script></main></body></html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"background":"#131313","surface-container-highest":"#353534","on-tertiary-fixed-variant":"#653e00","secondary-fixed":"#6ffbbe","tertiary-fixed":"#ffddb8","on-tertiary-fixed":"#2a1700","on-tertiary-container":"#402500","on-surface":"#e5e2e1","surface-dim":"#131313","on-error":"#690005","on-error-container":"#ffdad6","surface-variant":"#353534","primary-fixed-dim":"#ffb59e","outline-variant":"#5b4038","surface-container-low":"#1c1b1b","surface-tint":"#ffb59e","inverse-on-surface":"#313030","tertiary-fixed-dim":"#ffb95f","primary":"#ffb59e","error-container":"#93000a","on-secondary-fixed":"#002113","secondary-fixed-dim":"#4edea3","secondary":"#4edea3","surface-bright":"#393939","surface":"#131313","on-secondary-fixed-variant":"#005236","inverse-primary":"#ae3200","on-secondary":"#003824","secondary-container":"#00a572","primary-fixed":"#ffdbd0","surface-container-lowest":"#0e0e0e","on-primary-fixed-variant":"#852400","error":"#ffb4ab","tertiary":"#ffb95f","on-background":"#e5e2e1","on-primary-fixed":"#3a0b00","on-primary":"#5e1700","on-surface-variant":"#e4beb3","surface-container":"#201f1f","tertiary-container":"#cc8200","on-tertiary":"#472a00","on-primary-container":"#541400","surface-container-high":"#2a2a2a","inverse-surface":"#e5e2e1","outline":"#ab897f","on-secondary-container":"#00311f","primary-container":"#ff5a1f"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-md":"1rem","gutter-desktop":"1.5rem","margin":"1rem","space-lg":"1.5rem","margin-mobile":"0.75rem","space-xs":"0.25rem","margin-desktop":"2rem","space-sm":"0.5rem","space-xl":"2.25rem","gutter":"0.75rem"},"fontFamily":{"headline-sm":["Space Grotesk"],"display-mobile":["Space Grotesk"],"headline-lg":["Space Grotesk"],"label-sm":["Space Grotesk"],"body-lg":["Plus Jakarta Sans"],"label-lg":["Space Grotesk"],"price-card":["Space Grotesk"],"label-md":["Space Grotesk"],"price-hero":["Space Grotesk"],"body-sm":["Plus Jakarta Sans"],"display":["Space Grotesk"],"body-md":["Plus Jakarta Sans"],"headline-md":["Space Grotesk"]},"fontSize":{"headline-sm":["16px",{"lineHeight":"22px","fontWeight":"600"}],"display-mobile":["30px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["10px",{"lineHeight":"12px","letterSpacing":"0.04em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-lg":["14px",{"lineHeight":"18px","letterSpacing":"0.01em","fontWeight":"600"}],"price-card":["18px",{"lineHeight":"22px","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"price-hero":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"display":["40px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="flex flex-col"><div class="px-space-lg pt-space-lg pb-space-md flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-xl bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-white text-[22px]">local_shipping</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">DROPP<span class="text-primary-container">.B2B</span></span><span class="font-label-sm text-label-sm text-on-surface-variant">HQ CAMEROON</span></div></div><div class="mt-space-xs inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high w-fit"><span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span><span class="font-label-sm text-label-sm text-on-surface uppercase">ADMIN CONSOLE / HQ</span></div></div><nav class="flex flex-col gap-1 px-space-md mt-space-md" data-active-classes="bg-surface-container-high text-primary font-bold"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Vue d'ensemble / KPIs</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="gestion-comptes" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>Gestion des Comptes</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="verifications-kyc" href="#"><span class="material-symbols-outlined text-[20px]">badge</span><span>Vérifications KYC &amp; Identité</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="transactions-escrow" href="#"><span class="material-symbols-outlined text-[20px]">account_balance_wallet</span><span>Transactions &amp; Séquestre</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="moderation-catalogue" href="#"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span>Modération des Drops</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors font-label-md text-label-md" data-path="parametres-roles" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span>Paramètres &amp; Rôles</span></a></nav></div><div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low"><div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-container-lowest"><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary"></span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface">Nœud CEMAC Douala</span><span class="font-body-sm text-body-sm text-on-surface-variant">Opérationnel • 24ms</span></div></div><span class="material-symbols-outlined text-secondary text-[16px]">wifi</span></div><div class="flex items-center justify-between pt-space-xs"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface leading-tight">Marcelle E.</span><span class="font-label-sm text-label-sm text-primary">Super Admin HQ</span></div></div><a class="text-on-surface-variant hover:text-error transition-colors p-1" data-path="connexion" href="#" title="Déconnexion"><span class="material-symbols-outlined text-[20px]">logout</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl z-40 shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-16 w-full px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant"><span class="material-symbols-outlined text-[16px]">corporate_fare</span><span>DROPP HQ</span><span class="text-outline">/</span><span class="text-on-surface font-semibold">Console Centrale</span></div><div class="relative flex items-center ml-space-md"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder-on-surface-variant pl-9 pr-space-md py-1.5 rounded-full w-80 focus:outline-none focus:bg-surface-container" placeholder="Rechercher compte, CNI, #CMD, téléphone..." type="search"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span><span class="font-label-sm text-label-sm text-secondary-fixed">Séquestre BEAC / COBAC</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">schedule</span><span>Douala (UTC+1)</span></div><button class="relative p-2 text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-xs pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></div></header><main class="w-full pt-16 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Stats Strip / Command Bar -->
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Header Section without double title -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs max-w-3xl">
+<div class="inline-flex items-center gap-space-xs text-primary font-label-sm uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span>Protocole CEMAC • Surveillance Flux Vidéo</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface-variant">Console Opérateur HQ-04</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+          Centre de Modération des Vidéos &amp; Drops Commerciaux
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+          Contrôle de conformité des flux courts (Reels B2B) : lutte anti-contrefaçon, clarté des prix unitaire/MoQ et respect de la réglementation CEMAC sur les prix TTC.
+        </p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<span class="px-space-md py-space-xs bg-surface-container-high text-on-surface rounded-full font-label-md flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[16px] text-secondary">verified_user</span>
+          Algorithme Vision v3.8 Douala
+        </span>
+<button class="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface rounded-full font-label-md flex items-center gap-space-xs transition-colors" id="btn-next-drop">
+<span class="material-symbols-outlined text-[16px]">skip_next</span>
+          Drop suivant (5 restants)
+        </button>
+</div>
+</div>
+<!-- Live Ingestion Metrics Bento Bar -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md">
+<div class="bg-surface-container-low rounded-xl p-space-md relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Drops soumis aujourd'hui</span>
+<span class="material-symbols-outlined text-[18px] text-primary">upload_file</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-price-hero text-price-hero text-on-surface">84</span>
+<span class="font-label-sm text-label-sm text-secondary">+14% vs hier</span>
+</div>
+<div class="mt-space-xs w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 78%;"></div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">En attente de revue</span>
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-price-hero text-price-hero text-tertiary">6</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">vidéos prioritaires</span>
+</div>
+<div class="font-label-sm text-label-sm text-tertiary flex items-center gap-1 mt-space-xs">
+<span class="material-symbols-outlined text-[14px]">timer</span>
+          Délai moyen actuel : 12 min
+        </div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Taux de rejet</span>
+<span class="material-symbols-outlined text-[18px] text-error">gavel</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-price-hero text-price-hero text-on-surface">4.8%</span>
+<span class="font-label-sm text-label-sm text-secondary">-0.6% CEMAC</span>
+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1 mt-space-xs">
+          Anti-contrefaçon active
+        </div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Drops diffusés en direct</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">sensors</span>
+</div>
+<div class="mt-space-sm flex items-baseline gap-space-xs">
+<span class="font-price-hero text-price-hero text-secondary">1 240</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">actifs</span>
+</div>
+<div class="font-label-sm text-label-sm text-secondary-fixed-dim flex items-center gap-1 mt-space-xs">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+          24.5k vues B2B/heure
+        </div>
+</div>
+</div>
+<!-- Main Workspace Grid: Streamlined 3-Column / Asymmetric Split -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Video Player & AI Vision Scan HUD (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Player Container Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg flex flex-col gap-space-md">
+<!-- Drop Title & Meta Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm bg-surface-container-low/40 p-space-md rounded-lg">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded bg-primary-container text-white font-label-sm text-label-sm uppercase tracking-wide">
+                  #DRP-2025-0982
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Arrivage Akwa Conteneur B</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate mt-1">
+                Lot 50x Sneakers Streetwear Air Pro 2025 - Arrivage Akwa Conteneur B
+              </h2>
+</div>
+<div class="flex items-center gap-space-xs shrink-0">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-high text-tertiary font-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Inspection en cours
+              </span>
+</div>
+</div>
+<!-- Video Viewport Frame & Overlay -->
+<div class="relative w-full bg-black rounded-xl overflow-hidden flex items-center justify-center aspect-[9/14] sm:aspect-[16/10] max-h-[560px]">
+<!-- Reel Media Canvas (Placeholder styled like Akwa Douala wholesale warehouse video) -->
+<div class="w-full h-full bg-cover bg-center relative" data-alt="A vertical smartphone B2B wholesale video capture inside a Douala commercial warehouse in Akwa. The merchant's hands are opening heavy brown corrugated cardboard boxes labeled Air Pro Sneakers, stacked high on wooden pallets under warm fluorescent industrial lights, vibrant raw commercial ambiance with streetwear shoes clearly displayed in bulk packaging." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCUTZQ_pS0feWNF_OusQTihkZ1-T-52-Zwt5zd2WhhKr0GXsc1XacYD-9AJnVUvHiO5s5PcvyUbYyd0jUFoWVo5bpalzLI--yt8nqn76B4vGtANrJ8h3i5izl2G3Wl4if2JH6CSnrMw2CVni_eazFGiLZoKWNiIZ3vxcwUZwP7vM7V9Bd0q-GlwQAtC6FqefFmCY8848XbFpujsQtl_npE2iNztRskDe708bKqwmuo')">
+<!-- Video Overlays / Scrim -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/60 pointer-events-none"></div>
+<!-- Top Telemetry Badges on Video -->
+<div class="absolute top-4 left-4 right-4 flex items-center justify-between">
+<div class="flex items-center gap-space-xs px-3 py-1 rounded-full bg-black/60 backdrop-blur-md">
+<span class="material-symbols-outlined text-[16px] text-primary">videocam</span>
+<span class="font-label-sm text-label-sm text-white">REEL B2B • 1080x1920 (9:16)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white font-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">wifi</span>
+                    Douala 4G Live
+                  </span>
+<span class="px-2.5 py-1 rounded-full bg-primary-container text-white font-label-sm">
+                    00:18 / 00:45
+                  </span>
+</div>
+</div>
+<!-- AI Vision Bounding Boxes in Action -->
+<div class="absolute top-[28%] left-[18%] w-48 h-36 border-2 border-dashed border-secondary rounded-lg pointer-events-none p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(78,222,163,0.3)]">
+<span class="px-2 py-0.5 rounded bg-secondary text-on-secondary font-label-sm text-[10px] w-fit flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+                  Logo Conforme (98.8%)
+                </span>
+<span class="text-secondary font-label-sm text-[10px] self-end bg-black/70 px-1 rounded">
+                  Barcode: #CMR-AKW-50X
+                </span>
+</div>
+<div class="absolute bottom-[24%] right-[12%] w-40 h-28 border-2 border-primary-container rounded-lg pointer-events-none p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(255,90,31,0.3)]">
+<span class="px-2 py-0.5 rounded bg-primary-container text-white font-label-sm text-[10px] w-fit">
+                  PRIX DÉTECTÉ: 7 200 FCFA
+                </span>
+<span class="text-white font-label-sm text-[10px] self-end bg-black/70 px-1 rounded">
+                  MoQ : 50 paires
+                </span>
+</div>
+<!-- Central Live Scrubbing / Visual Indicator -->
+<div class="absolute inset-0 flex items-center justify-center">
+<button class="w-16 h-16 rounded-full bg-primary/90 text-on-primary flex items-center justify-center shadow-xl hover:scale-105 transition-transform backdrop-blur-sm">
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Video Bottom Control Bar -->
+<div class="absolute bottom-3 left-4 right-4 bg-surface-container-lowest/80 backdrop-blur-md rounded-xl p-space-sm flex flex-col gap-2">
+<!-- Timeline Slider -->
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden relative cursor-pointer">
+<div class="bg-primary-container h-full w-[40%] rounded-full"></div>
+</div>
+<!-- Action Nodes -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-space-sm">
+<button class="p-1 rounded text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">pause</span>
+</button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm hover:bg-surface-bright">
+                      Ralenti 0.5x
+                    </button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm hover:bg-surface-bright flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">crop_free</span>
+                      Zoom Étiquette (2.5x)
+                    </button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-sm text-label-sm hover:bg-surface-bright flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">graphic_eq</span>
+                      Audio Transcription
+                    </button>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm">
+<span class="material-symbols-outlined text-[18px]">volume_up</span>
+<span>Français / Pidgin</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Automated IA Vision & OCR Synthesis Box -->
+<div class="bg-surface-container rounded-xl p-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Analyseur Automatique par IA &amp; OCR</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary bg-secondary/10 px-2 py-0.5 rounded-full">
+                Score Global : 96.4/100 (Fiable)
+              </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<!-- AI Metric 1 -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-secondary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-md text-label-md">Authenticité &amp; Marque</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">
+                  Risque 1.2% (Faible)
+                </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Aucune violation de droit tiers détectée. Modèle générique "Air Pro" distribué sous licence locale.
+                </p>
+</div>
+<!-- AI Metric 2 -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-secondary">
+<span class="material-symbols-outlined text-[18px]">inventory</span>
+<span class="font-label-md text-label-md">Cartons &amp; Emballage</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">
+                  Cartons Scellés Usine
+                </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Mentions fabricant conformes. Palettisation homogène confirmée par analyse spatiale.
+                </p>
+</div>
+<!-- AI Metric 3 -->
+<div class="bg-surface-container-low p-space-md rounded-lg flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs text-primary-container">
+<span class="material-symbols-outlined text-[18px]">price_check</span>
+<span class="font-label-md text-label-md">Concordance Tarifaire</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mt-1">
+                  7 200 FCFA = 100% Conforme
+                </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Prix énoncé oralement à 00:14 synchronisé avec la fiche B2B et exempt de frais dissimulés.
+                </p>
+</div>
+</div>
+<!-- Audio OCR Transcription Drawer -->
+<div class="p-space-sm bg-surface-container-lowest rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-tertiary shrink-0 mt-0.5">record_voice_over</span>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Transcription Audio Instantanée (Extrait 00:08 - 00:22)</span>
+<span class="text-outline font-label-sm">•</span>
+<span class="font-label-sm text-label-sm text-secondary">Traduction CEMAC</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant italic mt-0.5">
+                  « ...Gars les conteneurs sont arrivés direct au port de Douala, les 50 paires sont scellées, prix net 7 200 FCFA l'unité pour les revendeurs de Mokolo et Akwa, paiement sous séquestre DROPP... »
+                </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Merchant Credibility Sheet & Human Checklist (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Merchant Identification Dossier -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Identité du Vendeur</span>
+<span class="px-2 py-0.5 rounded bg-tertiary-container text-on-tertiary font-label-sm flex items-center gap-1 font-bold">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+              Grossiste Certifié Or
+            </span>
+</div>
+<div class="flex items-center gap-space-md mt-space-xs">
+<div class="w-14 h-14 rounded-xl overflow-hidden bg-surface-container-high shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close-up portrait photo of an African business professional merchant at a modern logistics center in Douala wearing an orange high-visibility B2B vest with Dropp identification badge" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8e4KlK5ucAWEdFRDj1PnvcT60PVW23yzizBz2hfvna4BOOn1NzMmG-DJPzzkTXLbkxoYl42Mp0IfPSSNDaYBCXuxXYtC2-ReBOQzf7Nmpj06wlVq6DOTc-ghdjpaekliBQtSQInpcMPgmOu4DtBDaw3vSEiCAC8rCxmZgCJfHldiKotm88orL95BJDS73znqys_E_EDX4dgFjYFWz84BxNMcU0G_AWwqZOAXrcdM"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">@KmerChic Import &amp; Wholesale</h3>
+<span class="material-symbols-outlined text-secondary text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">RCCM : RC/DLA/2021/B/451 • Hangar D-14 Douala</span>
+<div class="flex items-center gap-space-md mt-1">
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">star</span> 4.9 (420 commandes)
+                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">
+                  Séquestre garanti : 15 000 000 FCFA
+                </span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-space-xs pt-space-xs">
+<div class="bg-surface-container rounded-lg p-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">KYC Entrepôt</span>
+<span class="font-label-md text-label-md text-on-surface">Validé (J-15)</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">sync_alt</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Règlement</span>
+<span class="font-label-md text-label-md text-on-surface">MoMo / OM / Virement</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Human Auditing Checklist Form -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Checklist de Conformité Légale</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4/4 requis</span>
+</div>
+<!-- Interactive Checkbox List -->
+<div class="flex flex-col gap-space-sm">
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary-container bg-surface-container-highest border-none focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">
+                  Absence de contenu trompeur sur le MoQ
+                </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  Quantité minimum d'achat (50 unités) clairement spécifiée sans condition occulte.
+                </span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary-container bg-surface-container-highest border-none focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">
+                  Visibilité distincte des produits physiques
+                </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  Produits réels en mains, cartons physiques ouverts. Aucun mockup ou rendu 3D non-autorisé.
+                </span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary-container bg-surface-container-highest border-none focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">
+                  Audio conforme &amp; Description explicite
+                </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  Vocabulaire professionnel en français/pidgin, aucun propos diffamatoire ou concurrentiel déloyal.
+                </span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer group">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary-container bg-surface-container-highest border-none focus:ring-0 cursor-pointer" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition-colors">
+                  Stock physiquement présent au Cameroun
+                </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  Géolocalisation vérifiée Hangar D-14 Akwa. Déchargement confirmé sous 24h.
+                </span>
+</div>
+</label>
+</div>
+<!-- Boost & Regional Merchandising Tags -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+              Sélecteur de tags &amp; Attribution de Badges Flux
+            </span>
+<div class="flex flex-wrap gap-space-xs mt-1">
+<button class="px-space-sm py-1.5 rounded-full bg-secondary text-on-secondary font-label-sm text-label-sm flex items-center gap-1 font-semibold hover:opacity-90">
+<span class="material-symbols-outlined text-[14px]">local_shipping</span>
+                Badge Recommandé Port de Douala
+              </button>
+<button class="px-space-sm py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                Tendance Réassort Yaoundé
+              </button>
+<button class="px-space-sm py-1.5 rounded-full bg-primary-container text-white font-label-sm text-label-sm flex items-center gap-1 font-semibold hover:opacity-90">
+<span class="material-symbols-outlined text-[14px]">sell</span>
+                Prix Cassé Grossiste
+              </button>
+<button class="px-space-sm py-1.5 rounded-full bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+                Livraison Express Axe Lourd
+              </button>
+</div>
+</div>
+<!-- Arbitration Action Center -->
+<div class="flex flex-col gap-space-sm pt-space-md bg-surface-container-lowest p-space-md rounded-xl mt-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">
+              Décision d'Arbitrage Immédiate
+            </span>
+<!-- Green Primary Broadcast Push Button -->
+<button class="w-full h-12 rounded-full bg-secondary-container hover:bg-secondary text-on-secondary font-headline-sm text-headline-sm flex items-center justify-center gap-space-xs transition-all shadow-lg active:scale-98" id="btn-approve">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<span>Approuver &amp; Propulser dans "Pour toi"</span>
+</button>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Quarantine Action Button -->
+<button class="w-full py-2.5 px-3 rounded-lg bg-surface-container-high hover:bg-surface-bright text-tertiary font-label-md text-label-md flex items-center justify-center gap-1 transition-colors" id="btn-quarantine">
+<span class="material-symbols-outlined text-[18px]">policy</span>
+<span>Quarantaine (Terrain)</span>
+</button>
+<!-- Rejection Trigger Button -->
+<button class="w-full py-2.5 px-3 rounded-lg bg-surface-container-high hover:bg-error-container text-error font-label-md text-label-md flex items-center justify-center gap-1 transition-colors" id="btn-reject">
+<span class="material-symbols-outlined text-[18px]">block</span>
+<span>Rejeter avec motif</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Rejection Modal Drawer Backdrop (Hidden by default, toggled via JS) -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-space-md" id="rejection-modal">
+<div class="bg-surface-container-low max-w-lg w-full rounded-2xl p-space-lg flex flex-col gap-space-md shadow-2xl">
+<div class="flex items-center justify-between pb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-error text-[22px]">report</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">Motif de Rejet du Drop Vidéo</h3>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface p-1" id="btn-close-modal">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Sélectionnez la non-conformité constatée. Une notification SMS et WhatsApp automatique sera acheminée à <strong>@KmerChic Import &amp; Wholesale</strong>.
+      </p>
+<div class="flex flex-col gap-space-xs">
+<label class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high">
+<input checked="" class="text-error bg-surface-container-highest border-none focus:ring-0" name="rejection-reason" type="radio"/>
+<span class="font-label-md text-on-surface">Suspicion de contrefaçon ou atteinte PI CEMAC</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high">
+<input class="text-error bg-surface-container-highest border-none focus:ring-0" name="rejection-reason" type="radio"/>
+<span class="font-label-md text-on-surface">Prix unitaire / MoQ non conforme (différence audio / fiche)</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high">
+<input class="text-error bg-surface-container-highest border-none focus:ring-0" name="rejection-reason" type="radio"/>
+<span class="font-label-md text-on-surface">Absence de stock physique réel (mockups 3D / précommande illégale)</span>
+</label>
+<label class="flex items-center gap-space-sm p-space-sm rounded-lg bg-surface-container cursor-pointer hover:bg-surface-container-high">
+<input class="text-error bg-surface-container-highest border-none focus:ring-0" name="rejection-reason" type="radio"/>
+<span class="font-label-md text-on-surface">Mauvaise qualité visuelle / Éclairage insuffisant</span>
+</label>
+</div>
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Note complémentaire pour le grossiste</label>
+<textarea class="bg-surface-container-lowest text-on-surface font-body-sm p-space-sm rounded-lg focus:outline-none placeholder-on-surface-variant resize-none" placeholder="Précisez par exemple le minutage non conforme..." rows="3"></textarea>
+</div>
+<div class="flex items-center justify-end gap-space-sm pt-space-sm">
+<button class="px-space-md py-2 rounded-full bg-surface-container text-on-surface font-label-md" id="btn-cancel-modal">
+          Annuler
+        </button>
+<button class="px-space-md py-2 rounded-full bg-error text-on-error font-label-md font-semibold" id="btn-confirm-rejection">
+          Notifier le Rejet
+        </button>
+</div>
+</div>
+</div>
+<!-- Inline Micro-Interactions Script -->
+<script>
+    (function initModerationDesk() {
+      const btnReject = document.getElementById('btn-reject');
+      const btnApprove = document.getElementById('btn-approve');
+      const btnQuarantine = document.getElementById('btn-quarantine');
+      const rejectionModal = document.getElementById('rejection-modal');
+      const btnCloseModal = document.getElementById('btn-close-modal');
+      const btnCancelModal = document.getElementById('btn-cancel-modal');
+      const btnConfirmRejection = document.getElementById('btn-confirm-rejection');
+      const btnNextDrop = document.getElementById('btn-next-drop');
+
+      function openModal() {
+        if (rejectionModal) rejectionModal.classList.remove('hidden');
+      }
+
+      function closeModal() {
+        if (rejectionModal) rejectionModal.classList.add('hidden');
+      }
+
+      if (btnReject) btnReject.addEventListener('click', openModal);
+      if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+      if (btnCancelModal) btnCancelModal.addEventListener('click', closeModal);
+
+      if (btnApprove) {
+        btnApprove.addEventListener('click', function() {
+          const originalHTML = btnApprove.innerHTML;
+          btnApprove.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">refresh</span><span>Propulsion en direct...</span>';
+          btnApprove.classList.add('opacity-75');
+          setTimeout(() => {
+            btnApprove.innerHTML = '<span class="material-symbols-outlined text-[20px]">check</span><span>Drop Diffusé avec Succès !</span>';
+            btnApprove.classList.remove('opacity-75');
+            setTimeout(() => {
+              btnApprove.innerHTML = originalHTML;
+            }, 2500);
+          }, 900);
+        });
+      }
+
+      if (btnQuarantine) {
+        btnQuarantine.addEventListener('click', function() {
+          alert('Le drop #DRP-2025-0982 a été transféré aux inspecteurs terrain de la zone Port/Akwa Douala.');
+        });
+      }
+
+      if (btnConfirmRejection) {
+        btnConfirmRejection.addEventListener('click', function() {
+          closeModal();
+          alert('Notification de rejet transmise au vendeur avec motif certifié.');
+        });
+      }
+
+      if (btnNextDrop) {
+        btnNextDrop.addEventListener('click', function() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    })();
+  </script>
+</div></main></div></body></html>
