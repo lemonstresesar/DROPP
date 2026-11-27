@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  ArrowLeft,
   BadgeCheck,
   Check,
   FileText,
@@ -252,7 +251,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
       ) : (
         <div className="flex-1 flex overflow-hidden">
           {/* Conversation list */}
-          <aside className={`w-full sm:w-72 border-r border-[var(--dropp-border)] overflow-y-auto shrink-0 ${activeConv ? 'hidden sm:block' : 'block'}`}>
+          <aside className="w-full sm:w-72 border-r border-[var(--dropp-border)] overflow-y-auto shrink-0">
             {conversations.length === 0 ? (
               <p className="p-6 text-xs text-[var(--dropp-muted)] text-center">{t.messages.noConversations}</p>
             ) : (
@@ -299,17 +298,9 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
 
           {/* Active Thread */}
           {activeConv && (
-            <section className="flex-1 flex flex-col overflow-hidden">
+            <section className="hidden sm:flex flex-1 flex-col overflow-hidden">
               <div className="px-4 py-3 border-b border-[var(--dropp-border)] flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <button
-                    type="button"
-                    onClick={() => onSelectConversation('')}
-                    className="sm:hidden p-1.5 -ml-1 text-[var(--dropp-text)] hover:bg-[var(--dropp-surface-alt)] rounded-lg"
-                    aria-label="Retour"
-                  >
-                    <ArrowLeft className="w-5 h-5" />
-                  </button>
                   <img
                     src={activeConv.shopAvatarUrl}
                     alt={activeConv.shopName}

@@ -33,7 +33,6 @@ import {
   getRetryableActions,
   markQueuedActionStatus,
 } from '../utils/offlineQueue';
-import { DEMO_POSTS, DEMO_SHOPS } from '../data/demoData';
 import {
   canBuyerCancelOrder,
   canBuyerDisputeOrder,
@@ -593,8 +592,7 @@ export function useDroppState(isOnline: boolean) {
           const merged = new Map<string, ShopProfile>();
           for (const [id, s] of approvedShopsMap) merged.set(id, s);
           for (const [id, s] of ownedOrAllShopsMap) merged.set(id, s);
-          const list = Array.from(merged.values());
-          setShops(list.length > 0 ? list : DEMO_SHOPS);
+          setShops(Array.from(merged.values()));
           setCatalogLoading(false);
         };
 
@@ -603,8 +601,7 @@ export function useDroppState(isOnline: boolean) {
           const merged = new Map<string, FeedPost>();
           for (const [id, p] of publishedPostsMap) merged.set(id, p);
           for (const [id, p] of ownedOrAllPostsMap) merged.set(id, p);
-          const list = Array.from(merged.values());
-          const sorted = (list.length > 0 ? list : DEMO_POSTS).sort(
+          const sorted = Array.from(merged.values()).sort(
             (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
           setPosts(sorted);

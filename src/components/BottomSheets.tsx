@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  BadgeCheck,
   Check,
   Clock,
   Copy,
@@ -510,85 +509,31 @@ export const StoryPreviewSheet: React.FC<StoryPreviewSheetProps> = ({
   onReplyToShop,
   onClose,
 }) => (
-  <div
-    className="fixed inset-0 z-50 bg-black flex flex-col justify-between p-4 sm:p-6 text-white"
-    onClick={onClose}
-  >
-    {/* Top Progress & Header */}
-    <div className="space-y-3" onClick={(e) => e.stopPropagation()}>
-      <div className="flex items-center gap-1.5">
-        <div className="flex-1 h-1 rounded-full bg-white/30 overflow-hidden">
-          <div className="h-full bg-[#FF5A1F] w-full animate-pulse" />
-        </div>
-      </div>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <img
-            src={shop.avatarUrl}
-            alt={shop.name}
-            referrerPolicy="no-referrer"
-            className="w-10 h-10 rounded-full object-cover border border-white/20"
-          />
-          <div>
-            <div className="flex items-center gap-1 text-sm font-bold">
-              <span>{shop.name}</span>
-              {shop.isCertified && <BadgeCheck className="w-4 h-4 text-[#FF5A1F]" />}
-            </div>
-            <div className="text-[11px] text-white/70">{shop.city} · Story 24h</div>
-          </div>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label={t.actions.close}
-          className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-        >
-          <X className="w-5 h-5" />
-        </button>
-      </div>
-    </div>
-
-    {/* Center Media / Caption */}
-    <div
-      className="flex-1 flex flex-col justify-center items-center my-4 relative rounded-3xl overflow-hidden bg-zinc-900 border border-white/10 shadow-2xl max-w-lg mx-auto w-full"
-      onClick={(e) => e.stopPropagation()}
-    >
-      {shop.storyMediaUrl ? (
+  <SheetWrapper title={`${t.sheets.storyTitle} · ${shop.name}`} onClose={onClose} closeLabel={t.actions.close}>
+    <div className="space-y-4">
+      {shop.storyMediaUrl && (
         <img
           src={shop.storyMediaUrl}
           alt={shop.name}
           referrerPolicy="no-referrer"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="w-full h-64 object-cover rounded-2xl bg-black"
         />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-zinc-800 to-black flex items-center justify-center p-8 text-center text-white/50 text-sm">
-          {shop.name} — Story active
-        </div>
       )}
-      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-6 space-y-3">
-        <p className="text-base sm:text-lg font-medium text-white leading-relaxed drop-shadow-md">
-          {shop.storyPreviewText}
-        </p>
-      </div>
-    </div>
-
-    {/* Bottom Reply CTA */}
-    {canReply && (
-      <div className="max-w-lg mx-auto w-full" onClick={(e) => e.stopPropagation()}>
+      <p className="text-sm text-[var(--dropp-text)] leading-relaxed">{shop.storyPreviewText}</p>
+      {canReply && (
         <button
           type="button"
           onClick={() => {
             onClose();
             onReplyToShop(shop);
           }}
-          className="w-full min-h-[48px] rounded-2xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold shadow-lg transition-colors flex items-center justify-center gap-2"
+          className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
         >
-          <Send className="w-4 h-4" />
-          <span>{t.sheets.storyReplyBtn}</span>
+          {t.sheets.storyReplyBtn}
         </button>
-      </div>
-    )}
-  </div>
+      )}
+    </div>
+  </SheetWrapper>
 );
 
 interface CreateActionSheetProps {

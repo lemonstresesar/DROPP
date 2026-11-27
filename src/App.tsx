@@ -355,7 +355,7 @@ export default function App() {
   const handleToggleCompare = (postId: string) => {
     setCompareIds((prev) => {
       if (prev.includes(postId)) return prev.filter((id) => id !== postId);
-      if (prev.length >= 3) return [...prev.slice(1), postId];
+      if (prev.length >= 4) return [...prev.slice(1), postId];
       return [...prev, postId];
     });
   };
