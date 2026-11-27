@@ -20,11 +20,9 @@ import type {
   OrderRecord,
   UserSession,
   WalletTransaction,
-  WithdrawalRequestRecord,
 } from '../types/dropp';
 import { canBuyerCancelOrder, canBuyerDisputeOrder } from '../utils/commerce';
 import { formatFcfa } from '../utils/formatters';
-import { canBuy, canUseWalletAndReferral } from '../utils/permissions';
 
 interface WalletAndOrdersPanelProps {
   t: DroppDictionary;
@@ -33,7 +31,6 @@ interface WalletAndOrdersPanelProps {
   isOnline: boolean;
   orders: OrderRecord[];
   transactions: WalletTransaction[];
-  withdrawalRequests: WithdrawalRequestRecord[];
   notifications: AppNotification[];
   notifPrefs: NotificationPrefs;
   appRating: number;
@@ -43,19 +40,11 @@ interface WalletAndOrdersPanelProps {
   onRateOrder: (orderId: string) => void;
   onReorder: (order: OrderRecord) => void;
   onOpenCart: () => void;
-  onDeposit: (
-    amountFcfa: number,
-    method: 'mtn_momo' | 'orange_money',
-    phone: string
-  ) => Promise<{ ok: boolean; error?: string }>;
-  onWithdraw: (
-    amountFcfa: number,
-    method: 'mtn_momo' | 'orange_money',
-    phone: string
-  ) => Promise<{ ok: boolean; error?: string }>;
+  onDeposit: (amountFcfa: number, methodLabel: string) => boolean;
+  onWithdraw: (amountFcfa: number, methodLabel: string) => boolean;
   onToggleNotifPref: (key: keyof NotificationPrefs) => void;
   onMarkAllNotifsRead: () => void;
-  onApplyReferralCode: (code: string) => Promise<boolean> | boolean;
+  onApplyReferralCode: (code: string) => boolean;
   onSubmitAppRating: (stars: number) => void;
 }
 
@@ -66,7 +55,6 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
   isOnline,
   orders,
   transactions,
-  withdrawalRequests,
   notifications,
   notifPrefs,
   appRating,
@@ -88,19 +76,14 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
   const [disputeReason, setDisputeReason] = useState('');
 
   const [walletAmount, setWalletAmount] = useState('25000');
-  const [walletMethod, setWalletMethod] = useState<'mtn_momo' | 'orange_money'>('mtn_momo');
-  const [walletPhone, setWalletPhone] = useState('677102030');
-  const [walletBusy, setWalletBusy] = useState(false);
+  const [walletMethod, setWalletMethod] = useState<'MTN MoMo' | 'Orange Money'>('MTN MoMo');
   const [walletMsg, setWalletMsg] = useState('');
 
   const [referralInput, setReferralInput] = useState('');
   const [referralFeedback, setReferralFeedback] = useState<'ok' | 'err' | null>(null);
 
-  const allowBuyActions = canBuy(session);
-  const allowWalletReferral = canUseWalletAndReferral(session);
-
   const filteredOrders = useMemo(() => {
-    const mine = orders.filter((o) => o.buyerId === session.uid);
+    const mine = orders.filter((o) => o.buyerId === session.uid || o.buyerId === 'client-demo');
     return mine.filter((o) => {
       if (orderFilter === 'active') {
         return (
@@ -245,7 +228,7 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
                         key={`${item.postId}-${item.variantId}`}
                         className="flex items-center justify-between text-xs text-[var(--dropp-text)] gap-2"
                       >
-                        <span>
+                        <span className="truncate">
                           {item.qty}× {item.title} ({item.variantLabel})
                         </span>
                         <span className="font-semibold tabular-nums shrink-0">
@@ -264,7 +247,7 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    {allowBuyActions && showConfirm && (
+                    {showConfirm && (
                       <button
                         type="button"
                         onClick={() => onConfirmDelivery(order.orderId)}
@@ -275,7 +258,7 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
                       </button>
                     )}
 
-                    {allowBuyActions && showDispute && (
+                    {showDispute && (
                       <button
                         type="button"
                         onClick={() =>
@@ -290,7 +273,7 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
                       </button>
                     )}
 
-                    {allowBuyActions && showCancel && (
+                    {showCancel && (
                       <button
                         type="button"
                         onClick={() => onCancelOrder(order.orderId)}
@@ -300,21 +283,19 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
                       </button>
                     )}
 
-                    {allowBuyActions && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onReorder(order);
-                          onOpenCart();
-                        }}
-                        className="min-h-[40px] px-3.5 rounded-xl bg-[var(--dropp-bg)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-1.5"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
-                        <span>{t.orders.reorderBtn}</span>
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onReorder(order);
+                        onOpenCart();
+                      }}
+                      className="min-h-[40px] px-3.5 rounded-xl bg-[var(--dropp-bg)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-semibold inline-flex items-center gap-1.5"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>{t.orders.reorderBtn}</span>
+                    </button>
 
-                    {allowBuyActions && order.status === 'delivered' && (
+                    {order.status === 'delivered' && (
                       <button
                         type="button"
                         disabled={order.rated}
@@ -361,45 +342,28 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
 
   if (section === 'wallet') {
     const parsedAmt = Math.max(0, Number(walletAmount) || 0);
-    const myWithdrawals = withdrawalRequests.filter((w) => w.userId === session.uid);
 
-    const handleDeposit = async () => {
+    const handleDeposit = () => {
       setWalletMsg('');
       if (!isOnline) {
         setWalletMsg(t.network.offlineOrderBlocked);
         return;
       }
-      if (parsedAmt <= 0 || walletPhone.trim().length < 8) {
-        setWalletMsg(t.cart.errInvalidAddress);
-        return;
-      }
-      setWalletBusy(true);
-      const res = await onDeposit(parsedAmt, walletMethod, walletPhone.trim());
-      setWalletBusy(false);
-      setWalletMsg(
-        res.ok
-          ? `${t.wallet.txDeposit} (+${formatFcfa(parsedAmt)})`
-          : res.error || t.errors.writeFailed
-      );
+      if (parsedAmt <= 0) return;
+      const ok = onDeposit(parsedAmt, walletMethod);
+      if (ok) setWalletMsg(`${t.wallet.txDeposit} (+${formatFcfa(parsedAmt)})`);
     };
 
-    const handleWithdraw = async () => {
+    const handleWithdraw = () => {
       setWalletMsg('');
       if (!isOnline) {
         setWalletMsg(t.network.offlineOrderBlocked);
         return;
       }
-      if (parsedAmt <= 0 || walletPhone.trim().length < 8) {
-        setWalletMsg(t.cart.errInvalidAddress);
-        return;
-      }
-      setWalletBusy(true);
-      const res = await onWithdraw(parsedAmt, walletMethod, walletPhone.trim());
-      setWalletBusy(false);
+      if (parsedAmt <= 0) return;
+      const ok = onWithdraw(parsedAmt, walletMethod);
       setWalletMsg(
-        res.ok
-          ? `${t.wallet.txWithdrawal} (-${formatFcfa(parsedAmt)})`
-          : res.error || t.wallet.insufficientBalance
+        ok ? `${t.wallet.txWithdrawal} (-${formatFcfa(parsedAmt)})` : t.wallet.insufficientBalance
       );
     };
 
@@ -432,7 +396,7 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
             <span>{t.wallet.title}</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <input
               type="number"
               min="500"
@@ -445,84 +409,38 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
             />
             <select
               value={walletMethod}
-              onChange={(e) => setWalletMethod(e.target.value as 'mtn_momo' | 'orange_money')}
+              onChange={(e) => setWalletMethod(e.target.value as 'MTN MoMo' | 'Orange Money')}
               aria-label={t.cart.paymentMethodLabel}
               className="min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-sm text-[var(--dropp-text)] focus:outline-none focus:border-[var(--dropp-accent)]"
             >
-              <option value="mtn_momo">{t.cart.methodMtn}</option>
-              <option value="orange_money">{t.cart.methodOrange}</option>
+              <option value="MTN MoMo">MTN MoMo</option>
+              <option value="Orange Money">Orange Money</option>
             </select>
-            <input
-              type="tel"
-              value={walletPhone}
-              onChange={(e) => setWalletPhone(e.target.value)}
-              placeholder={t.wallet.phoneLabel}
-              aria-label={t.wallet.phoneLabel}
-              className="min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-sm text-[var(--dropp-text)] focus:outline-none focus:border-[var(--dropp-accent)]"
-            />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <button
               type="button"
-              disabled={walletBusy}
               onClick={handleDeposit}
-              className="min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] disabled:opacity-50 text-white text-xs font-bold inline-flex items-center justify-center gap-2"
+              className="min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center justify-center gap-2"
             >
               <ArrowDownLeft className="w-4 h-4" aria-hidden="true" />
               <span>{t.wallet.depositBtn}</span>
             </button>
             <button
               type="button"
-              disabled={walletBusy}
               onClick={handleWithdraw}
-              className="min-h-[44px] rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] disabled:opacity-50 text-[var(--dropp-text)] text-xs font-bold inline-flex items-center justify-center gap-2"
+              className="min-h-[44px] rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] text-xs font-bold inline-flex items-center justify-center gap-2"
             >
               <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
               <span>{t.wallet.withdrawBtn}</span>
             </button>
           </div>
 
-          <p className="text-[11px] text-[var(--dropp-muted)]">{t.wallet.simulatedNotice}</p>
-
           {walletMsg && (
             <p className="text-xs font-medium text-[#9A5B00] dark:text-[#F5A524]">{walletMsg}</p>
           )}
         </section>
-
-        {myWithdrawals.length > 0 && (
-          <section className="space-y-2.5">
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--dropp-muted)]">
-              {t.wallet.withdrawRequestsTitle}
-            </h3>
-            <div className="space-y-2">
-              {myWithdrawals.map((w) => (
-                <div
-                  key={w.requestId}
-                  className="p-3.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex items-center justify-between gap-3"
-                >
-                  <div>
-                    <div className="text-xs font-semibold text-[var(--dropp-text)]">
-                      {w.method === 'orange_money' ? 'Orange Money' : 'MTN MoMo'} · {w.phone}
-                    </div>
-                    <div className="text-[11px] text-[var(--dropp-muted)]">
-                      {w.requestId} ·{' '}
-                      {w.status === 'approved'
-                        ? t.wallet.statusApproved
-                        : w.status === 'rejected'
-                          ? t.wallet.statusRejected
-                          : t.wallet.statusPending}
-                      {w.note ? ` — ${w.note}` : ''}
-                    </div>
-                  </div>
-                  <div className="text-sm font-bold text-[var(--dropp-accent)] tabular-nums shrink-0">
-                    {formatFcfa(w.amountFcfa)}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
 
         <section className="space-y-2.5">
           <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--dropp-muted)]">
@@ -538,10 +456,10 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
                   className="p-3.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] flex items-center justify-between gap-3"
                 >
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-[var(--dropp-text)]">
+                    <div className="text-xs font-semibold text-[var(--dropp-text)] truncate">
                       {txLabel(tx.type)}
                     </div>
-                    <div className="text-[11px] text-[var(--dropp-muted)]">
+                    <div className="text-[11px] text-[var(--dropp-muted)] truncate">
                       {tx.methodLabel}
                       {tx.referenceId ? ` · ${tx.referenceId}` : ''}
                     </div>
@@ -637,44 +555,42 @@ export const WalletAndOrdersPanel: React.FC<WalletAndOrdersPanelProps> = ({
         ))}
       </section>
 
-      {/* Referral apply (NOT shown for Admin) */}
-      {allowWalletReferral && (
-        <section className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-2.5">
-          <div className="flex items-center gap-2 text-sm font-semibold text-[var(--dropp-text)]">
-            <Gift className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
-            <span>{t.profile.referralLabel}: {session.referralCode}</span>
+      {/* Referral apply */}
+      <section className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-2.5">
+        <div className="flex items-center gap-2 text-sm font-semibold text-[var(--dropp-text)]">
+          <Gift className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+          <span>{t.profile.referralLabel}: {session.referralCode}</span>
+        </div>
+        <p className="text-xs text-[var(--dropp-muted)]">{t.profile.referralHint}</p>
+        {session.referredByCode ? (
+          <p className="text-xs font-semibold text-[var(--dropp-accent)]">
+            Code actif : {session.referredByCode}
+          </p>
+        ) : (
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={referralInput}
+              onChange={(e) => setReferralInput(e.target.value)}
+              placeholder={t.profile.referralApplyPlaceholder}
+              className="flex-1 min-h-[42px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                const ok = onApplyReferralCode(referralInput);
+                setReferralFeedback(ok ? 'ok' : 'err');
+              }}
+              className="min-h-[42px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold"
+            >
+              {t.profile.referralApplyBtn}
+            </button>
           </div>
-          <p className="text-xs text-[var(--dropp-muted)]">{t.profile.referralHint}</p>
-          {session.referredByCode ? (
-            <p className="text-xs font-semibold text-[var(--dropp-accent)]">
-              Code actif : {session.referredByCode}
-            </p>
-          ) : (
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={referralInput}
-                onChange={(e) => setReferralInput(e.target.value)}
-                placeholder={t.profile.referralApplyPlaceholder}
-                className="flex-1 min-h-[42px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
-              />
-              <button
-                type="button"
-                onClick={async () => {
-                  const ok = await onApplyReferralCode(referralInput);
-                  setReferralFeedback(ok ? 'ok' : 'err');
-                }}
-                className="min-h-[42px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold"
-              >
-                {t.profile.referralApplyBtn}
-              </button>
-            </div>
-          )}
-          {referralFeedback === 'err' && (
-            <p className="text-xs text-[#B42328] dark:text-[#FCA5A5]">DROPP-XXXXX requis</p>
-          )}
-        </section>
-      )}
+        )}
+        {referralFeedback === 'err' && (
+          <p className="text-xs text-[#B42328] dark:text-[#FCA5A5]">DROPP-XXXXX requis</p>
+        )}
+      </section>
 
       {/* App rating */}
       <section className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-2.5">

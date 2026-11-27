@@ -4,7 +4,6 @@ import type { DroppDictionary } from '../i18n/translations';
 import type { MarketplaceCategory, RfqRequest, UserSession } from '../types/dropp';
 import { formatFcfa } from '../utils/formatters';
 import { uploadSignedMedia } from '../utils/cloudinary';
-import { canBuy, canCreateRfq, canRespondToRfq } from '../utils/permissions';
 
 interface RfqModalProps {
   t: DroppDictionary;
@@ -52,32 +51,18 @@ export const RfqModal: React.FC<RfqModalProps> = ({
   const [deadlineDays, setDeadlineDays] = useState('5');
   const [city, setCity] = useState(session?.city || 'Douala');
   const [photoUrl, setPhotoUrl] = useState('');
-  const [photoFileName, setPhotoFileName] = useState('');
-  const [uploadError, setUploadError] = useState('');
-  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
 
   const [replyingRfqId, setReplyingRfqId] = useState<string | null>(null);
   const [offerPrice, setOfferPrice] = useState('10000');
   const [offerDays, setOfferDays] = useState('3');
   const [offerMsg, setOfferMsg] = useState('Disponible en stock, facture pro forma incluse.');
 
-  const isApprovedVendor = canRespondToRfq(session);
-  const allowCreateRfq = !session || canCreateRfq(session);
-  const allowAcceptOffer = canBuy(session);
+  const isVendor = session?.role === 'vendor' || session?.role === 'admin';
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUploadError('');
     const file = e.target.files?.[0];
     if (!file) return;
-    setPhotoFileName(file.name);
-    setIsUploadingPhoto(true);
-    const res = await uploadSignedMedia(file, 'image', 'rfq');
-    setIsUploadingPhoto(false);
-    if (!res.ok) {
-      setUploadError(res.error);
-      setPhotoUrl('');
-      return;
-    }
+    const res = await uploadSignedMedia(file, 'image');
     setPhotoUrl(res.url);
   };
 
@@ -87,7 +72,6 @@ export const RfqModal: React.FC<RfqModalProps> = ({
       onRequireAuth();
       return;
     }
-    if (!canCreateRfq(session)) return;
     if (!title.trim() || !description.trim()) return;
     onCreateRfq({
       title,
@@ -102,8 +86,6 @@ export const RfqModal: React.FC<RfqModalProps> = ({
     setTitle('');
     setDescription('');
     setPhotoUrl('');
-    setPhotoFileName('');
-    setUploadError('');
     setShowCreateForm(false);
   };
 
@@ -139,22 +121,20 @@ export const RfqModal: React.FC<RfqModalProps> = ({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            {allowCreateRfq && (
-              <button
-                type="button"
-                onClick={() => {
-                  if (!session) {
-                    onRequireAuth();
-                    return;
-                  }
-                  setShowCreateForm((v) => !v);
-                }}
-                className="min-h-[40px] px-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-1"
-              >
-                <Plus className="w-4 h-4" aria-hidden="true" />
-                <span>{t.rfq.createBtn}</span>
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                if (!session) {
+                  onRequireAuth();
+                  return;
+                }
+                setShowCreateForm((v) => !v);
+              }}
+              className="min-h-[40px] px-3.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold inline-flex items-center gap-1"
+            >
+              <Plus className="w-4 h-4" aria-hidden="true" />
+              <span>{t.rfq.createBtn}</span>
+            </button>
             <button
               type="button"
               onClick={onClose}
@@ -256,33 +236,19 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                 </label>
               </div>
 
-              <div className="space-y-2 text-xs text-[var(--dropp-muted)]">
-                <span className="block">{t.rfq.formPhotoLabel}</span>
-                <div className="flex flex-wrap items-center gap-3">
-                  <label
-                    htmlFor="rfq-photo-upload"
-                    className="min-h-[38px] px-3.5 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-xs font-semibold text-[var(--dropp-text)] inline-flex items-center cursor-pointer"
-                  >
-                    {isUploadingPhoto ? t.vendor.uploadingMedia : t.vendor.chooseFileBtn}
-                  </label>
-                  <input
-                    id="rfq-photo-upload"
-                    type="file"
-                    accept="image/*"
-                    onChange={handlePhotoUpload}
-                    className="sr-only"
-                  />
-                  <span>{photoFileName || t.vendor.noFileChosen}</span>
-                </div>
-                {uploadError && (
-                  <p className="text-xs text-[#B42328] dark:text-[#FCA5A5]">{uploadError}</p>
-                )}
-              </div>
+              <label className="block text-xs text-[var(--dropp-muted)] space-y-1">
+                <span>{t.rfq.formPhotoLabel}</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoUpload}
+                  className="block text-xs text-[var(--dropp-muted)]"
+                />
+              </label>
 
               <button
                 type="submit"
-                disabled={isUploadingPhoto}
-                className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] disabled:opacity-50 text-white text-xs font-bold"
+                className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold"
               >
                 {t.rfq.submitRfqBtn}
               </button>
@@ -351,7 +317,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                               </span>
                               <span>{offer.deliveryDays}j</span>
                             </div>
-                            {rfq.status === 'open' && allowAcceptOffer && rfq.buyerId === session?.uid && (
+                            {rfq.status === 'open' && (
                               <button
                                 type="button"
                                 onClick={() => {
@@ -370,7 +336,7 @@ export const RfqModal: React.FC<RfqModalProps> = ({
                     </div>
                   )}
 
-                  {isApprovedVendor && rfq.status === 'open' && (
+                  {isVendor && rfq.status === 'open' && (
                     <div className="pt-1">
                       {replyingRfqId === rfq.rfqId ? (
                         <form

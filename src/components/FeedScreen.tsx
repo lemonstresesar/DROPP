@@ -16,20 +16,15 @@ import {
   Zap,
 } from 'lucide-react';
 import type { DroppDictionary } from '../i18n/translations';
-import type { FeedPost, FeedSubTab, LanguageCode, ShopProfile, UserSession } from '../types/dropp';
+import type { FeedPost, FeedSubTab, LanguageCode, ShopProfile } from '../types/dropp';
 import { formatCompactCount, formatFcfa } from '../utils/formatters';
 import { buildCloudinaryMediaUrl } from '../utils/cloudinary';
-import { canBuy, canLikeAndComment, isSuspendedVendor } from '../utils/permissions';
 
 interface FeedScreenProps {
   t: DroppDictionary;
   lang: LanguageCode;
-  session: UserSession | null;
   posts: FeedPost[];
   shops: ShopProfile[];
-  catalogLoading?: boolean;
-  catalogError?: string | null;
-  onRetryCatalog?: () => void;
   likedIds: string[];
   bookmarkedIds: string[];
   followedShopIds: string[];
@@ -38,7 +33,6 @@ interface FeedScreenProps {
   isSlowNetwork: boolean;
   initialPostId?: string | null;
   onRequireAuth: () => void;
-  onRoleBlocked?: () => void;
   isAuthenticated: boolean;
   onToggleLike: (postId: string, forceLike?: boolean) => void;
   onToggleBookmark: (postId: string) => void;
@@ -61,12 +55,8 @@ interface HeartBurst {
 export const FeedScreen: React.FC<FeedScreenProps> = ({
   t,
   lang,
-  session,
   posts,
   shops,
-  catalogLoading,
-  catalogError,
-  onRetryCatalog,
   likedIds,
   bookmarkedIds,
   followedShopIds,
@@ -75,7 +65,6 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
   isSlowNetwork,
   initialPostId,
   onRequireAuth,
-  onRoleBlocked,
   isAuthenticated,
   onToggleLike,
   onToggleBookmark,
@@ -199,9 +188,6 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
     }, 700);
   }, []);
 
-  const userCanLike = canLikeAndComment(session);
-  const userCanPurchase = !session || canBuy(session);
-
   const handleVideoSurfaceTap = useCallback(
     (e: React.MouseEvent<HTMLDivElement>, post: FeedPost) => {
       const now = Date.now();
@@ -212,15 +198,11 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
       if (lastTapRef.current && lastTapRef.current.postId === post.postId && now - lastTapRef.current.time < 280) {
         if (singleTapTimerRef.current) clearTimeout(singleTapTimerRef.current);
         lastTapRef.current = null;
+        spawnHeart(post.postId, x, y);
         if (!isAuthenticated) {
           onRequireAuth();
           return;
         }
-        if (!userCanLike) {
-          onRoleBlocked?.();
-          return;
-        }
-        spawnHeart(post.postId, x, y);
         onToggleLike(post.postId, true);
         return;
       }
@@ -236,22 +218,7 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
         setPausedMap((prev) => ({ ...prev, [post.postId]: !prev[post.postId] }));
       }, 240);
     },
-    [dataSaver, isAuthenticated, manualPlayMap, onRequireAuth, onRoleBlocked, onToggleLike, spawnHeart, userCanLike]
-  );
-
-  const handleLikeButton = useCallback(
-    (postId: string) => {
-      if (!isAuthenticated) {
-        onRequireAuth();
-        return;
-      }
-      if (!userCanLike) {
-        onRoleBlocked?.();
-        return;
-      }
-      onToggleLike(postId);
-    },
-    [isAuthenticated, onRequireAuth, onRoleBlocked, onToggleLike, userCanLike]
+    [dataSaver, isAuthenticated, manualPlayMap, onRequireAuth, onToggleLike, spawnHeart]
   );
 
   const handleAuthenticatedAction = useCallback(
@@ -260,13 +227,9 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
         onRequireAuth();
         return;
       }
-      if (isSuspendedVendor(session)) {
-        onRoleBlocked?.();
-        return;
-      }
       fn();
     },
-    [isAuthenticated, onRequireAuth, onRoleBlocked, session]
+    [isAuthenticated, onRequireAuth]
   );
 
   return (
@@ -357,7 +320,7 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
                     className="w-full h-full rounded-full object-cover border-2 border-black"
                   />
                 </span>
-                <span className="text-[11px] font-medium text-white drop-shadow whitespace-nowrap">
+                <span className="text-[11px] font-medium text-white drop-shadow max-w-[64px] truncate">
                   {shop.name.split(' ')[0]}
                 </span>
               </button>
@@ -366,27 +329,8 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
         </div>
       )}
 
-      {/* Loading / Error / Empty Catalog / Empty Following States */}
-      {catalogLoading && posts.length === 0 ? (
-        <div className="max-w-sm px-6 text-center space-y-3">
-          <div className="w-10 h-10 rounded-full border-2 border-[#FF5A1F] border-t-transparent animate-spin mx-auto" />
-          <p className="text-sm text-[var(--dropp-muted)]">…</p>
-        </div>
-      ) : catalogError && posts.length === 0 ? (
-        <div className="max-w-sm px-6 text-center space-y-3">
-          <p className="text-sm font-semibold text-[#FCA5A5]">{t.errors.catalogLoadDesc}</p>
-          <p className="text-xs text-[var(--dropp-muted)]">{catalogError}</p>
-          {onRetryCatalog && (
-            <button
-              type="button"
-              onClick={onRetryCatalog}
-              className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
-            >
-              {t.errors.retry}
-            </button>
-          )}
-        </div>
-      ) : subTab === 'following' && visiblePosts.length === 0 ? (
+      {/* Empty Following State */}
+      {subTab === 'following' && visiblePosts.length === 0 ? (
         <div className="max-w-sm px-6 text-center">
           <h2 className="text-lg font-semibold text-[var(--dropp-text)]">{t.feed.noFollowingTitle}</h2>
           <p className="mt-2 text-sm text-[var(--dropp-muted)]">{t.feed.noFollowingDesc}</p>
@@ -397,19 +341,6 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
           >
             {t.feed.discoverForYou}
           </button>
-        </div>
-      ) : visiblePosts.length === 0 ? (
-        <div className="max-w-sm px-6 text-center space-y-3">
-          <p className="text-sm text-[var(--dropp-muted)]">{t.errors.emptyCatalog}</p>
-          {onRetryCatalog && (
-            <button
-              type="button"
-              onClick={onRetryCatalog}
-              className="min-h-[44px] px-5 py-2.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[var(--dropp-text)] text-xs font-bold"
-            >
-              {t.errors.retry}
-            </button>
-          )}
         </div>
       ) : (
         <div className="relative w-full h-full lg:w-auto lg:flex lg:items-center lg:gap-4">
@@ -553,7 +484,7 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
                     {/* Like */}
                     <button
                       type="button"
-                      onClick={() => handleLikeButton(post.postId)}
+                      onClick={() => handleAuthenticatedAction(() => onToggleLike(post.postId))}
                       aria-label={`${t.actions.like} ${post.title}`}
                       aria-pressed={isLiked}
                       className="min-w-[44px] min-h-[44px] flex flex-col items-center justify-center gap-0.5 text-white"
@@ -615,23 +546,21 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
                     </button>
 
                     {/* Quick Cart / Order */}
-                    {userCanPurchase && (
-                      <button
-                        type="button"
-                        onClick={() => onOpenOrder(post)}
-                        aria-label={`${t.actions.cart} — ${post.title}`}
-                        className="relative min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-white"
-                      >
-                        <span className="w-10 h-10 rounded-full bg-black/80 border border-[#FF5A1F]/50 flex items-center justify-center">
-                          <ShoppingBag className="w-5 h-5 text-[#FF5A1F]" aria-hidden="true" />
+                    <button
+                      type="button"
+                      onClick={() => onOpenOrder(post)}
+                      aria-label={`${t.actions.cart} — ${post.title}`}
+                      className="relative min-w-[44px] min-h-[44px] flex flex-col items-center justify-center text-white"
+                    >
+                      <span className="w-10 h-10 rounded-full bg-black/80 border border-[#FF5A1F]/50 flex items-center justify-center">
+                        <ShoppingBag className="w-5 h-5 text-[#FF5A1F]" aria-hidden="true" />
+                      </span>
+                      {cartCount > 0 && (
+                        <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#FF5A1F] text-[10px] font-bold text-white flex items-center justify-center tabular-nums">
+                          {cartCount}
                         </span>
-                        {cartCount > 0 && (
-                          <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#FF5A1F] text-[10px] font-bold text-white flex items-center justify-center tabular-nums">
-                            {cartCount}
-                          </span>
-                        )}
-                      </button>
-                    )}
+                      )}
+                    </button>
                   </div>
 
                   {/* Bottom-Left Overlay: Shop, Certified, Collapsible Description, Price FCFA, MOQ, Commander CTA */}
@@ -686,15 +615,13 @@ export const FeedScreen: React.FC<FeedScreenProps> = ({
                       </span>
                     </div>
 
-                    {userCanPurchase && (
-                      <button
-                        type="button"
-                        onClick={() => onOpenOrder(post)}
-                        className="mt-0.5 min-h-[44px] px-5 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] active:scale-[0.98] text-white text-sm font-bold shadow-lg shadow-[#FF5A1F]/25 transition-all whitespace-nowrap"
-                      >
-                        {t.feed.orderNow}
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => onOpenOrder(post)}
+                      className="mt-0.5 min-h-[44px] px-5 py-2.5 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] active:scale-[0.98] text-white text-sm font-bold shadow-lg shadow-[#FF5A1F]/25 transition-all whitespace-nowrap"
+                    >
+                      {t.feed.orderNow}
+                    </button>
                   </div>
                 </article>
               );

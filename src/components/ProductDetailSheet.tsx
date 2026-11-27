@@ -18,15 +18,12 @@ import type {
   LocalCartPreviewItem,
   ProductReview,
   ShopProfile,
-  UserSession,
 } from '../types/dropp';
 import { formatFcfa, getUnitPriceForQty } from '../utils/formatters';
 import { buildCloudinaryMediaUrl } from '../utils/cloudinary';
-import { canBuy, canLikeAndComment, canSendMessage } from '../utils/permissions';
 
 interface ProductDetailSheetProps {
   t: DroppDictionary;
-  session: UserSession | null;
   post: FeedPost;
   shop: ShopProfile | undefined;
   reviews: ProductReview[];
@@ -44,7 +41,6 @@ interface ProductDetailSheetProps {
 
 export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
   t,
-  session,
   post,
   shop,
   reviews,
@@ -59,9 +55,6 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
   onWatchVideo,
   onClose,
 }) => {
-  const allowBuy = !session || canBuy(session);
-  const allowMessage = !session || canSendMessage(session);
-  const allowReview = !session || canLikeAndComment(session);
   const gallery = post.galleryUrls && post.galleryUrls.length > 0 ? post.galleryUrls : [post.posterUrl];
   const [activeImgIdx, setActiveImgIdx] = useState(0);
   const firstInStock = post.variants.find((v) => v.stock > 0) || post.variants[0];
@@ -121,7 +114,6 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
       onRequireAuth();
       return;
     }
-    if (!allowReview) return;
     if (!reviewText.trim()) return;
     onAddReview(post.postId, reviewRating, reviewText);
     setReviewText('');
@@ -143,9 +135,8 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
           <div className="min-w-0">
             <span className="text-xs text-[var(--dropp-muted)]">
               {post.category} · {post.city} · {post.neighborhood}
-              {post.isDemo ? ` · ${t.product.demoBadge}` : ''}
             </span>
-            <h2 className="text-base font-bold text-[var(--dropp-text)]">{post.title}</h2>
+            <h2 className="text-base font-bold text-[var(--dropp-text)] truncate">{post.title}</h2>
           </div>
           <button
             type="button"
@@ -219,8 +210,8 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
                       className="w-12 h-12 rounded-full object-cover border border-[var(--dropp-border-strong)]"
                     />
                     <div className="min-w-0 flex-1">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="text-sm font-bold text-[var(--dropp-text)]">{shop.name}</span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold text-[var(--dropp-text)] truncate">{shop.name}</span>
                         {shop.isCertified && (
                           <BadgeCheck className="w-4 h-4 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
                         )}
@@ -258,19 +249,17 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
                       <Store className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>{t.product.viewShopBtn}</span>
                     </button>
-                    {allowMessage && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          onClose();
-                          onNegotiate(shop, post);
-                        }}
-                        className="min-h-[44px] px-3 rounded-xl border border-[var(--dropp-accent)]/70 text-[var(--dropp-accent)] hover:bg-[var(--dropp-accent)]/10 text-xs font-semibold inline-flex items-center justify-center gap-1.5"
-                      >
-                        <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
-                        <span>{t.product.negotiateBtn}</span>
-                      </button>
-                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onClose();
+                        onNegotiate(shop, post);
+                      }}
+                      className="min-h-[44px] px-3 rounded-xl border border-[var(--dropp-accent)]/70 text-[var(--dropp-accent)] hover:bg-[var(--dropp-accent)]/10 text-xs font-semibold inline-flex items-center justify-center gap-1.5"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>{t.product.negotiateBtn}</span>
+                    </button>
                   </div>
                 </div>
               )}
@@ -411,48 +400,46 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
               </div>
 
               {/* Action Buttons */}
-              {allowBuy && (
-                <div className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-3">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-[var(--dropp-muted)]">{t.sheets.estimatedTotal}</span>
-                    <span className="text-xl font-bold text-[var(--dropp-text)] tabular-nums">
-                      {formatFcfa(unitPrice * effectiveQty)}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    <button
-                      type="button"
-                      onClick={handleAdd}
-                      disabled={!selectedVariant || selectedVariant.stock <= 0}
-                      className="min-h-[48px] rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] font-semibold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-40"
-                    >
-                      {addedFeedback ? (
-                        <>
-                          <Check className="w-4 h-4 text-[#FF5A1F]" aria-hidden="true" />
-                          <span>{t.sheets.addedToCart}</span>
-                        </>
-                      ) : (
-                        <>
-                          <ShoppingBag className="w-4 h-4" aria-hidden="true" />
-                          <span>{t.sheets.addToCartPreview}</span>
-                        </>
-                      )}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleBuy}
-                      disabled={!selectedVariant || selectedVariant.stock <= 0}
-                      className="min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-40"
-                    >
-                      <span>{t.product.buyNowBtn}</span>
-                    </button>
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#FF5A1F] font-medium">
-                    <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
-                    <span>{t.product.escrowBadge}</span>
-                  </div>
+              <div className="p-4 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-3">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-[var(--dropp-muted)]">{t.sheets.estimatedTotal}</span>
+                  <span className="text-xl font-bold text-[var(--dropp-text)] tabular-nums">
+                    {formatFcfa(unitPrice * effectiveQty)}
+                  </span>
                 </div>
-              )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <button
+                    type="button"
+                    onClick={handleAdd}
+                    disabled={!selectedVariant || selectedVariant.stock <= 0}
+                    className="min-h-[48px] rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-[var(--dropp-text)] font-semibold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-40"
+                  >
+                    {addedFeedback ? (
+                      <>
+                        <Check className="w-4 h-4 text-[#FF5A1F]" aria-hidden="true" />
+                        <span>{t.sheets.addedToCart}</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingBag className="w-4 h-4" aria-hidden="true" />
+                        <span>{t.sheets.addToCartPreview}</span>
+                      </>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleBuy}
+                    disabled={!selectedVariant || selectedVariant.stock <= 0}
+                    className="min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-40"
+                  >
+                    <span>{t.product.buyNowBtn}</span>
+                  </button>
+                </div>
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-[#FF5A1F] font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>{t.product.escrowBadge}</span>
+                </div>
+              </div>
 
               {/* Technical Specs */}
               {post.specs.length > 0 && (
@@ -487,15 +474,8 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
                   <div className="space-y-2.5">
                     {reviews.map((rev) => (
                       <div key={rev.reviewId} className="p-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] space-y-1">
-                        <div className="flex items-center justify-between text-xs gap-2">
-                          <span className="font-semibold text-[var(--dropp-text)]">
-                            {rev.authorName}
-                            {rev.isDemo && (
-                              <span className="ml-1.5 text-[10px] font-normal text-[var(--dropp-muted)]">
-                                ({t.product.demoBadge})
-                              </span>
-                            )}
-                          </span>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-semibold text-[var(--dropp-text)]">{rev.authorName}</span>
                           <span className="text-[#9A5B00] dark:text-[#F5A524] tabular-nums font-medium">{rev.rating}/5</span>
                         </div>
                         <p className="text-xs text-[var(--dropp-muted)]">{rev.comment}</p>
@@ -504,35 +484,33 @@ export const ProductDetailSheet: React.FC<ProductDetailSheetProps> = ({
                   </div>
                 )}
 
-                {allowReview && (
-                  <form onSubmit={handleReviewSubmit} className="flex items-center gap-2 pt-1">
-                    <select
-                      aria-label={t.profile.shopStatsRating}
-                      value={reviewRating}
-                      onChange={(e) => setReviewRating(Number(e.target.value))}
-                      className="min-h-[44px] px-2.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs text-[var(--dropp-text)]"
-                    >
-                      {[5, 4, 3, 2, 1].map((n) => (
-                        <option key={n} value={n}>
-                          {n}/5
-                        </option>
-                      ))}
-                    </select>
-                    <input
-                      type="text"
-                      value={reviewText}
-                      onChange={(e) => setReviewText(e.target.value)}
-                      placeholder={t.product.addReviewPlaceholder}
-                      className="flex-1 min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
-                    />
-                    <button
-                      type="submit"
-                      className="min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] text-xs font-semibold text-[var(--dropp-text)] shrink-0"
-                    >
-                      {t.product.submitReview}
-                    </button>
-                  </form>
-                )}
+                <form onSubmit={handleReviewSubmit} className="flex items-center gap-2 pt-1">
+                  <select
+                    aria-label={t.profile.shopStatsRating}
+                    value={reviewRating}
+                    onChange={(e) => setReviewRating(Number(e.target.value))}
+                    className="min-h-[44px] px-2.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs text-[var(--dropp-text)]"
+                  >
+                    {[5, 4, 3, 2, 1].map((n) => (
+                      <option key={n} value={n}>
+                        {n}/5
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    type="text"
+                    value={reviewText}
+                    onChange={(e) => setReviewText(e.target.value)}
+                    placeholder={t.product.addReviewPlaceholder}
+                    className="flex-1 min-h-[44px] px-3 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-xs text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
+                  />
+                  <button
+                    type="submit"
+                    className="min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-surface-alt)] border border-[var(--dropp-border)] hover:border-[var(--dropp-border-strong)] text-xs font-semibold text-[var(--dropp-text)] shrink-0"
+                  >
+                    {t.product.submitReview}
+                  </button>
+                </form>
               </div>
             </div>
           </div>

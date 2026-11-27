@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { formatFcfa, formatCompactCount, getUnitPriceForQty } from './formatters';
 import { buildCloudinaryMediaUrl } from './cloudinary';
-import { buildDroppPath, parseDroppRoute, routeToNavTab } from './routing';
 import {
   canQueueActionOffline,
   enqueueOfflineAction,
@@ -13,28 +12,13 @@ import {
   calculateVendorShippingFcfa,
   canBuyerCancelOrder,
   canBuyerDisputeOrder,
-  computeCommissionSplit,
   filterAndSortMarketPosts,
   groupCartByVendor,
   processMultiVendorCheckout,
   qualifiesForReferralReward,
   resolveEscrowOnDispute,
 } from './commerce';
-import {
-  canAccessAdmin,
-  canBuy,
-  canCreateRfq,
-  canLikeAndComment,
-  canManageOwnSalesOrders,
-  canModerate,
-  canPublishPostOrStory,
-  canRequestVendorKyc,
-  canRespondToRfq,
-  canUseWalletAndReferral,
-  canViewFeedAndMarket,
-  canViewOwnSalesOrders,
-} from './permissions';
-import type { FeedPost, LocalCartPreviewItem, OrderRecord, ShopProfile, UserSession } from '../types/dropp';
+import type { FeedPost, LocalCartPreviewItem, OrderRecord, ShopProfile } from '../types/dropp';
 
 test('formatFcfa formats Cameroonian currency with spaces and FCFA suffix', () => {
   assert.equal(formatFcfa(12500), '12 500 FCFA');
@@ -77,38 +61,6 @@ test('buildCloudinaryMediaUrl caps to 480p on slow/data-saver and 720p max on 4g
     buildCloudinaryMediaUrl(cloud, { dataSaver: false, effectiveType: '4g' }),
     'https://res.cloudinary.com/demo/video/upload/f_auto,q_auto:good,h_720,c_limit/v123/sample.mp4'
   );
-});
-
-test('routing utility parses and builds all canonical DROPP routes cleanly', () => {
-  assert.deepEqual(parseDroppRoute('/', ''), { route: 'feed', shopId: null, postId: null });
-  assert.deepEqual(parseDroppRoute('/', '?post=post-03'), { route: 'feed', shopId: null, postId: 'post-03' });
-  assert.deepEqual(parseDroppRoute('/marche/', ''), { route: 'market', shopId: null, postId: null });
-  assert.deepEqual(parseDroppRoute('/messages', ''), { route: 'messages', shopId: null, postId: null });
-  assert.deepEqual(parseDroppRoute('/profil', ''), { route: 'profile', shopId: null, postId: null });
-  assert.deepEqual(parseDroppRoute('/admin', ''), { route: 'admin', shopId: null, postId: null });
-  assert.deepEqual(parseDroppRoute('/vendeur', ''), { route: 'vendor', shopId: null, postId: null });
-  assert.deepEqual(parseDroppRoute('/boutique/shop-akwa-mode/', ''), {
-    route: 'shop',
-    shopId: 'shop-akwa-mode',
-    postId: null,
-  });
-
-  assert.equal(buildDroppPath({ route: 'market' }), '/marche');
-  assert.equal(buildDroppPath({ route: 'shop', shopId: 'shop-1' }), '/boutique/shop-1');
-  assert.equal(buildDroppPath({ route: 'feed', postId: 'post-01' }), '/?post=post-01');
-  assert.equal(routeToNavTab('admin'), 'profile');
-  assert.equal(routeToNavTab('market'), 'market');
-});
-
-test('computeCommissionSplit computes platform fee and net vendor payout cleanly', () => {
-  const split = computeCommissionSplit(100000, 3500, 5);
-  assert.equal(split.commissionRatePercent, 5);
-  assert.equal(split.commissionFcfa, 5000);
-  assert.equal(split.netVendorFcfa, 98500);
-
-  const zeroCap = computeCommissionSplit(50000, 1500, 50);
-  assert.equal(zeroCap.commissionRatePercent, 30);
-  assert.equal(zeroCap.commissionFcfa, 15000);
 });
 
 test('offlineQueue blocks offline order/payment actions and deduplicates pending toggles', () => {
@@ -162,7 +114,7 @@ test('multi-vendor cart grouping calculates per-vendor subtotals and Cameroon ti
       variantLabel: 'M',
       qty: 2,
       unitPriceFcfa: 15000,
-      posterUrl: '/x.webp',
+      posterUrl: '/x.jpg',
     },
     {
       postId: 'p2',
@@ -174,7 +126,7 @@ test('multi-vendor cart grouping calculates per-vendor subtotals and Cameroon ti
       variantLabel: 'Noir',
       qty: 5,
       unitPriceFcfa: 12000,
-      posterUrl: '/y.webp',
+      posterUrl: '/y.jpg',
     },
   ];
 
@@ -208,6 +160,7 @@ test('checkout splits global order into sub-orders, enforces escrow, and prevent
     },
   ];
 
+  // Insufficient wallet
   const failWallet = processMultiVendorCheckout({
     idempotencyKey: 'key-1',
     processedKeys: [],
@@ -224,6 +177,7 @@ test('checkout splits global order into sub-orders, enforces escrow, and prevent
   assert.equal(failWallet.ok, false);
   assert.equal(failWallet.reason, 'insufficient_wallet');
 
+  // Successful wallet checkout
   const successWallet = processMultiVendorCheckout({
     idempotencyKey: 'key-2',
     processedKeys: [],
@@ -242,6 +196,7 @@ test('checkout splits global order into sub-orders, enforces escrow, and prevent
   assert.equal(successWallet.walletDeltaFcfa, -95000);
   assert.equal(successWallet.escrowDeltaFcfa, 95000);
 
+  // Double-debit idempotency check
   const duplicate = processMultiVendorCheckout({
     idempotencyKey: 'key-2',
     processedKeys: ['key-2'],
@@ -258,6 +213,7 @@ test('checkout splits global order into sub-orders, enforces escrow, and prevent
   assert.equal(duplicate.ok, false);
   assert.equal(duplicate.reason, 'duplicate_attempt');
 
+  // Simulated Mobile Money failure creates awaiting_payment orders with 0 debit
   const momoFail = processMultiVendorCheckout({
     idempotencyKey: 'key-3',
     processedKeys: [],
@@ -404,80 +360,4 @@ test('market filterAndSortMarketPosts filters by price/moq/neighborhood and boos
   });
   assert.equal(filteredMoq.length, 1);
   assert.equal(filteredMoq[0].postId, 'p2');
-});
-
-test('permissions matrix strictly enforces rights across visitor, client, pending, approved, suspended, and admin', () => {
-  const makeSession = (patch: Partial<UserSession>): UserSession => ({
-    uid: 'u-1',
-    email: 'u1@example.com',
-    displayName: 'User',
-    role: 'client',
-    vendorStatus: 'none',
-    isCertified: false,
-    city: 'Douala',
-    neighborhood: 'Akwa',
-    walletBalanceFcfa: 0,
-    pendingEscrowFcfa: 0,
-    referralCode: 'DROPP-U1',
-    emailVerified: true,
-    ...patch,
-  });
-
-  const visitor = null;
-  const client = makeSession({ role: 'client', vendorStatus: 'none' });
-  const pendingVendor = makeSession({ role: 'vendor', vendorStatus: 'pending' });
-  const approvedVendor = makeSession({ role: 'vendor', vendorStatus: 'approved', shopId: 'shop-1' });
-  const suspendedVendor = makeSession({ role: 'vendor', vendorStatus: 'suspended', shopId: 'shop-1' });
-  const admin = makeSession({ role: 'admin', vendorStatus: 'none', shopId: undefined });
-
-  for (const s of [visitor, client, pendingVendor, approvedVendor, suspendedVendor, admin]) {
-    assert.equal(canViewFeedAndMarket(s), true);
-  }
-
-  assert.equal(canLikeAndComment(visitor), false);
-  assert.equal(canLikeAndComment(client), true);
-  assert.equal(canLikeAndComment(pendingVendor), true);
-  assert.equal(canLikeAndComment(approvedVendor), true);
-  assert.equal(canLikeAndComment(suspendedVendor), false);
-  assert.equal(canLikeAndComment(admin), false);
-  assert.equal(canModerate(admin), true);
-  assert.equal(canModerate(approvedVendor), false);
-
-  assert.equal(canBuy(visitor), false);
-  assert.equal(canBuy(client), true);
-  assert.equal(canBuy(pendingVendor), true);
-  assert.equal(canBuy(approvedVendor), true);
-  assert.equal(canBuy(suspendedVendor), false);
-  assert.equal(canBuy(admin), false);
-  assert.equal(canCreateRfq(admin), false);
-  assert.equal(canCreateRfq(suspendedVendor), false);
-
-  assert.equal(canPublishPostOrStory(visitor), false);
-  assert.equal(canPublishPostOrStory(client), false);
-  assert.equal(canPublishPostOrStory(pendingVendor), false);
-  assert.equal(canPublishPostOrStory(approvedVendor), true);
-  assert.equal(canPublishPostOrStory(suspendedVendor), false);
-  assert.equal(canPublishPostOrStory(admin), false);
-  assert.equal(canRespondToRfq(approvedVendor), true);
-  assert.equal(canRespondToRfq(admin), false);
-  assert.equal(canRespondToRfq(suspendedVendor), false);
-
-  assert.equal(canViewOwnSalesOrders(approvedVendor), true);
-  assert.equal(canManageOwnSalesOrders(approvedVendor), true);
-  assert.equal(canViewOwnSalesOrders(suspendedVendor), true);
-  assert.equal(canManageOwnSalesOrders(suspendedVendor), false);
-  assert.equal(canViewOwnSalesOrders(admin), false);
-
-  assert.equal(canRequestVendorKyc(visitor), false);
-  assert.equal(canRequestVendorKyc(client), true);
-  assert.equal(canRequestVendorKyc(pendingVendor), false);
-  assert.equal(canRequestVendorKyc(approvedVendor), false);
-  assert.equal(canRequestVendorKyc(suspendedVendor), false);
-  assert.equal(canRequestVendorKyc(admin), false);
-
-  assert.equal(canAccessAdmin(admin), true);
-  assert.equal(canAccessAdmin(client), false);
-  assert.equal(canUseWalletAndReferral(admin), false);
-  assert.equal(canUseWalletAndReferral(client), true);
-  assert.equal(canUseWalletAndReferral(approvedVendor), true);
 });

@@ -29,7 +29,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ t, onClose }) => {
           signInWithEmailAndPassword,
           createUserWithEmailAndPassword,
           updateProfile,
-          sendEmailVerification,
         },
         { doc, setDoc, serverTimestamp },
       ] = await Promise.all([
@@ -45,8 +44,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ t, onClose }) => {
         if (displayName.trim()) {
           await updateProfile(cred.user, { displayName: displayName.trim() });
         }
-        const suffix =
-          cred.user.uid.slice(0, 6).toUpperCase().replace(/[^A-Z0-9]/g, 'X') || 'USER01';
         // Safe client profile creation (role locked to 'client' by Firestore rules)
         await setDoc(doc(db, 'users', cred.user.uid), {
           uid: cred.user.uid,
@@ -55,19 +52,15 @@ export const AuthModal: React.FC<AuthModalProps> = ({ t, onClose }) => {
           vendorStatus: 'none',
           isCertified: false,
           city,
-          neighborhood: 'Akwa',
-          referralCode: `DROPP-${suffix}`,
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
-        });
+        }).catch(() => undefined);
 
         await setDoc(doc(db, 'users', cred.user.uid, 'private', 'info'), {
           uid: cred.user.uid,
-          email: email.trim().toLowerCase(),
+          email: email.trim(),
           updatedAt: serverTimestamp(),
-        });
-
-        await sendEmailVerification(cred.user).catch(() => undefined);
+        }).catch(() => undefined);
       }
       onClose();
     } catch (err) {

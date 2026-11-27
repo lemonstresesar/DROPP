@@ -76,8 +76,8 @@ export const ProductComparatorModal: React.FC<ProductComparatorModalProps> = ({
                     <div className="p-4 flex-1 flex flex-col justify-between gap-3 text-xs">
                       <div className="space-y-2.5">
                         <h3 className="text-sm font-bold text-[var(--dropp-text)] line-clamp-2">{post.title}</h3>
-                        <div className="flex flex-wrap items-center gap-1 text-[var(--dropp-muted)]">
-                          <span>{post.shopName}</span>
+                        <div className="flex items-center gap-1 text-[var(--dropp-muted)]">
+                          <span className="truncate">{post.shopName}</span>
                           {post.shopCertified && (
                             <BadgeCheck className="w-3.5 h-3.5 text-[var(--dropp-accent)] shrink-0" aria-hidden="true" />
                           )}

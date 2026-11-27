@@ -20,12 +20,6 @@ import type {
   UserSession,
 } from '../types/dropp';
 import { formatFcfa, getUnitPriceForQty } from '../utils/formatters';
-import {
-  canCreateRfq,
-  canRequestVendorKyc,
-  isApprovedVendorUser,
-  isPendingVendorUser,
-} from '../utils/permissions';
 
 interface SheetWrapperProps {
   title: string;
@@ -75,8 +69,6 @@ interface CommentsSheetProps {
   post: FeedPost;
   comments: PostComment[];
   isAuthenticated: boolean;
-  canComment?: boolean;
-  blockedHint?: string;
   onRequireAuth: () => void;
   onAddComment: (postId: string, text: string) => void;
   onRetryComment: (postId: string, commentId: string) => void;
@@ -88,8 +80,6 @@ export const CommentsSheet: React.FC<CommentsSheetProps> = ({
   post,
   comments,
   isAuthenticated,
-  canComment = true,
-  blockedHint,
   onRequireAuth,
   onAddComment,
   onRetryComment,
@@ -103,7 +93,6 @@ export const CommentsSheet: React.FC<CommentsSheetProps> = ({
       onRequireAuth();
       return;
     }
-    if (!canComment) return;
     if (!text.trim()) return;
     onAddComment(post.postId, text);
     setText('');
@@ -122,14 +111,7 @@ export const CommentsSheet: React.FC<CommentsSheetProps> = ({
           comments.map((c) => (
             <div key={c.commentId} className="flex flex-col gap-1 border-b border-[var(--dropp-border)] pb-3 last:border-0">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-xs font-semibold text-[var(--dropp-muted)]">
-                  {c.authorName}
-                  {c.isDemo && (
-                    <span className="ml-1.5 text-[10px] font-normal text-[var(--dropp-muted)]/80">
-                      · {t.product.demoBadge}
-                    </span>
-                  )}
-                </span>
+                <span className="text-xs font-semibold text-[var(--dropp-muted)]">{c.authorName}</span>
                 {c.deliveryStatus === 'pending' && (
                   <span className="inline-flex items-center gap-1 text-[11px] text-[#9A5B00] dark:text-[#F5A524]">
                     <Clock className="w-3 h-3" aria-hidden="true" />
@@ -157,24 +139,16 @@ export const CommentsSheet: React.FC<CommentsSheetProps> = ({
         <input
           type="text"
           value={text}
-          disabled={isAuthenticated && !canComment}
           onChange={(e) => setText(e.target.value)}
-          placeholder={
-            !isAuthenticated
-              ? t.sheets.loginToInteract
-              : !canComment
-              ? blockedHint || t.errors.suspendedBlocked
-              : t.sheets.commentPlaceholder
-          }
+          placeholder={isAuthenticated ? t.sheets.commentPlaceholder : t.sheets.loginToInteract}
           aria-label={t.sheets.commentPlaceholder}
           maxLength={400}
-          className="flex-1 min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-sm text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)] disabled:opacity-50"
+          className="flex-1 min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-sm text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
         />
         <button
           type="submit"
-          disabled={isAuthenticated && !canComment}
           aria-label={t.sheets.sendComment}
-          className="min-w-[44px] min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] text-white font-bold text-sm flex items-center justify-center hover:bg-[#E54E19] transition-colors shrink-0 disabled:opacity-40"
+          className="min-w-[44px] min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] text-white font-bold text-sm flex items-center justify-center hover:bg-[#E54E19] transition-colors shrink-0"
         >
           <Send className="w-4 h-4" aria-hidden="true" />
         </button>
@@ -187,8 +161,6 @@ interface QuickOrderSheetProps {
   t: DroppDictionary;
   post: FeedPost;
   cartCount: number;
-  canOrder?: boolean;
-  blockedHint?: string;
   onAddToCart: (item: LocalCartPreviewItem) => void;
   onOpenCart: () => void;
   onClose: () => void;
@@ -198,8 +170,6 @@ export const QuickOrderSheet: React.FC<QuickOrderSheetProps> = ({
   t,
   post,
   cartCount,
-  canOrder = true,
-  blockedHint,
   onAddToCart,
   onOpenCart,
   onClose,
@@ -383,14 +353,10 @@ export const QuickOrderSheet: React.FC<QuickOrderSheetProps> = ({
             </span>
           </div>
 
-          {!canOrder && blockedHint && (
-            <p className="text-xs text-[#FCA5A5] text-center">{blockedHint}</p>
-          )}
-
           <button
             type="button"
             onClick={handleAdd}
-            disabled={!canOrder || !selectedVariant || selectedVariant.stock <= 0}
+            disabled={!selectedVariant || selectedVariant.stock <= 0}
             className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white font-bold text-sm flex items-center justify-center gap-2 transition-colors disabled:opacity-40"
           >
             {addedFeedback ? (
@@ -406,22 +372,20 @@ export const QuickOrderSheet: React.FC<QuickOrderSheetProps> = ({
             )}
           </button>
 
-          {canOrder && (
-            <button
-              type="button"
-              onClick={() => {
-                onClose();
-                onOpenCart();
-              }}
-              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
-            >
-              <ShoppingBag className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
-              <span>
-                {t.sheets.openCartCheckout}
-                {cartCount > 0 ? ` (${cartCount})` : ''}
-              </span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              onOpenCart();
+            }}
+            className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-xs flex items-center justify-center gap-2 transition-colors"
+          >
+            <ShoppingBag className="w-4 h-4 text-[var(--dropp-accent)]" aria-hidden="true" />
+            <span>
+              {t.sheets.openCartCheckout}
+              {cartCount > 0 ? ` (${cartCount})` : ''}
+            </span>
+          </button>
 
           <p className="text-[11px] text-[var(--dropp-muted)] text-center">
             {t.sheets.phase2CheckoutNote}
@@ -497,7 +461,6 @@ export const ShareSheet: React.FC<ShareSheetProps> = ({ t, post, onClose }) => {
 interface StoryPreviewSheetProps {
   t: DroppDictionary;
   shop: ShopProfile;
-  canReply?: boolean;
   onReplyToShop: (shop: ShopProfile) => void;
   onClose: () => void;
 }
@@ -505,7 +468,6 @@ interface StoryPreviewSheetProps {
 export const StoryPreviewSheet: React.FC<StoryPreviewSheetProps> = ({
   t,
   shop,
-  canReply = true,
   onReplyToShop,
   onClose,
 }) => (
@@ -520,18 +482,16 @@ export const StoryPreviewSheet: React.FC<StoryPreviewSheetProps> = ({
         />
       )}
       <p className="text-sm text-[var(--dropp-text)] leading-relaxed">{shop.storyPreviewText}</p>
-      {canReply && (
-        <button
-          type="button"
-          onClick={() => {
-            onClose();
-            onReplyToShop(shop);
-          }}
-          className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
-        >
-          {t.sheets.storyReplyBtn}
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={() => {
+          onClose();
+          onReplyToShop(shop);
+        }}
+        className="w-full min-h-[44px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
+      >
+        {t.sheets.storyReplyBtn}
+      </button>
     </div>
   </SheetWrapper>
 );
@@ -553,10 +513,10 @@ export const CreateActionSheet: React.FC<CreateActionSheetProps> = ({
   onOpenRfq,
   onClose,
 }) => {
-  const isApprovedVendor = isApprovedVendorUser(session);
-  const isPendingVendor = isPendingVendorUser(session);
-  const allowRfq = canCreateRfq(session);
-  const allowKyc = canRequestVendorKyc(session);
+  const isApprovedVendor =
+    session?.role === 'admin' ||
+    (session?.role === 'vendor' && session.vendorStatus === 'approved');
+  const isPendingVendor = session?.role === 'vendor' && session.vendorStatus === 'pending';
 
   const title = isPendingVendor
     ? t.sheets.createPendingTitle
@@ -597,18 +557,16 @@ export const CreateActionSheet: React.FC<CreateActionSheetProps> = ({
             >
               {t.sheets.openVendorStudio}
             </button>
-            {allowRfq && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenRfq();
-                }}
-                className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
-              >
-                {t.sheets.openRfqModal}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenRfq();
+              }}
+              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
+            >
+              {t.sheets.openRfqModal}
+            </button>
           </div>
         ) : isPendingVendor ? (
           <div className="space-y-2.5 pt-1">
@@ -622,45 +580,39 @@ export const CreateActionSheet: React.FC<CreateActionSheetProps> = ({
             >
               {t.sheets.openKycModal}
             </button>
-            {allowRfq && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenRfq();
-                }}
-                className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
-              >
-                {t.sheets.openRfqModal}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenRfq();
+              }}
+              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
+            >
+              {t.sheets.openRfqModal}
+            </button>
           </div>
         ) : (
           <div className="space-y-2.5 pt-1">
-            {allowRfq && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenRfq();
-                }}
-                className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
-              >
-                {t.sheets.openRfqModal}
-              </button>
-            )}
-            {allowKyc && (
-              <button
-                type="button"
-                onClick={() => {
-                  onClose();
-                  onOpenVendorStudio('kyc');
-                }}
-                className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
-              >
-                {t.profile.becomeVendorBtn}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenRfq();
+              }}
+              className="w-full min-h-[48px] rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-sm font-bold transition-colors"
+            >
+              {t.sheets.openRfqModal}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenVendorStudio('kyc');
+              }}
+              className="w-full min-h-[44px] rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:bg-[var(--dropp-surface-alt)] text-[var(--dropp-text)] font-semibold text-sm transition-colors"
+            >
+              {t.profile.becomeVendorBtn}
+            </button>
           </div>
         )}
       </div>

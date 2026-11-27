@@ -6,7 +6,7 @@ export interface MediaOptimizationOptions {
 
 /**
  * Optimizes Cloudinary URLs with f_auto,q_auto and caps resolution to 480p on slow/data-saver
- * connections or 720p max on fast connections. Non-Cloudinary local assets pass through cleanly.
+ * connections or 720p max on fast connections. Non-Cloudinary local demo assets pass through cleanly.
  */
 export function buildCloudinaryMediaUrl(
   rawUrl: string,
@@ -34,22 +34,17 @@ export function buildCloudinaryMediaUrl(
   return `${prefix}/upload/${transform}/${suffix}`;
 }
 
-export type SignedUploadResult =
-  | { ok: true; url: string; mode: 'cloudinary' }
-  | { ok: false; error: string; url?: never };
-
-export type UploadPurpose = 'post' | 'story' | 'kyc' | 'rfq' | 'chat';
+export interface SignedUploadResult {
+  url: string;
+  mode: 'cloudinary' | 'demo';
+}
 
 export async function uploadSignedMedia(
   file: File,
-  resourceType: 'image' | 'video' | 'raw',
-  purpose: UploadPurpose = 'post'
+  resourceType: 'image' | 'video' | 'raw'
 ): Promise<SignedUploadResult> {
   if (typeof navigator !== 'undefined' && !navigator.onLine) {
-    return {
-      ok: false,
-      error: 'Connexion hors ligne : l’envoi de fichiers nécessite une connexion Internet.',
-    };
+    return { url: URL.createObjectURL(file), mode: 'demo' };
   }
 
   try {
@@ -57,24 +52,21 @@ export async function uploadSignedMedia(
     const { auth } = await getFirebaseServices();
     const idToken = await auth.currentUser?.getIdToken();
     if (!idToken) {
-      return {
-        ok: false,
-        error: 'Session expirée : reconnectez-vous pour envoyer ce fichier.',
-      };
+      return { url: URL.createObjectURL(file), mode: 'demo' };
     }
 
     const signRes = await fetch('/api/cloudinary/sign', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${idToken}`,
-        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ purpose }),
     });
+    if (!signRes.ok) {
+      return { url: URL.createObjectURL(file), mode: 'demo' };
+    }
 
-    const sig = (await signRes.json().catch(() => ({}))) as {
+    const sig = (await signRes.json()) as {
       configured?: boolean;
-      error?: string;
       cloudName?: string;
       apiKey?: string;
       timestamp?: number;
@@ -82,13 +74,8 @@ export async function uploadSignedMedia(
       signature?: string;
     };
 
-    if (!signRes.ok || !sig.configured || !sig.cloudName || !sig.apiKey || !sig.signature || !sig.timestamp) {
-      return {
-        ok: false,
-        error:
-          sig.error ||
-          'Cloudinary n’est pas configuré sur le serveur. Impossible d’enregistrer ce fichier.',
-      };
+    if (!sig.configured || !sig.cloudName || !sig.apiKey || !sig.signature || !sig.timestamp) {
+      return { url: URL.createObjectURL(file), mode: 'demo' };
     }
 
     const formData = new FormData();
@@ -108,31 +95,15 @@ export async function uploadSignedMedia(
       }
     );
     if (!uploadRes.ok) {
-      const errBody = (await uploadRes.json().catch(() => ({}))) as {
-        error?: { message?: string };
-      };
-      return {
-        ok: false,
-        error:
-          errBody.error?.message ||
-          `Échec du téléversement Cloudinary (${uploadRes.status}).`,
-      };
+      return { url: URL.createObjectURL(file), mode: 'demo' };
     }
     const uploaded = (await uploadRes.json()) as { secure_url?: string };
     if (uploaded.secure_url) {
-      return { ok: true, url: uploaded.secure_url, mode: 'cloudinary' };
+      return { url: uploaded.secure_url, mode: 'cloudinary' };
     }
-    return {
-      ok: false,
-      error: 'Réponse Cloudinary invalide (URL manquante).',
-    };
-  } catch (err) {
-    return {
-      ok: false,
-      error:
-        err instanceof Error
-          ? err.message
-          : 'Erreur réseau lors du téléversement vers Cloudinary.',
-    };
+  } catch {
+    // Graceful demo fallback when offline or unconfigured
   }
+
+  return { url: URL.createObjectURL(file), mode: 'demo' };
 }

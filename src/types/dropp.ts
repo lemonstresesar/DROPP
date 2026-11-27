@@ -14,8 +14,6 @@ export type LanguageCode = 'fr' | 'en';
 
 export type NavTab = 'feed' | 'market' | 'messages' | 'profile';
 
-export type AppRoute = 'feed' | 'market' | 'messages' | 'profile' | 'shop' | 'admin' | 'vendor';
-
 export type FeedSubTab = 'following' | 'foryou';
 
 export type MarketSortOption =
@@ -61,7 +59,6 @@ export interface ProductReview {
   rating: number;
   comment: string;
   createdAt: string;
-  isDemo?: boolean;
 }
 
 export interface ShopProfile {
@@ -89,7 +86,6 @@ export interface ShopProfile {
   storyMediaUrl?: string;
   storyExpiresAt?: string;
   isOnline?: boolean;
-  isDemo?: boolean;
 }
 
 export interface FeedPost {
@@ -123,7 +119,6 @@ export interface FeedPost {
   rating: number;
   status: 'published' | 'pending' | 'rejected';
   createdAt: string;
-  isDemo?: boolean;
 }
 
 export interface PostComment {
@@ -134,7 +129,6 @@ export interface PostComment {
   text: string;
   createdAt: string;
   deliveryStatus?: 'pending' | 'sent' | 'failed';
-  isDemo?: boolean;
 }
 
 export interface UserSession {
@@ -154,26 +148,7 @@ export interface UserSession {
   hasCompletedFirstOrder?: boolean;
   referralCode: string;
   avatarUrl?: string;
-  bio?: string;
   emailVerified: boolean;
-  disabled?: boolean;
-}
-
-export interface AdminUserRecord {
-  uid: string;
-  email: string;
-  displayName: string;
-  role: UserRole;
-  vendorStatus: VendorStatus;
-  isCertified: boolean;
-  disabled: boolean;
-  emailVerified: boolean;
-  city: string;
-  neighborhood: string;
-  shopId?: string;
-  walletBalanceFcfa: number;
-  pendingEscrowFcfa: number;
-  createdAt?: string;
 }
 
 export interface QueuedAction {
@@ -199,9 +174,6 @@ export interface LocalCartPreviewItem {
   isSample?: boolean;
   unitPriceFcfa: number;
   posterUrl: string;
-  acceptedOfferId?: string;
-  conversationId?: string;
-  rfqId?: string;
 }
 
 export interface VendorCartGroup {
@@ -221,16 +193,11 @@ export interface OrderRecord {
   buyerName: string;
   shopId: string;
   shopName: string;
-  vendorOwnerId?: string;
   items: LocalCartPreviewItem[];
   subtotalFcfa: number;
   shippingFeeFcfa: number;
   totalFcfa: number;
-  commissionRatePercent?: number;
-  commissionFcfa?: number;
-  netVendorFcfa?: number;
   paymentMethod: PaymentMethod;
-  isSimulatedPayment?: boolean;
   escrowStatus: EscrowStatus;
   status: OrderStatus;
   deliveryCity: string;
@@ -251,48 +218,6 @@ export interface WalletTransaction {
   methodLabel: string;
   referenceId?: string;
   status: 'completed' | 'failed';
-  isSimulated?: boolean;
-  createdAt: string;
-}
-
-export interface WithdrawalRequestRecord {
-  requestId: string;
-  userId: string;
-  userName: string;
-  userEmail: string;
-  amountFcfa: number;
-  method: 'mtn_momo' | 'orange_money';
-  phone: string;
-  status: 'pending' | 'approved' | 'rejected';
-  note?: string;
-  createdAt: string;
-  reviewedAt?: string;
-  reviewedBy?: string;
-}
-
-export interface PlatformAnnouncement {
-  title: string;
-  message: string;
-  active: boolean;
-  updatedAt?: string;
-}
-
-export interface PlatformSettings {
-  commissionPercent: number;
-  enabledCategories: MarketplaceCategory[];
-  announcement?: PlatformAnnouncement | null;
-  updatedAt?: string;
-  updatedBy?: string;
-}
-
-export interface AuditLogEntry {
-  logId: string;
-  actorId: string;
-  actorName: string;
-  action: string;
-  targetType: 'user' | 'shop' | 'kyc' | 'post' | 'dispute' | 'withdrawal' | 'settings';
-  targetId: string;
-  details: string;
   createdAt: string;
 }
 
@@ -329,7 +254,6 @@ export interface Conversation {
   buyerName: string;
   shopId: string;
   shopName: string;
-  vendorOwnerId?: string;
   shopAvatarUrl: string;
   shopCertified: boolean;
   shopOnline: boolean;
@@ -344,7 +268,6 @@ export interface RfqOffer {
   rfqId: string;
   shopId: string;
   shopName: string;
-  vendorOwnerId?: string;
   shopCertified: boolean;
   unitPriceFcfa: number;
   deliveryDays: number;
@@ -394,7 +317,6 @@ export interface DisputeRecord {
   buyerName: string;
   shopId: string;
   shopName: string;
-  vendorOwnerId?: string;
   reason: string;
   amountHeldFcfa: number;
   status: 'open' | 'resolved_buyer' | 'resolved_vendor';

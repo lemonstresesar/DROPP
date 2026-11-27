@@ -1,18 +1,13 @@
-import React, { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, lazy, useMemo, useState } from 'react';
 import {
-  AlertCircle,
   Compass,
   Download,
   Home,
-  Megaphone,
   MessageSquare,
   Plus,
-  RefreshCw,
-  ShieldAlert,
   ShoppingBag,
   Store,
   User,
-  X,
   Zap,
 } from 'lucide-react';
 import { TRANSLATIONS } from './i18n/translations';
@@ -20,22 +15,7 @@ import { useNetworkProfile } from './hooks/useNetworkProfile';
 import { usePWAInstall } from './hooks/usePWAInstall';
 import { useDroppState } from './hooks/useDroppState';
 import { useTheme } from './hooks/useTheme';
-import type { AppRoute, FeedPost, NavTab, ShopProfile } from './types/dropp';
-import { buildDroppPath, parseDroppRoute, routeToNavTab } from './utils/routing';
-import {
-  canAccessAdmin,
-  canBuy,
-  canCreateRfq,
-  canLikeAndComment,
-  canRespondToRfq,
-  canRequestVendorKyc,
-  canSendMessage,
-  canViewOwnSalesOrders,
-  isAdminUser,
-  isApprovedVendorUser,
-  isPendingVendorUser,
-  isSuspendedVendor,
-} from './utils/permissions';
+import type { FeedPost, NavTab, ShopProfile } from './types/dropp';
 import { DroppLogo } from './components/DroppLogo';
 import { OfflineBanner } from './components/OfflineBanner';
 import { FeedScreen } from './components/FeedScreen';
@@ -73,12 +53,12 @@ const CartCheckoutDrawer = lazy(() =>
 const RfqModal = lazy(() =>
   import('./components/RfqModal').then((m) => ({ default: m.RfqModal }))
 );
-const VendorStudioScreen = lazy(() =>
-  import('./components/VendorStudioScreen').then((m) => ({ default: m.VendorStudioScreen }))
+const VendorStudioModal = lazy(() =>
+  import('./components/VendorStudioModal').then((m) => ({ default: m.VendorStudioModal }))
 );
-const AdminDashboardScreen = lazy(() =>
-  import('./components/AdminDashboardScreen').then((m) => ({
-    default: m.AdminDashboardScreen,
+const AdminDashboardModal = lazy(() =>
+  import('./components/AdminDashboardModal').then((m) => ({
+    default: m.AdminDashboardModal,
   }))
 );
 
@@ -112,16 +92,11 @@ export default function App() {
     setLang,
     posts,
     shops,
-    catalogLoading,
-    catalogError,
-    retryCatalogLoad,
     likedIds,
     bookmarkedIds,
     followedShopIds,
     commentsByPost,
     reviewsByPost,
-    setActiveCommentsPostId,
-    setActiveReviewsPostId,
     cartItems,
     recentlyViewedIds,
     orders,
@@ -130,23 +105,10 @@ export default function App() {
     conversations,
     rfqs,
     kycApplications,
-    withdrawalRequests,
-    adminUsers,
-    auditLogs,
-    platformSettings,
-    adminLoading,
-    refreshAdminOverview,
     notifications,
     notifPrefs,
     appRating,
     session,
-    firebaseUid,
-    authReady,
-    profileLoading,
-    profileError,
-    retryProfileLoad,
-    actionError,
-    clearActionError,
     recordViewedPost,
     toggleLike,
     toggleBookmark,
@@ -179,9 +141,6 @@ export default function App() {
     suspendShop,
     resolveDispute,
     moderatePost,
-    manageAdminUser,
-    reviewWithdrawalRequest,
-    updatePlatformSettings,
     toggleNotifPref,
     markAllNotifsRead,
     applyReferralCode,
@@ -191,29 +150,21 @@ export default function App() {
 
   const t = TRANSLATIONS[lang];
 
-  const isApprovedVendor = isApprovedVendorUser(session);
-  const canOpenCart = !session || canBuy(session);
+  const isApprovedVendor =
+    session?.role === 'admin' ||
+    (session?.role === 'vendor' && session.vendorStatus === 'approved');
 
-  const initialParsedRoute = useMemo(
-    () =>
-      typeof window !== 'undefined'
-        ? parseDroppRoute(window.location.pathname, window.location.search)
-        : { route: 'feed' as AppRoute, shopId: null, postId: null },
-    []
-  );
-
-  const [appRoute, setAppRoute] = useState<AppRoute>(initialParsedRoute.route);
-  const [viewedShopId, setViewedShopId] = useState<string | null>(initialParsedRoute.shopId);
-  const [selectedPostId, setSelectedPostId] = useState<string | null>(initialParsedRoute.postId);
-  const [vendorStudioTab, setVendorStudioTab] = useState<
-    'publish' | 'orders' | 'stories' | 'kyc'
-  >('publish');
-
-  const activeTab: NavTab = routeToNavTab(appRoute);
-
+  const [activeTab, setActiveTab] = useState<NavTab>('feed');
   const [profileSubTab, setProfileSubTab] = useState<
     'posts' | 'products' | 'info' | 'orders' | 'wallet' | 'notifs'
   >('posts');
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(() => {
+    try {
+      return new URLSearchParams(window.location.search).get('post');
+    } catch {
+      return null;
+    }
+  });
 
   const [commentsPost, setCommentsPost] = useState<FeedPost | null>(null);
   const [orderPost, setOrderPost] = useState<FeedPost | null>(null);
@@ -225,73 +176,13 @@ export default function App() {
   const [showCartDrawer, setShowCartDrawer] = useState(false);
   const [showComparator, setShowComparator] = useState(false);
   const [showRfqModal, setShowRfqModal] = useState(false);
+  const [vendorStudioTab, setVendorStudioTab] = useState<
+    'publish' | 'orders' | 'stories' | 'kyc' | null
+  >(null);
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [viewedShopId, setViewedShopId] = useState<string | null>(null);
   const [compareIds, setCompareIds] = useState<string[]>([]);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
-  const [uiNotice, setUiNotice] = useState<string | null>(null);
-  const [dismissedAnnouncementKey, setDismissedAnnouncementKey] = useState<string | null>(null);
-
-  const navigateTo = useCallback(
-    (
-      nextRoute: AppRoute,
-      opts?: {
-        shopId?: string | null;
-        postId?: string | null;
-        vendorTab?: 'publish' | 'orders' | 'stories' | 'kyc';
-        replace?: boolean;
-      }
-    ) => {
-      const nextShopId = opts?.shopId ?? null;
-      const nextPostId = opts?.postId ?? null;
-      if (opts?.vendorTab) {
-        setVendorStudioTab(opts.vendorTab);
-      }
-      setAppRoute(nextRoute);
-      setViewedShopId(nextShopId);
-      setSelectedPostId(nextPostId);
-
-      if (typeof window !== 'undefined') {
-        const targetPath = buildDroppPath({
-          route: nextRoute,
-          shopId: nextShopId,
-          postId: nextPostId,
-        });
-        const currentPath = `${window.location.pathname}${window.location.search}`;
-        if (currentPath !== targetPath) {
-          if (opts?.replace) {
-            window.history.replaceState(null, '', targetPath);
-          } else {
-            window.history.pushState(null, '', targetPath);
-          }
-        }
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    const handlePopState = () => {
-      const parsed = parseDroppRoute(window.location.pathname, window.location.search);
-      setAppRoute(parsed.route);
-      setViewedShopId(parsed.shopId);
-      setSelectedPostId(parsed.postId);
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  useEffect(() => {
-    if (appRoute === 'admin' && canAccessAdmin(session)) {
-      refreshAdminOverview();
-    }
-  }, [appRoute, refreshAdminOverview, session]);
-
-  const showRoleBlockedNotice = () => {
-    if (isAdminUser(session)) {
-      setUiNotice(t.errors.adminBlocked);
-    } else if (isSuspendedVendor(session)) {
-      setUiNotice(t.errors.suspendedBlocked);
-    }
-  };
 
   const viewedShop = useMemo(
     () => (viewedShopId ? shops.find((s) => s.shopId === viewedShopId) ?? null : null),
@@ -299,13 +190,8 @@ export default function App() {
   );
 
   const publishedPosts = useMemo(
-    () =>
-      posts.filter(
-        (p) =>
-          p.status === 'published' &&
-          shops.some((s) => s.shopId === p.shopId && s.vendorStatus === 'approved')
-      ),
-    [posts, shops]
+    () => posts.filter((p) => p.status === 'published'),
+    [posts]
   );
 
   const totalCartQty = useMemo(
@@ -323,33 +209,16 @@ export default function App() {
     [conversations]
   );
 
-  const handleOpenComments = (post: FeedPost) => {
-    setCommentsPost(post);
-    setActiveCommentsPostId(post.postId);
-  };
-
-  const handleCloseComments = () => {
-    setCommentsPost(null);
-    setActiveCommentsPostId(null);
-  };
-
-  const handleOpenDetail = (post: FeedPost) => {
-    setDetailPost(post);
-    setActiveReviewsPostId(post.postId);
-  };
-
-  const handleCloseDetail = () => {
-    setDetailPost(null);
-    setActiveReviewsPostId(null);
-  };
-
   const handleOpenShopProfile = (shopId: string) => {
+    setViewedShopId(shopId);
     setProfileSubTab('posts');
-    navigateTo('shop', { shopId });
+    setActiveTab('profile');
   };
 
   const handleWatchPost = (postId: string) => {
-    navigateTo('feed', { postId });
+    setSelectedPostId(postId);
+    setViewedShopId(null);
+    setActiveTab('feed');
   };
 
   const handleToggleCompare = (postId: string) => {
@@ -360,86 +229,21 @@ export default function App() {
     });
   };
 
-  const handleNegotiateWithShop = async (shop: ShopProfile, post?: FeedPost) => {
-    if (!session) {
-      setShowAuthModal(true);
-      return;
-    }
-    if (!canSendMessage(session)) {
-      showRoleBlockedNotice();
-      return;
-    }
+  const handleNegotiateWithShop = (shop: ShopProfile, post?: FeedPost) => {
     const initialText = post
       ? `Bonjour ${shop.name}, je souhaite négocier le tarif de gros pour "${post.title}" (MOQ ${post.moq} pcs).`
       : undefined;
-    const convId = await openOrCreateConversation(shop, initialText);
-    if (convId) {
-      setActiveConversationId(convId);
-      handleCloseDetail();
-      navigateTo('messages');
-    }
-  };
-
-  const handleOpenVendorStudio = (tab: 'publish' | 'orders' | 'stories' | 'kyc' = 'publish') => {
-    if (!session) {
-      setShowAuthModal(true);
-      return;
-    }
-    if (tab === 'kyc') {
-      if (canRequestVendorKyc(session) || isPendingVendorUser(session)) {
-        navigateTo('vendor', { vendorTab: 'kyc' });
-      } else {
-        showRoleBlockedNotice();
-      }
-      return;
-    }
-    if (tab === 'orders') {
-      if (canViewOwnSalesOrders(session)) {
-        navigateTo('vendor', { vendorTab: 'orders' });
-      } else {
-        showRoleBlockedNotice();
-      }
-      return;
-    }
-    if (isApprovedVendorUser(session)) {
-      navigateTo('vendor', { vendorTab: tab });
-    } else if (canViewOwnSalesOrders(session)) {
-      navigateTo('vendor', { vendorTab: 'orders' });
-    } else {
-      showRoleBlockedNotice();
-    }
-  };
-
-  const handleOpenOrderSheet = (post: FeedPost) => {
-    if (session && !canBuy(session)) {
-      showRoleBlockedNotice();
-      return;
-    }
-    setOrderPost(post);
-  };
-
-  const handleOpenCartDrawer = () => {
-    if (session && !canBuy(session)) {
-      showRoleBlockedNotice();
-      return;
-    }
-    setShowCartDrawer(true);
-  };
-
-  const handleOpenRfqModal = () => {
-    if (session && !canCreateRfq(session) && !canRespondToRfq(session)) {
-      showRoleBlockedNotice();
-      return;
-    }
-    setShowRfqModal(true);
+    const convId = openOrCreateConversation(shop, initialText);
+    setActiveConversationId(convId);
+    setDetailPost(null);
+    setActiveTab('messages');
   };
 
   return (
     <div className="h-dvh w-full bg-[var(--dropp-bg)] text-[var(--dropp-text)] flex overflow-hidden">
       <OfflineBanner isOnline={isOnline} justReconnected={justReconnected} t={t} />
 
-      {/* Desktop Left Sidebar (hidden on full-screen Admin Console) */}
-      {appRoute !== 'admin' && (
+      {/* Desktop Left Sidebar (TikTok Web Disposition) */}
       <aside className="hidden lg:flex flex-col w-60 shrink-0 border-r border-[var(--dropp-border)] bg-[var(--dropp-bg)] px-4 py-5 justify-between">
         <div className="space-y-6">
           <div className="px-2">
@@ -449,7 +253,10 @@ export default function App() {
           <nav aria-label="Navigation principale" className="space-y-1.5">
             <button
               type="button"
-              onClick={() => navigateTo('feed')}
+              onClick={() => {
+                setViewedShopId(null);
+                setActiveTab('feed');
+              }}
               className={`w-full min-h-[44px] px-3 rounded-xl flex items-center gap-3 text-sm font-semibold transition-colors ${
                 activeTab === 'feed'
                   ? 'bg-[var(--dropp-surface)] text-[var(--dropp-accent)]'
@@ -462,7 +269,7 @@ export default function App() {
 
             <button
               type="button"
-              onClick={() => navigateTo('market')}
+              onClick={() => setActiveTab('market')}
               className={`w-full min-h-[44px] px-3 rounded-xl flex items-center gap-3 text-sm font-semibold transition-colors ${
                 activeTab === 'market'
                   ? 'bg-[var(--dropp-surface)] text-[var(--dropp-accent)]'
@@ -486,7 +293,7 @@ export default function App() {
 
             <button
               type="button"
-              onClick={() => navigateTo('messages')}
+              onClick={() => setActiveTab('messages')}
               className={`w-full min-h-[44px] px-3 rounded-xl flex items-center justify-between text-sm font-semibold transition-colors ${
                 activeTab === 'messages'
                   ? 'bg-[var(--dropp-surface)] text-[var(--dropp-accent)]'
@@ -506,7 +313,10 @@ export default function App() {
 
             <button
               type="button"
-              onClick={() => navigateTo('profile')}
+              onClick={() => {
+                setViewedShopId(null);
+                setActiveTab('profile');
+              }}
               className={`w-full min-h-[44px] px-3 rounded-xl flex items-center gap-3 text-sm font-semibold transition-colors ${
                 activeTab === 'profile'
                   ? 'bg-[var(--dropp-surface)] text-[var(--dropp-accent)]'
@@ -517,23 +327,21 @@ export default function App() {
               <span>{t.nav.profile}</span>
             </button>
 
-            {canOpenCart && (
-              <button
-                type="button"
-                onClick={handleOpenCartDrawer}
-                className="w-full min-h-[44px] px-3 rounded-xl flex items-center justify-between text-sm font-semibold text-[var(--dropp-muted)] hover:bg-[var(--dropp-surface)] hover:text-[var(--dropp-text)] transition-colors"
-              >
-                <span className="flex items-center gap-3">
-                  <ShoppingBag className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
-                  <span>{t.actions.cart}</span>
+            <button
+              type="button"
+              onClick={() => setShowCartDrawer(true)}
+              className="w-full min-h-[44px] px-3 rounded-xl flex items-center justify-between text-sm font-semibold text-[var(--dropp-muted)] hover:bg-[var(--dropp-surface)] hover:text-[var(--dropp-text)] transition-colors"
+            >
+              <span className="flex items-center gap-3">
+                <ShoppingBag className="w-5 h-5 text-[var(--dropp-accent)]" aria-hidden="true" />
+                <span>{t.actions.cart}</span>
+              </span>
+              {totalCartQty > 0 && (
+                <span className="px-1.5 py-0.5 rounded-full bg-[#FF5A1F] text-white text-[10px] font-bold tabular-nums">
+                  {totalCartQty}
                 </span>
-                {totalCartQty > 0 && (
-                  <span className="px-1.5 py-0.5 rounded-full bg-[#FF5A1F] text-white text-[10px] font-bold tabular-nums">
-                    {totalCartQty}
-                  </span>
-                )}
-              </button>
-            )}
+              )}
+            </button>
           </nav>
         </div>
 
@@ -563,20 +371,7 @@ export default function App() {
             </button>
           )}
 
-          {!session && firebaseUid ? (
-            <button
-              type="button"
-              onClick={() => navigateTo('profile')}
-              className="w-full p-2.5 rounded-xl bg-[#E5484D]/12 border border-[#E5484D]/40 text-left"
-            >
-              <div className="text-xs font-semibold text-[#FCA5A5] truncate">
-                {profileLoading ? '...' : t.errors.profileLoadTitle}
-              </div>
-              <div className="text-[11px] text-[var(--dropp-muted)] truncate">
-                {t.errors.retry}
-              </div>
-            </button>
-          ) : !session ? (
+          {!session ? (
             <button
               type="button"
               onClick={() => setShowAuthModal(true)}
@@ -587,7 +382,10 @@ export default function App() {
           ) : (
             <button
               type="button"
-              onClick={() => navigateTo('profile')}
+              onClick={() => {
+                setViewedShopId(null);
+                setActiveTab('profile');
+              }}
               className="w-full p-2.5 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-left hover:border-[var(--dropp-border-strong)]"
             >
               <div className="text-xs font-semibold text-[var(--dropp-text)] truncate">
@@ -598,231 +396,15 @@ export default function App() {
           )}
         </div>
       </aside>
-      )}
 
       {/* Main Content Area */}
       <main className="flex-1 relative h-full overflow-hidden">
-        {(actionError || uiNotice || (firebaseUid && profileError && !session)) && (
-          <div className="absolute top-14 lg:top-4 right-4 left-4 lg:left-auto lg:max-w-md z-40 space-y-2">
-            {firebaseUid && profileError && !session && (
-              <div className="p-3 rounded-2xl bg-[var(--dropp-elevated)]/95 border border-[#E5484D]/60 shadow-xl flex items-center justify-between gap-3 text-xs">
-                <div className="flex items-start gap-2 min-w-0">
-                  <AlertCircle className="w-4 h-4 text-[#FCA5A5] shrink-0 mt-0.5" aria-hidden="true" />
-                  <div className="min-w-0">
-                    <div className="font-bold text-[var(--dropp-text)]">{t.errors.profileLoadTitle}</div>
-                    <div className="text-[11px] text-[var(--dropp-muted)] line-clamp-2">{profileError}</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => retryProfileLoad()}
-                    className="min-h-[34px] px-2.5 rounded-lg bg-[#FF5A1F] text-white font-bold inline-flex items-center gap-1"
-                  >
-                    <RefreshCw className="w-3 h-3" aria-hidden="true" />
-                    <span>{t.errors.retry}</span>
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {(actionError || uiNotice) && (
-              <div className="p-3 rounded-2xl bg-[var(--dropp-elevated)]/95 border border-[#FF5A1F]/60 shadow-xl flex items-center justify-between gap-3 text-xs text-[var(--dropp-text)]">
-                <div className="flex items-start gap-2 min-w-0">
-                  <AlertCircle className="w-4 h-4 text-[#FF5A1F] shrink-0 mt-0.5" aria-hidden="true" />
-                  <span>{actionError || uiNotice}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => {
-                    clearActionError();
-                    setUiNotice(null);
-                  }}
-                  aria-label={t.actions.close}
-                  className="p-1 text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] shrink-0"
-                >
-                  <X className="w-4 h-4" aria-hidden="true" />
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {platformSettings.announcement?.active &&
-          platformSettings.announcement.message &&
-          appRoute !== 'admin' &&
-          dismissedAnnouncementKey !==
-            `${platformSettings.announcement.title}:${platformSettings.announcement.message}` && (
-            <div className="absolute top-2 left-3 right-3 lg:left-6 lg:right-6 z-30 pointer-events-none flex justify-center">
-              <div className="pointer-events-auto max-w-2xl w-full px-3.5 py-2.5 rounded-2xl bg-[var(--dropp-elevated)]/95 border border-[#FF5A1F]/50 shadow-xl flex items-center justify-between gap-3 text-xs backdrop-blur-md">
-                <div className="flex items-start gap-2 min-w-0">
-                  <Megaphone className="w-4 h-4 text-[#FF5A1F] shrink-0 mt-0.5" aria-hidden="true" />
-                  <div className="min-w-0">
-                    {platformSettings.announcement.title && (
-                      <div className="font-bold text-[var(--dropp-text)]">
-                        {platformSettings.announcement.title}
-                      </div>
-                    )}
-                    <div className="text-[var(--dropp-muted)]">
-                      {platformSettings.announcement.message}
-                    </div>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={() =>
-                    setDismissedAnnouncementKey(
-                      `${platformSettings.announcement?.title}:${platformSettings.announcement?.message}`
-                    )
-                  }
-                  aria-label={t.actions.close}
-                  className="p-1 text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] shrink-0"
-                >
-                  <X className="w-4 h-4" aria-hidden="true" />
-                </button>
-              </div>
-            </div>
-          )}
-
-        {appRoute === 'admin' && (
-          !authReady || profileLoading ? (
-            <ScreenSkeleton />
-          ) : canAccessAdmin(session) ? (
-            <Suspense fallback={<ScreenSkeleton />}>
-              <AdminDashboardScreen
-                t={t}
-                adminUsers={adminUsers}
-                withdrawalRequests={withdrawalRequests}
-                auditLogs={auditLogs}
-                platformSettings={platformSettings}
-                adminLoading={adminLoading}
-                kycApplications={kycApplications}
-                disputes={disputes}
-                orders={orders}
-                shops={shops}
-                posts={posts}
-                onRefresh={refreshAdminOverview}
-                onBack={() => navigateTo('profile')}
-                onReviewKyc={reviewKycApplication}
-                onResolveDispute={resolveDispute}
-                onToggleCertifyShop={toggleShopCertification}
-                onSuspendShop={suspendShop}
-                onModeratePost={moderatePost}
-                onManageUser={manageAdminUser}
-                onReviewWithdrawal={reviewWithdrawalRequest}
-                onUpdateSettings={updatePlatformSettings}
-              />
-            </Suspense>
-          ) : (
-            <div className="h-full w-full flex items-center justify-center p-6 bg-[var(--dropp-bg)]">
-              <div className="max-w-md w-full p-6 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-center space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#E5484D]/15 text-[#FCA5A5] mx-auto flex items-center justify-center">
-                  <ShieldAlert className="w-6 h-6" aria-hidden="true" />
-                </div>
-                <h1 className="text-lg font-extrabold text-[var(--dropp-text)]">
-                  {t.admin.accessDeniedTitle}
-                </h1>
-                <p className="text-sm text-[var(--dropp-muted)]">{t.admin.accessDeniedDesc}</p>
-                <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-                  {!session && !firebaseUid && (
-                    <button
-                      type="button"
-                      onClick={() => setShowAuthModal(true)}
-                      className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] text-white text-sm font-bold"
-                    >
-                      {t.auth.loginSubmit}
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => navigateTo('feed')}
-                    className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-elevated)] border border-[var(--dropp-border)] text-sm font-semibold text-[var(--dropp-text)]"
-                  >
-                    {t.admin.backHomeBtn}
-                  </button>
-                </div>
-              </div>
-            </div>
-          )
-        )}
-
-        {appRoute === 'vendor' && (
-          !authReady || profileLoading ? (
-            <ScreenSkeleton />
-          ) : !session ? (
-            <div className="h-full w-full flex items-center justify-center p-6 bg-[var(--dropp-bg)]">
-              <div className="max-w-md w-full p-6 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-center space-y-4">
-                <h1 className="text-lg font-extrabold text-[var(--dropp-text)]">
-                  {t.vendor.studioTitle}
-                </h1>
-                <p className="text-sm text-[var(--dropp-muted)]">{t.profile.visitorSubtitle}</p>
-                <div className="flex flex-wrap items-center justify-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowAuthModal(true)}
-                    className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] text-white text-sm font-bold"
-                  >
-                    {t.profile.loginCta}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => navigateTo('feed')}
-                    className="min-h-[44px] px-4 rounded-xl bg-[var(--dropp-elevated)] border border-[var(--dropp-border)] text-sm font-semibold text-[var(--dropp-text)]"
-                  >
-                    {t.admin.backHomeBtn}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ) : isAdminUser(session) ? (
-            <div className="h-full w-full flex items-center justify-center p-6 bg-[var(--dropp-bg)]">
-              <div className="max-w-md w-full p-6 rounded-2xl bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-center space-y-4">
-                <h1 className="text-lg font-extrabold text-[var(--dropp-text)]">
-                  {t.vendor.studioTitle}
-                </h1>
-                <p className="text-sm text-[var(--dropp-muted)]">{t.errors.adminBlocked}</p>
-                <button
-                  type="button"
-                  onClick={() => navigateTo('admin')}
-                  className="min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] text-white text-sm font-bold"
-                >
-                  {t.profile.openAdminBtn}
-                </button>
-              </div>
-            </div>
-          ) : (
-            <Suspense fallback={<ScreenSkeleton />}>
-              <VendorStudioScreen
-                t={t}
-                session={session}
-                shops={shops}
-                posts={posts}
-                orders={orders}
-                kycApplications={kycApplications}
-                initialTab={vendorStudioTab}
-                dataSaver={dataSaver}
-                onSubmitKyc={submitVendorKyc}
-                onPublishPost={publishVendorPost}
-                onPublishStory={publishVendorStory}
-                onUpdateOrderStatus={updateOrderStatusByVendor}
-                onWatchPost={handleWatchPost}
-                onOpenRfq={handleOpenRfqModal}
-                onBack={() => navigateTo('profile')}
-              />
-            </Suspense>
-          )
-        )}
-
-        {appRoute === 'feed' && (
+        {activeTab === 'feed' && (
           <FeedScreen
             t={t}
             lang={lang}
-            session={session}
             posts={publishedPosts}
             shops={shops}
-            catalogLoading={catalogLoading}
-            catalogError={catalogError}
-            onRetryCatalog={retryCatalogLoad}
             likedIds={likedIds}
             bookmarkedIds={bookmarkedIds}
             followedShopIds={followedShopIds}
@@ -832,46 +414,40 @@ export default function App() {
             initialPostId={selectedPostId}
             isAuthenticated={Boolean(session)}
             onRequireAuth={() => setShowAuthModal(true)}
-            onRoleBlocked={showRoleBlockedNotice}
             onToggleLike={toggleLike}
             onToggleBookmark={toggleBookmark}
             onToggleFollow={toggleFollowShop}
-            onOpenComments={handleOpenComments}
-            onOpenOrder={handleOpenOrderSheet}
+            onOpenComments={(post) => setCommentsPost(post)}
+            onOpenOrder={(post) => setOrderPost(post)}
             onOpenShare={(post) => setSharePost(post)}
             onOpenShopProfile={handleOpenShopProfile}
             onOpenStory={(shop) => setStoryShop(shop)}
-            onOpenSearch={() => navigateTo('market')}
+            onOpenSearch={() => setActiveTab('market')}
             onPostVisible={recordViewedPost}
           />
         )}
 
-        {appRoute === 'market' && (
+        {activeTab === 'market' && (
           <Suspense fallback={<ScreenSkeleton />}>
             <MarketScreen
               t={t}
-              session={session}
               posts={publishedPosts}
-              platformSettings={platformSettings}
-              catalogLoading={catalogLoading}
-              catalogError={catalogError}
-              onRetryCatalog={retryCatalogLoad}
               likedIds={likedIds}
               recentlyViewedIds={recentlyViewedIds}
               compareIds={compareIds}
               cartCount={totalCartQty}
               dataSaver={dataSaver}
               onWatchPost={handleWatchPost}
-              onOpenProductDetail={handleOpenDetail}
+              onOpenProductDetail={(post) => setDetailPost(post)}
               onToggleCompare={handleToggleCompare}
               onOpenComparator={() => setShowComparator(true)}
-              onOpenCart={handleOpenCartDrawer}
-              onOpenRfq={handleOpenRfqModal}
+              onOpenCart={() => setShowCartDrawer(true)}
+              onOpenRfq={() => setShowRfqModal(true)}
             />
           </Suspense>
         )}
 
-        {appRoute === 'messages' && (
+        {activeTab === 'messages' && (
           <Suspense fallback={<ScreenSkeleton />}>
             <MessagesScreen
               t={t}
@@ -882,14 +458,14 @@ export default function App() {
               onSelectConversation={setActiveConversationId}
               onSendMessage={sendMessage}
               onRespondOffer={respondToDealOffer}
-              onOpenCart={handleOpenCartDrawer}
-              onOpenRfqModal={handleOpenRfqModal}
+              onOpenCart={() => setShowCartDrawer(true)}
+              onOpenRfqModal={() => setShowRfqModal(true)}
               onOpenAuth={() => setShowAuthModal(true)}
             />
           </Suspense>
         )}
 
-        {(appRoute === 'profile' || appRoute === 'shop') && (
+        {activeTab === 'profile' && (
           <Suspense fallback={<ScreenSkeleton />}>
             <ProfileScreen
               t={t}
@@ -898,20 +474,13 @@ export default function App() {
               themePref={themePref}
               onChangeTheme={setThemePref}
               session={session}
-              firebaseUid={firebaseUid}
-              profileLoading={profileLoading}
-              profileError={profileError}
-              onRetryProfile={retryProfileLoad}
               isOnline={isOnline}
               viewedShop={viewedShop}
-              shops={shops}
               posts={publishedPosts}
-              likedIds={likedIds}
               bookmarkedIds={bookmarkedIds}
               followedShopIds={followedShopIds}
               orders={orders}
               transactions={transactions}
-              withdrawalRequests={withdrawalRequests}
               notifications={notifications}
               notifPrefs={notifPrefs}
               appRating={appRating}
@@ -927,19 +496,17 @@ export default function App() {
               onOpenAuth={() => setShowAuthModal(true)}
               onSignOut={signOutUser}
               onWatchPost={handleWatchPost}
-              onOpenProductDetail={handleOpenDetail}
-              onClearViewedShop={() => navigateTo('profile')}
+              onOpenProductDetail={(post) => setDetailPost(post)}
+              onClearViewedShop={() => setViewedShopId(null)}
               onMessageShop={(shop) => handleNegotiateWithShop(shop)}
-              onOpenVendorStudio={handleOpenVendorStudio}
-              onOpenAdminConsole={() => {
-                if (canAccessAdmin(session)) navigateTo('admin');
-              }}
+              onOpenVendorStudio={(tab = 'publish') => setVendorStudioTab(tab)}
+              onOpenAdminConsole={() => setShowAdminModal(true)}
               onCancelOrder={cancelOrder}
               onConfirmDelivery={confirmOrderDelivery}
               onOpenDispute={openOrderDispute}
               onRateOrder={rateOrder}
               onReorder={reorderItems}
-              onOpenCart={handleOpenCartDrawer}
+              onOpenCart={() => setShowCartDrawer(true)}
               onDeposit={depositToWallet}
               onWithdraw={withdrawFromWallet}
               onToggleNotifPref={toggleNotifPref}
@@ -951,8 +518,7 @@ export default function App() {
         )}
       </main>
 
-      {/* Mobile Navigation Bar (hidden on full-screen Admin / Vendor workspaces) */}
-      {appRoute !== 'admin' && appRoute !== 'vendor' && (
+      {/* Mobile Navigation Bar */}
       <nav
         aria-label="Navigation mobile"
         className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 h-16 bg-[var(--dropp-elevated)]/95 backdrop-blur-md border-t border-[var(--dropp-border)] grid ${
@@ -961,7 +527,10 @@ export default function App() {
       >
         <button
           type="button"
-          onClick={() => navigateTo('feed')}
+          onClick={() => {
+            setViewedShopId(null);
+            setActiveTab('feed');
+          }}
           className={`min-h-[44px] flex flex-col items-center justify-center gap-0.5 ${
             activeTab === 'feed' ? 'text-[var(--dropp-accent)]' : 'text-[var(--dropp-muted)]'
           }`}
@@ -972,7 +541,7 @@ export default function App() {
 
         <button
           type="button"
-          onClick={() => navigateTo('market')}
+          onClick={() => setActiveTab('market')}
           className={`min-h-[44px] flex flex-col items-center justify-center gap-0.5 ${
             activeTab === 'market' ? 'text-[var(--dropp-accent)]' : 'text-[var(--dropp-muted)]'
           }`}
@@ -999,7 +568,7 @@ export default function App() {
 
         <button
           type="button"
-          onClick={() => navigateTo('messages')}
+          onClick={() => setActiveTab('messages')}
           className={`min-h-[44px] flex flex-col items-center justify-center gap-0.5 relative ${
             activeTab === 'messages' ? 'text-[var(--dropp-accent)]' : 'text-[var(--dropp-muted)]'
           }`}
@@ -1013,7 +582,10 @@ export default function App() {
 
         <button
           type="button"
-          onClick={() => navigateTo('profile')}
+          onClick={() => {
+            setViewedShopId(null);
+            setActiveTab('profile');
+          }}
           className={`min-h-[44px] flex flex-col items-center justify-center gap-0.5 ${
             activeTab === 'profile' ? 'text-[var(--dropp-accent)]' : 'text-[var(--dropp-muted)]'
           }`}
@@ -1022,7 +594,6 @@ export default function App() {
           <span className="text-[10px] font-medium">{t.nav.profile}</span>
         </button>
       </nav>
-      )}
 
       {/* Bottom Sheets & Modals */}
       {commentsPost && (
@@ -1031,12 +602,10 @@ export default function App() {
           post={commentsPost}
           comments={commentsByPost[commentsPost.postId] || []}
           isAuthenticated={Boolean(session)}
-          canComment={canLikeAndComment(session)}
-          blockedHint={isAdminUser(session) ? t.errors.adminBlocked : isSuspendedVendor(session) ? t.errors.suspendedBlocked : undefined}
           onRequireAuth={() => setShowAuthModal(true)}
           onAddComment={addComment}
           onRetryComment={retryFailedComment}
-          onClose={handleCloseComments}
+          onClose={() => setCommentsPost(null)}
         />
       )}
 
@@ -1045,10 +614,8 @@ export default function App() {
           t={t}
           post={orderPost}
           cartCount={totalCartQty}
-          canOrder={!session || canBuy(session)}
-          blockedHint={isAdminUser(session) ? t.errors.adminBlocked : isSuspendedVendor(session) ? t.errors.suspendedBlocked : undefined}
           onAddToCart={addToCartPreview}
-          onOpenCart={handleOpenCartDrawer}
+          onOpenCart={() => setShowCartDrawer(true)}
           onClose={() => setOrderPost(null)}
         />
       )}
@@ -1065,7 +632,6 @@ export default function App() {
         <StoryPreviewSheet
           t={t}
           shop={storyShop}
-          canReply={!session || canSendMessage(session)}
           onReplyToShop={(shop) => handleNegotiateWithShop(shop)}
           onClose={() => setStoryShop(null)}
         />
@@ -1076,8 +642,8 @@ export default function App() {
           t={t}
           session={session}
           onRequireAuth={() => setShowAuthModal(true)}
-          onOpenVendorStudio={handleOpenVendorStudio}
-          onOpenRfq={handleOpenRfqModal}
+          onOpenVendorStudio={(tab = 'publish') => setVendorStudioTab(tab)}
+          onOpenRfq={() => setShowRfqModal(true)}
           onClose={() => setShowCreateSheet(false)}
         />
       )}
@@ -1086,7 +652,6 @@ export default function App() {
         <Suspense fallback={null}>
           <ProductDetailSheet
             t={t}
-            session={session}
             post={detailPost}
             shop={shops.find((s) => s.shopId === detailPost.shopId)}
             reviews={reviewsByPost[detailPost.postId] || []}
@@ -1095,25 +660,21 @@ export default function App() {
             onRequireAuth={() => setShowAuthModal(true)}
             onAddToCart={addToCartPreview}
             onBuyNow={(item) => {
-              if (session && !canBuy(session)) {
-                showRoleBlockedNotice();
-                return;
-              }
               addToCartPreview(item);
-              handleCloseDetail();
+              setDetailPost(null);
               setShowCartDrawer(true);
             }}
             onAddReview={addProductReview}
             onNegotiate={(shop, post) => handleNegotiateWithShop(shop, post)}
             onOpenShop={(shopId) => {
-              handleCloseDetail();
+              setDetailPost(null);
               handleOpenShopProfile(shopId);
             }}
             onWatchVideo={(postId) => {
-              handleCloseDetail();
+              setDetailPost(null);
               handleWatchPost(postId);
             }}
-            onClose={handleCloseDetail}
+            onClose={() => setDetailPost(null)}
           />
         </Suspense>
       )}
@@ -1128,14 +689,14 @@ export default function App() {
             }
             onSelectPost={(post) => {
               setShowComparator(false);
-              handleOpenDetail(post);
+              setDetailPost(post);
             }}
             onClose={() => setShowComparator(false)}
           />
         </Suspense>
       )}
 
-      {showCartDrawer && canOpenCart && (
+      {showCartDrawer && (
         <Suspense fallback={null}>
           <CartCheckoutDrawer
             t={t}
@@ -1148,8 +709,9 @@ export default function App() {
             onCheckout={checkoutCart}
             onViewOrders={() => {
               setShowCartDrawer(false);
+              setViewedShopId(null);
               setProfileSubTab('orders');
-              navigateTo('profile');
+              setActiveTab('profile');
             }}
             onClose={() => setShowCartDrawer(false)}
           />
@@ -1168,9 +730,45 @@ export default function App() {
             onAcceptOffer={acceptRfqOffer}
             onOpenCart={() => {
               setShowRfqModal(false);
-              handleOpenCartDrawer();
+              setShowCartDrawer(true);
             }}
             onClose={() => setShowRfqModal(false)}
+          />
+        </Suspense>
+      )}
+
+      {vendorStudioTab && (
+        <Suspense fallback={null}>
+          <VendorStudioModal
+            t={t}
+            session={session}
+            orders={orders}
+            kycApplications={kycApplications}
+            initialTab={vendorStudioTab}
+            onSubmitKyc={submitVendorKyc}
+            onPublishPost={publishVendorPost}
+            onPublishStory={publishVendorStory}
+            onUpdateOrderStatus={updateOrderStatusByVendor}
+            onClose={() => setVendorStudioTab(null)}
+          />
+        </Suspense>
+      )}
+
+      {showAdminModal && (
+        <Suspense fallback={null}>
+          <AdminDashboardModal
+            t={t}
+            kycApplications={kycApplications}
+            disputes={disputes}
+            orders={orders}
+            shops={shops}
+            posts={posts}
+            onReviewKyc={reviewKycApplication}
+            onResolveDispute={resolveDispute}
+            onToggleCertifyShop={toggleShopCertification}
+            onSuspendShop={suspendShop}
+            onModeratePost={moderatePost}
+            onClose={() => setShowAdminModal(false)}
           />
         </Suspense>
       )}

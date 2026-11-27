@@ -21,7 +21,6 @@ import type {
 } from '../types/dropp';
 import { formatFcfa } from '../utils/formatters';
 import { uploadSignedMedia } from '../utils/cloudinary';
-import { canBuy, canCreateRfq, canRespondToRfq, canSendMessage } from '../utils/permissions';
 
 interface MessagesScreenProps {
   t: DroppDictionary;
@@ -72,12 +71,6 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
   const [offerPrice, setOfferPrice] = useState('11500');
   const [offerShipping, setOfferShipping] = useState('2000');
   const [offerNote, setOfferNote] = useState('Expédition sous 24 h avec facture');
-  const [attachError, setAttachError] = useState('');
-
-  const allowChatWrite = canSendMessage(session);
-  const allowCreateOffer = canRespondToRfq(session);
-  const allowRfqCreate = canCreateRfq(session);
-  const allowBuyerOrder = canBuy(session);
 
   const selectedId = activeConversationId || conversations[0]?.conversationId || null;
   const activeConv = conversations.find((c) => c.conversationId === selectedId) || null;
@@ -88,7 +81,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
       onOpenAuth();
       return;
     }
-    if (!allowChatWrite || !activeConv || !draft.trim()) return;
+    if (!activeConv || !draft.trim()) return;
     onSendMessage(activeConv.conversationId, {
       kind: 'text',
       text: draft.trim(),
@@ -101,21 +94,16 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
       onOpenAuth();
       return;
     }
-    if (!allowChatWrite || !activeConv) return;
+    if (!activeConv) return;
     const input = document.createElement('input');
     input.type = 'file';
     input.accept =
       kind === 'image' ? 'image/*' : kind === 'video' ? 'video/*' : '.pdf,.doc,.docx,.xlsx';
     input.onchange = async () => {
-      setAttachError('');
       const file = input.files?.[0];
       if (!file) return;
       const resourceType = kind === 'image' ? 'image' : kind === 'video' ? 'video' : 'raw';
-      const uploaded = await uploadSignedMedia(file, resourceType, 'chat');
-      if (!uploaded.ok) {
-        setAttachError(uploaded.error);
-        return;
-      }
+      const uploaded = await uploadSignedMedia(file, resourceType);
       onSendMessage(activeConv.conversationId, {
         kind,
         text: file.name,
@@ -131,7 +119,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
       onOpenAuth();
       return;
     }
-    if (!allowChatWrite || !activeConv) return;
+    if (!activeConv) return;
     onSendMessage(activeConv.conversationId, {
       kind: 'location',
       text: `Position partagée : ${session.city} · ${session.neighborhood}`,
@@ -141,7 +129,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
 
   const handleSendOfferCard = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!session || !allowCreateOffer || !activeConv) return;
+    if (!session || !activeConv) return;
     const qty = Math.max(1, Number(offerQty) || 1);
     const unitPrice = Math.max(100, Number(offerPrice) || 1000);
     const shipping = Math.max(0, Number(offerShipping) || 0);
@@ -214,15 +202,13 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
         <div className="flex-1 overflow-y-auto p-5 max-w-3xl w-full mx-auto space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-bold text-[var(--dropp-text)]">{t.rfq.title}</h2>
-            {allowRfqCreate && (
-              <button
-                type="button"
-                onClick={onOpenRfqModal}
-                className="min-h-[40px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold"
-              >
-                {t.rfq.createBtn}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={onOpenRfqModal}
+              className="min-h-[40px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white text-xs font-bold"
+            >
+              {t.rfq.createBtn}
+            </button>
           </div>
           {rfqs.map((r) => (
             <div
@@ -233,7 +219,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
                 <div className="text-xs text-[var(--dropp-muted)]">
                   {r.rfqId} · {r.city} · {r.quantity} {t.sheets.pcsUnit}
                 </div>
-                <div className="text-sm font-bold text-[var(--dropp-text)]">{r.title}</div>
+                <div className="text-sm font-bold text-[var(--dropp-text)] truncate">{r.title}</div>
                 <div className="text-xs text-[var(--dropp-accent)] font-semibold tabular-nums mt-0.5">
                   {formatFcfa(r.budgetFcfa)} · {r.offers.length} {t.rfq.offersCountLabel}
                 </div>
@@ -275,7 +261,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-1">
                         <span className="inline-flex items-center gap-1 min-w-0">
-                          <span className="text-xs font-bold text-[var(--dropp-text)]">
+                          <span className="text-xs font-bold text-[var(--dropp-text)] truncate">
                             {conv.shopName}
                           </span>
                           {conv.shopCertified && (
@@ -309,7 +295,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
                   />
                   <div className="min-w-0">
                     <div className="flex items-center gap-1">
-                      <span className="text-sm font-bold text-[var(--dropp-text)]">
+                      <span className="text-sm font-bold text-[var(--dropp-text)] truncate">
                         {activeConv.shopName}
                       </span>
                       {activeConv.shopCertified && (
@@ -322,16 +308,14 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
                   </div>
                 </div>
 
-                {allowCreateOffer && (
-                  <button
-                    type="button"
-                    onClick={() => setShowOfferForm((v) => !v)}
-                    className="min-h-[40px] px-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-xs font-semibold text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-                  >
-                    <Tag className="w-3.5 h-3.5 text-[var(--dropp-accent)]" aria-hidden="true" />
-                    <span>{t.messages.sendOfferBtn}</span>
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => setShowOfferForm((v) => !v)}
+                  className="min-h-[40px] px-3 rounded-xl bg-[var(--dropp-surface)] border border-[var(--dropp-border-strong)] hover:border-[var(--dropp-accent)] text-xs font-semibold text-[var(--dropp-text)] inline-flex items-center gap-1.5"
+                >
+                  <Tag className="w-3.5 h-3.5 text-[var(--dropp-accent)]" aria-hidden="true" />
+                  <span>{t.messages.sendOfferBtn}</span>
+                </button>
               </div>
 
               {showOfferForm && (
@@ -432,9 +416,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
                           </div>
                           <p className="text-xs text-[var(--dropp-muted)]">{msg.offer.note}</p>
 
-                          {msg.offer.status === 'pending' &&
-                            allowBuyerOrder &&
-                            activeConv.buyerId === session.uid && (
+                          {msg.offer.status === 'pending' && (
                             <div className="grid grid-cols-2 gap-2 pt-1">
                               <button
                                 type="button"
@@ -459,7 +441,7 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
                             </div>
                           )}
 
-                          {msg.offer.status === 'accepted' && allowBuyerOrder && (
+                          {msg.offer.status === 'accepted' && (
                             <button
                               type="button"
                               onClick={onOpenCart}
@@ -512,69 +494,60 @@ export const MessagesScreen: React.FC<MessagesScreenProps> = ({
               </div>
 
               {/* Composer */}
-              {allowChatWrite ? (
-                <div className="p-3 border-t border-[var(--dropp-border)] space-y-2">
-                  {attachError && (
-                    <p className="text-xs text-[#B42328] dark:text-[#FCA5A5]">{attachError}</p>
-                  )}
-                  <div className="flex items-center gap-2 overflow-x-auto">
-                    <button
-                      type="button"
-                      onClick={() => handleAttachment('image')}
-                      className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-                    >
-                      <ImageIcon className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>{t.messages.attachPhoto}</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleAttachment('video')}
-                      className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-                    >
-                      <Video className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>{t.messages.attachVideo}</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleAttachment('file')}
-                      className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-                    >
-                      <Paperclip className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>{t.messages.attachFile}</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleShareLocation}
-                      className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
-                    >
-                      <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
-                      <span>{t.messages.shareLocation}</span>
-                    </button>
-                  </div>
+              <div className="p-3 border-t border-[var(--dropp-border)] space-y-2">
+                <div className="flex items-center gap-2 overflow-x-auto">
+                  <button
+                    type="button"
+                    onClick={() => handleAttachment('image')}
+                    className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
+                  >
+                    <ImageIcon className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>{t.messages.attachPhoto}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleAttachment('video')}
+                    className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
+                  >
+                    <Video className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>{t.messages.attachVideo}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleAttachment('file')}
+                    className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
+                  >
+                    <Paperclip className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>{t.messages.attachFile}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleShareLocation}
+                    className="min-h-[36px] px-3 rounded-lg bg-[var(--dropp-surface)] border border-[var(--dropp-border)] text-[11px] text-[var(--dropp-muted)] hover:text-[var(--dropp-text)] inline-flex items-center gap-1.5"
+                  >
+                    <MapPin className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>{t.messages.shareLocation}</span>
+                  </button>
+                </div>
 
-                  <form onSubmit={handleSendText} className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      value={draft}
-                      onChange={(e) => setDraft(e.target.value)}
-                      placeholder={t.messages.messagePlaceholder}
-                      aria-label={t.messages.messagePlaceholder}
-                      className="flex-1 min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-sm text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
-                    />
-                    <button
-                      type="submit"
-                      aria-label={t.messages.sendBtn}
-                      className="min-w-[44px] min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white flex items-center justify-center"
-                    >
-                      <Send className="w-4 h-4" aria-hidden="true" />
-                    </button>
-                  </form>
-                </div>
-              ) : (
-                <div className="p-3 border-t border-[var(--dropp-border)] text-xs text-[#FCA5A5] text-center">
-                  {t.errors.suspendedBlocked}
-                </div>
-              )}
+                <form onSubmit={handleSendText} className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    value={draft}
+                    onChange={(e) => setDraft(e.target.value)}
+                    placeholder={t.messages.messagePlaceholder}
+                    aria-label={t.messages.messagePlaceholder}
+                    className="flex-1 min-h-[44px] px-3.5 rounded-xl bg-[var(--dropp-input)] border border-[var(--dropp-border)] text-sm text-[var(--dropp-text)] placeholder:text-[var(--dropp-muted)] focus:outline-none focus:border-[var(--dropp-accent)]"
+                  />
+                  <button
+                    type="submit"
+                    aria-label={t.messages.sendBtn}
+                    className="min-w-[44px] min-h-[44px] px-4 rounded-xl bg-[#FF5A1F] hover:bg-[#E54E19] text-white flex items-center justify-center"
+                  >
+                    <Send className="w-4 h-4" aria-hidden="true" />
+                  </button>
+                </form>
+              </div>
             </section>
           )}
         </div>

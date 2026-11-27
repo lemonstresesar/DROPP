@@ -1,23 +1,15 @@
-import {
-  firebaseConfig,
-  hasAdminCredentialsConfigured,
-} from './_lib/droppAuth.js';
+import { bootstrapTestAccounts, firebaseConfig } from './_lib/droppAuth';
 
-export default async function handler(req: any, res: any) {
-  if (req.method !== 'GET') {
-    res.status(405).json({ error: 'Method Not Allowed' });
-    return;
-  }
-
+export default async function handler(_req: any, res: any) {
+  const authSetupStatus = await bootstrapTestAccounts();
   res.status(200).json({
     ok: true,
     projectId: firebaseConfig.projectId,
-    databaseId: firebaseConfig.firestoreDatabaseId || '(default)',
-    adminConfigured: hasAdminCredentialsConfigured(),
     cloudinaryConfigured: Boolean(
       process.env.CLOUDINARY_CLOUD_NAME &&
         process.env.CLOUDINARY_API_KEY &&
         process.env.CLOUDINARY_API_SECRET
     ),
+    authSetupStatus,
   });
 }
